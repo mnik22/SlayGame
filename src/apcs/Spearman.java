@@ -1,4 +1,4 @@
-package src.apcs;
+package apcs;
 
 public class Spearman extends Unit{
 

@@ -4,7 +4,7 @@
  *Teacher:
  *Description:
  */
-package src.apcs;
+package apcs;
 
 
 public class GUI

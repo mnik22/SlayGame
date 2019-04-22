@@ -7,6 +7,7 @@
 package apcs;
 
 
-public class Driver {
+public class AI
+{
 
 }

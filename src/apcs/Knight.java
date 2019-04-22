@@ -1,4 +1,4 @@
-package src.apcs;
+package apcs;
 
 public class Knight extends Unit{
 
