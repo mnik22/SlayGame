@@ -12,7 +12,11 @@ public class Tile {
     private int horizontalPos;
     private int verticalPos;
     
+    private int protection;
+    
     private Team team;
+    
+    boolean isCapital;
     
     public Tile(int x, int y)
     {
@@ -40,6 +44,17 @@ public class Tile {
     {
         
     }
+    
+    public boolean isCapital()
+    {
+        return isCapital;
+    }
+    
+    public void setCapital(boolean b)
+    {
+        isCapital = b;
+    }
+    
     
     
 }
