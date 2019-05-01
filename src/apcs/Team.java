@@ -16,16 +16,12 @@ public class Team
     
     ArrayList<Territory> territories = new ArrayList<Territory>();
     
-    public Team(Color c, AI a)
+    public Team(Color c)
     {
         color = c;
         
     }
     
-    public Team(Color c, Player p)
-    {
-        color = c;
-    }
     
     public void addTerritory(Territory t)
     {
