@@ -18,7 +18,7 @@ public class Tile {
     
     private boolean isCapital;
     
-    public Tile(int x, int y, Tile[][] map)
+    public Tile(int x, int y)
     {
         horizontalPos = x;
         verticalPos = y;
