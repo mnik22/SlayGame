@@ -16,9 +16,9 @@ public class Tile {
     
     private Team team;
     
-    boolean isCapital;
+    private boolean isCapital;
     
-    public Tile(int x, int y)
+    public Tile(int x, int y, Tile[][] map)
     {
         horizontalPos = x;
         verticalPos = y;
@@ -27,7 +27,14 @@ public class Tile {
     
     public boolean isAdjacent(Tile t)
     {
-        return true;
+        if(t.equals(topLeft) || t.equals(left) || t.equals(bottomLeft) || t.equals(bottomRight) || t.equals(right) || t.equals(topRight))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     public Team getTeam()
