@@ -27,12 +27,12 @@ public class Driver {
             
             case 0:     for(int j = 2; j < map[0].length - 1; j += 2)
                         {
-                            map[i][j] = new Tile(i,j);
+                             map[i][j] = new Tile(i,j);
                         }
                         break;
             case 1:     for(int k = 1; k < map[0].length - 1; k += 2)
                         {
-                              map[i][k] = new Tile(i,k);
+                             map[i][k] = new Tile(i,k);
                         }
                         break;
             }
