@@ -13,6 +13,7 @@ public class Tile {
     private int verticalPos;
     
     private int protection;
+    private Unit unit;
     
     private Team team;
     
