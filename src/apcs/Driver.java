@@ -36,7 +36,7 @@ public class Driver extends Application {
     
     public static void main(String[] args) {
         
-        map = new Tile[5][5];
+        map = new Tile[61][45];
         launch(args);
 //        GUI gui = new GUI(map);
 //        gui.displayGame();
