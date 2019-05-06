@@ -48,8 +48,76 @@ public class Tile {
         team = t;
     }
     
-    public void setAdjacent(Tile[][] board)
+    public void setAdjacent()
     {
+        //pre: should be run when the board is initiated to set the tile adjacents.
+        // as of this edition this should be run with a board that has a border of null spaces around it.
+        if(verticalPos%2 == 1)
+        {
+            if(horizontalPos == 1)
+            {
+                left = null;
+                topLeft = null;
+                bottomLeft = null;
+            }
+            else
+            {
+                left = Driver.map[horizontalPos - 2][verticalPos];
+            }
+            if(horizontalPos == Driver.map.length - 3)
+            {
+                right = null;
+                topRight = null;
+                bottomRight = null;
+            }
+            else
+            {
+                right = Driver.map[horizontalPos + 2][verticalPos];
+            }
+        }
+        else
+        {
+            if(horizontalPos == 2)
+            {
+                left = null;
+                topLeft = null;
+                bottomLeft = null;
+            }
+            else
+            {
+                left = Driver.map[horizontalPos - 2][verticalPos];
+            }
+            if(horizontalPos == Driver.map.length - 2)
+            {
+                right = null;
+                topRight = null;
+                bottomRight = null;
+            }
+            else
+            {
+                right = Driver.map[horizontalPos + 2][verticalPos];
+            }
+        }
+        if(verticalPos == 1)
+        {
+            topRight = null;
+            topLeft = null;
+        }
+        else
+        {
+            topRight = Driver.map[horizontalPos + 2][verticalPos + 1];
+            topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
+        }
+        if(verticalPos == Driver.map[0].length - 2)
+        {
+            bottomRight = null;
+            bottomLeft = null;
+        }
+        else
+        {
+            bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
+            bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
+        }
         
     }
     
@@ -61,6 +129,21 @@ public class Tile {
     public void setCapital(boolean b)
     {
         isCapital = b;
+    }
+    
+    public boolean equals(Tile t)
+    {
+        return(horizontalPos == t.getHor() && verticalPos == t.getVert());
+    }
+    
+    public int getHor()
+    {
+        return horizontalPos;
+    }
+    
+    public int getVert()
+    {
+        return verticalPos;
     }
     
     
