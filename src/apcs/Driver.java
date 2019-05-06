@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Driver extends Application {
     
-    static Tile[][] map;
+    public static Tile[][] map;
     
     @Override
     public void start(Stage primaryStage) {
