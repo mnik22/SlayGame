@@ -146,6 +146,27 @@ public class Tile {
         return verticalPos;
     }
     
+    public Unit getUnit()
+    {
+        return unit;
+    }
+    
+    public void setUnit(Unit u)
+    {
+        unit = u;
+    }
+    
+    public void setProtection(int p)
+    {
+        protection = p;
+    }
+    public int getProtection()
+    {
+        return protection;
+    }
+    
+    
+    
     
     
 }
