@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class Driver extends Application {
     
     static Tile[][] map;
+    static AI cpu1;
     
     @Override
     public void start(Stage primaryStage) {
@@ -43,6 +44,7 @@ public class Driver extends Application {
     public static void main(String[] args) {
         
         map = new Tile[61][45];
+        cpu1 = new AI();
         launch(args);
 //        GUI gui = new GUI(map);
 //        gui.displayGame();
@@ -70,5 +72,6 @@ public class Driver extends Application {
         }
         
     }
+    
 
 }
