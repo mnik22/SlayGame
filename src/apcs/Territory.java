@@ -81,6 +81,40 @@ public class Territory {
         }
     }
     
+    public int[] availbleUnits()
+    {
+        int[] temp = new int[2]; //the first slot is how many peasants you can buy and the second is how many castles you can buy.
+        int cost = 0;
+        for(int i = 0; i < tiles.size(); i++)
+        {
+            if(tiles.get(i).getUnit() != null)
+            {
+                cost += tiles.get(i).getUnit().getCost();
+            }
+        }
+        if(money - cost > 0)
+        {
+            temp[0] = (money-cost)/5;
+            temp[1] = (money-cost)/10;
+        }
+        
+        return temp;       
+    }
+    
+    public void buyUnit(Unit u, Tile t)
+    {
+        if(u instanceof Peasant)
+        {
+            money -= 5; //peasant costs 5
+        }
+        else if(u instanceof Castle)
+        {
+            money -= 10; //castle costs 10
+        }
+        t.setUnit(u);
+        availbleUnits();
+    }
+    
     
    
 }
