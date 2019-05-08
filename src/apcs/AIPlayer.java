@@ -9,5 +9,11 @@ package apcs;
 
 public class AIPlayer extends Player
 {
-    
+    public void nextPlay()
+    {
+        if(hasNextPlay())
+        {
+            
+        }
+    }
 }
