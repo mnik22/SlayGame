@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1">
    <right>
-      <VBox prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
+      <VBox id="rightSideVBox" prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
          <children>
             <BarChart prefHeight="191.0" prefWidth="237.0">
               <xAxis>
@@ -37,31 +37,31 @@
                <children>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0">
                      <items>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView id="pesantImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField prefHeight="26.0" prefWidth="57.0" />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <items>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView id="spearmanImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <items>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView id="knightImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <items>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView id="baronImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                         <TextField />
                      </items>
                   </SplitPane>
                </children>
             </GridPane>
-            <Button mnemonicParsing="false" text="Finish Turn" textAlignment="CENTER" />
+            <Button id="finishTurnButton" mnemonicParsing="false" text="Finish Turn" textAlignment="CENTER" />
          </children>
       </VBox>
    </right>
