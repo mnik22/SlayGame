@@ -14,7 +14,7 @@ public class Driver extends Application {
     private GUIController guiController;
     
     static Tile[][] map;
-    static AI cpu1;
+    static AIPlayer cpu1;
     
     @Override
     public void start(Stage primaryStage) {
@@ -26,7 +26,7 @@ public class Driver extends Application {
     public static void main(String[] args) {
         
         map = new Tile[61][45];
-        cpu1 = new AI();
+        cpu1 = new AIPlayer();
         launch(args);
 //        GUI gui = new GUI(map);
 //        gui.displayGame();

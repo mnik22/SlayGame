@@ -7,7 +7,7 @@
 package apcs;
 
 
-public class AI
+public class HumanPlayer extends Player
 {
-    
+
 }
