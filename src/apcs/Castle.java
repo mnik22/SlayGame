@@ -13,5 +13,11 @@ public class Castle extends Unit
     {
         unitCost = 0;
         unitStrength = 2;
+        canMove = false;
+    }
+    
+    public void move(boolean b)
+    {
+        //dose not need code as a castle does not get up and move.
     }
 }

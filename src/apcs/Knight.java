@@ -6,5 +6,7 @@ public class Knight extends Unit{
 	{
 		super.unitCost = 18;
 		super.unitStrength = 2;
+		canMove = true;
 	}
+	
 }

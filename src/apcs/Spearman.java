@@ -6,5 +6,7 @@ public class Spearman extends Unit{
 	{
 		super.unitCost = 6;
 		super.unitStrength = 1;
+		canMove = true;
 	}
+	
 }
