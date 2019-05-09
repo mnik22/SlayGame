@@ -16,4 +16,19 @@ public class AIPlayer extends Player
             
         }
     }
+    
+    public void playRound()
+    {
+        while(!endTurn())
+        {
+            
+        }
+        
+    }
+    
+    public boolean endTurn() 
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
