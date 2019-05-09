@@ -45,6 +45,27 @@ public class Territory {
         return false;
     }
     
+    public void captureTile(Tile t, Unit u)
+    {
+        if(u.getStrength() > t.getProtection())
+        {
+            if(t.hasUnit())
+            {
+                
+            }
+        }
+        else
+        {
+            
+        }
+        
+    }
+    
+    public void moveTile(Tile t, Unit u)
+    {
+        
+    }
+    
     //economy methods
     public boolean maintenance()
     {
@@ -101,7 +122,7 @@ public class Territory {
         return temp;       
     }
     
-    public void buyUnit(Unit u, Tile t)
+    public void buyUnit( Tile t, Unit u)
     {
         if(u instanceof Peasant)
         {

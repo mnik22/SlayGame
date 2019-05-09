@@ -1,5 +1,7 @@
 package apcs;
 
+import java.util.ArrayList;
+
 public class Tile {
     
     private Tile topLeft;
@@ -8,6 +10,7 @@ public class Tile {
     private Tile topRight;
     private Tile right;
     private Tile bottomRight;
+    private Tile[] adjacentTiles;
     
     private int horizontalPos;
     private int verticalPos;
@@ -118,7 +121,12 @@ public class Tile {
             bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
             bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
         }
-        
+        adjacentTiles[0] = topRight;
+        adjacentTiles[1] = right;
+        adjacentTiles[2] = bottomRight;
+        adjacentTiles[3] = bottomLeft;
+        adjacentTiles[4] = left;
+        adjacentTiles[5] = topLeft;
     }
     
     public boolean isCapital()
@@ -154,6 +162,31 @@ public class Tile {
     public void setUnit(Unit u)
     {
         unit = u;
+        
+        if(unit != null)
+        {
+            if(protection < unit.getStrength())
+            {
+                protection = unit.getStrength();
+            }
+            for(int i = 0; i < adjacentTiles.length; i++)
+            {
+                if(adjacentTiles[i].getProtection() < unit.getStrength() && adjacentTiles[i].getTeam() == team)
+                {
+                    adjacentTiles[i].protection = unit.getStrength();
+                }
+            }
+        }
+        else
+        {   //for removing a person from a tile
+            
+            
+        }
+    }
+    
+    public boolean hasUnit()
+    {
+        return unit != null;
     }
     
     public void setProtection(int p)
@@ -163,6 +196,16 @@ public class Tile {
     public int getProtection()
     {
         return protection;
+    }
+    
+    public ArrayList<Unit> hasProtection()
+    {
+        ArrayList<Unit> temp = new ArrayList<Unit>();
+        if(protection > 0)
+        {
+            
+        }
+        return null;
     }
     
     
