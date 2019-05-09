@@ -4,12 +4,13 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -17,7 +18,29 @@
    <right>
       <VBox id="rightSideVBox" prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
          <children>
-            <BarChart prefHeight="191.0" prefWidth="237.0">
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Savings:" />
+                  <Label text="Income:" GridPane.rowIndex="1" />
+                  <Label text="Wages:" GridPane.rowIndex="2" />
+                  <Label text="Balance:" GridPane.rowIndex="3" />
+                  <Label id="savingsLabel" GridPane.columnIndex="1" />
+                  <Label id="incomeLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label id="wagesLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label id="balanceLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            <BarChart prefHeight="124.0" prefWidth="200.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -25,7 +48,13 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <GridPane>
+            <HBox prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <ImageView id="pesantSelectorImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView id="castleSelectorImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <GridPane prefHeight="49.0" prefWidth="200.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,25 +67,25 @@
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0">
                      <items>
                         <ImageView id="pesantImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField prefHeight="26.0" prefWidth="57.0" />
+                        <Label text="Pesant" />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <items>
                         <ImageView id="spearmanImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField />
+                        <Label text="Spearman" />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="knightImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField />
+                        <Label text="Knight" />
                      </items>
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="baronImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField />
+                        <Label text="Baron" />
                      </items>
                   </SplitPane>
                </children>

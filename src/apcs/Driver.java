@@ -21,7 +21,7 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) {
         
-        guiController = new GUIController(primaryStage, map);
+        guiController = new GUIController(primaryStage, map, players);
         
     }
     
