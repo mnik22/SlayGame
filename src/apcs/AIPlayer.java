@@ -6,29 +6,27 @@
  */
 package apcs;
 
+import java.awt.Color;
+
 
 public class AIPlayer extends Player
 {
-    public void nextPlay()
-    {
-        if(hasNextPlay())
-        {
-            
-        }
-    }
+ 
     
+    public AIPlayer(Color c)
+    {
+        super(c);
+        // TODO Auto-generated constructor stub
+    }
+
     public void playRound()
     {
-        while(!endTurn())
+        while(hasNextPlay())
         {
-            
+           
         }
         
     }
     
-    public boolean endTurn() 
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+
 }

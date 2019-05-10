@@ -6,9 +6,16 @@
  */
 package apcs;
 
+import java.awt.Color;
+
 
 public class HumanPlayer extends Player
 {
+    public HumanPlayer(Color c)
+    {
+        super(c);
+    }
+
     public void playRound()
     {
         while(!endTurn())
