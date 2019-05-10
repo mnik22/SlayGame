@@ -2,7 +2,9 @@ package apcs;
 
 import java.util.ArrayList;
 
-public class Tile {
+import javafx.scene.shape.Polygon;
+
+public class Tile extends Polygon {
     
     private Tile topLeft;
     private Tile left;
