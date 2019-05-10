@@ -72,7 +72,7 @@ public class Territory {
     {
         canMoveUnit = false;
         for (int i = 0; i <tiles.size(); i++) {
-            if(tile.getUnit().canMove())
+            if(tiles.get(i).getUnit().canMove())
             {
                 canMoveUnit = true;
                 i = tiles.size();
