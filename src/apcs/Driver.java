@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class Driver extends Application {
     
     private GUIController guiController;
+    private static final int NUM_PLAYERS = 6;
     
     static Tile[][] map;
     static Player[] players;
@@ -21,19 +22,19 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) {
         
+        map = new Tile[61][45];
+        players = new Player[NUM_PLAYERS];
+        players[0] = new HumanPlayer();
+        for (int i = 1; i < players.length; i++) {
+            
+            players[i] = new AIPlayer();
+        }
+        
         guiController = new GUIController(primaryStage, map, players);
         
     }
     
     public static void main(String[] args) {
-        
-        map = new Tile[61][45];
-        players = new Player[6];
-        players[0] = new HumanPlayer();
-        for (int i = 1; i < args.length; i++)
-        {
-            players[i] = new AIPlayer();
-        }
         
         launch(args);
 //        GUI gui = new GUI(map);
