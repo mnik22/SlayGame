@@ -39,5 +39,10 @@ public class Team
         }
     }
     
+    public ArrayList<Territory> getTerritories()
+    {
+        return territories;
+    }
+    
     
 }
