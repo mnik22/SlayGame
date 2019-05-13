@@ -19,6 +19,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -49,12 +50,23 @@ public class GUIController {
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
         
         this.map = map;
+        
+        for (int r = 0; r < map.length; r++) {
+            
+            for (int c = 0; c < map[0].length; c++) {
+                
+//                map[r][c].setStyle("-fx-background-color: #156136;");
+                
+            }
+            
+        }
+        
         this.players = players;
         this.primaryStage = primaryStage;
         
         try {
             
-            root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+            root = FXMLLoader.load(getClass().getResource("main.fxml"));
             root.setStyle("-fx-background-color: #70BDFF;");
             root.lookup("#rightSideVBox").setStyle("-fx-background-color: #976729;");
             primaryStage.setTitle("Slay Game");
