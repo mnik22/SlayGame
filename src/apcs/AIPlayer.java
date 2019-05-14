@@ -16,14 +16,13 @@ public class AIPlayer extends Player
     public AIPlayer(Color c)
     {
         super(c);
-        // TODO Auto-generated constructor stub
     }
 
     public void playRound()
     {
         while(hasNextPlay())
         {
-           
+//           for(Territory t: te)
         }
         
     }

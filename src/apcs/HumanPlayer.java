@@ -20,14 +20,15 @@ public class HumanPlayer extends Player
     {
         while(!endTurn())
         {
-            
+            //needs to connect to GUI
         }
         
     }
     
     public boolean endTurn() //might need parameter to connect to GUI button
     {
-        // TODO Auto-generated method stub
+        if(!hasNextPlay()) //needs other case to consider an end turn button
+            return true;
         return false;
     }
 }

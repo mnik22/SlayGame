@@ -21,7 +21,7 @@ public class Player
 
     public boolean hasNextPlay()
     {
-        ArrayList<Territory> territories = t.getTerritories(); //needs to be more efficient
+        ArrayList<Territory> territories = t.getTerritories(); 
         for(Territory terr: territories)
         {
             if(terr.canPurchaseUnits() || terr.canMoveUnit())
