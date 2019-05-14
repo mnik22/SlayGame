@@ -209,7 +209,7 @@ public class Tile extends Polygon {
             {
                 if(adjacentTiles[i].hasUnit())
                 {
-                    temp.add(adjacentTiles[i].getUnit());
+                    temp.add(adjacentTiles[i]);
                 }
             }
         }
@@ -220,22 +220,22 @@ public class Tile extends Polygon {
     {
         for(int i = 0; i < adjacentTiles.length; i++)
         {
-            ArrayList<Tile> temp = i.hasProtection();
-            if(temp.size > 0)
+            ArrayList<Tile> temp = adjacentTiles[i].hasProtection();
+            if(temp.size() > 0)
             {
                 Unit strongest = temp.get(0).getUnit();
-                for(int i = 1; i < temp.size(); i++)
+                for(int k = 1; k < temp.size(); k++)
                 {
-                    if(temp.get(i).getUnit().getStrength() > strongest.getStrength())
+                    if(temp.get(k).getUnit().getStrength() > strongest.getStrength())
                     {
-                        strongest = temp.get(i).getUnit();
+                        strongest = temp.get(k).getUnit();
                     }
                 }
-                i.setProtection(strongest.getStrength());
+                adjacentTiles[i].setProtection(strongest.getStrength());
             }
             else
             {
-                i.setProtection(0);
+                adjacentTiles[i].setProtection(0);
             }
         }
     }
