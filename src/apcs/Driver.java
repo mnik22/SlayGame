@@ -17,12 +17,8 @@ public class Driver extends Application {
     private GUIController guiController;
     private static final int NUM_PLAYERS = 6;
     private static final int NUM_TILES = 50;
-    
-    /* GUI dimensions add one because the matrix will
-     * ignore the last index otherwise.
-     */
-    private static final int GUI_WIDTH = 1026 + 1;
-    private static final int GUI_HEIGHT = 800 + 1;
+    private Tile[][] GUIMap;
+    private Color[] colors;
     
     static Tile[][] map;
     static Player[] players;
@@ -30,33 +26,85 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) {
         
-        /* The map will be a matrix of Tiles and
-         * each index is a coordinate on the GUI.
-         */
-        map = new Tile[GUI_HEIGHT][GUI_WIDTH];
-        map[GUI_HEIGHT / 2][GUI_WIDTH / 2] = new Tile(GUI_WIDTH / 2, GUI_HEIGHT / 2); // Is this flip accounted for in Tile??
+        
+        GUIMap = new Tile[(NUM_TILES * 2) + 1][(NUM_TILES * 2) + 1];
+        colors = new Color[NUM_PLAYERS];
         
         int count = 0;
         while (count <= NUM_TILES) {
             
-            int randPosW = (int)(Math.random() * GUI_WIDTH);
-            int randPosH = (int)(Math.random() * GUI_HEIGHT);
+            /* Width = Number of Columns
+             * Height = Number of Rows
+             */
             
-            if (map[randPosH][randPosW] == null) {
+            int randPosW = (int)(Math.random() * GUIMap[0].length);
+            int randPosH = (int)(Math.random() * GUIMap.length);
+            
+            if (GUIMap[randPosH][randPosW] == null) {
                 
-                map[randPosH][randPosW] = new Tile(randPosW, randPosH);
+                GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
                 count++;
                 
             }
             
         }
         
-        players = new Player[NUM_PLAYERS];
-        players[0] = new HumanPlayer(Color.green);
-        for (int i = 1; i < players.length; i++)
-            players[i] = new AIPlayer(Color.cyan);
+        // TODO: Actually initialize the colors
+        for (int i = 0; i < colors.length; i++)
+            colors[i] = Color.CYAN;
         
-        guiController = new GUIController(primaryStage, map, players);
+        players = new Player[NUM_PLAYERS];
+        players[0] = new HumanPlayer(colors[0]);
+        for (int i = 1; i < players.length; i++)
+            players[i] = new AIPlayer(colors[i]);
+        
+        makeMap();
+        
+        guiController = new GUIController(primaryStage, GUIMap, players);
+        
+    }
+    
+    private void makeMap() {
+        
+        // TODO: OutOfBoundsException in line marked with @
+        
+//        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
+//        
+//        int GUIMapCol = 0;
+//        
+//        for (int r = 0; r < map.length; r++) {
+//            
+//            GUIMapCol = 0;
+//            
+//            for (int c = 0; c < map[0].length; c++) {
+//                
+//                // Handle an Even Row
+//                if (r % 2 == 0 || r == 0) {
+//                    if (c == map[0].length)
+//                        map[r][c] = null; 
+//                    else if (c % 2 == 0 || c == 0) {
+//@                       map[r][c] = GUIMap[r][GUIMapCol];
+//                        GUIMapCol++;
+//                    }
+//                    else
+//                        map[r][c] = null;
+//                    
+//                // Handle an Odd Row
+//                } else {
+//                    if (c == 0)
+//                        map[r][c] = null;
+//                    else if (c % 2 == 0)
+//                        map[r][c] = null;
+//                    else {
+//                        map[r][c] = GUIMap[r][GUIMapCol];
+//                        GUIMapCol++;
+//                    }
+//                    
+//                }
+//                
+//            }
+//            
+//        }
         
     }
     
