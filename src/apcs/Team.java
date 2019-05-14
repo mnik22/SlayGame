@@ -44,5 +44,15 @@ public class Team
         return territories;
     }
     
+    public Color getColor()
+    {
+        return color;
+    }
+    
+    public boolean equals(Team t)
+    {
+        return t.getColor().equals(color);
+    }
+    
     
 }

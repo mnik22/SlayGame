@@ -200,15 +200,46 @@ public class Tile extends Polygon {
         return protection;
     }
     
-    public ArrayList<Unit> hasProtection()
+    public ArrayList<Tile> hasProtection()
     {
-        ArrayList<Unit> temp = new ArrayList<Unit>();
+        ArrayList<Tile> temp = new ArrayList<Tile>();
         if(protection > 0)
         {
-            
+            for(int i = 0; i < adjacentTiles.length; i++)
+            {
+                if(adjacentTiles[i].hasUnit())
+                {
+                    temp.add(adjacentTiles[i].getUnit());
+                }
+            }
         }
-        return null;
+        return temp;
     }
+    
+    public void removeProtection() //you should remove the Unit on this tile before calling this method
+    {
+        for(int i = 0; i < adjacentTiles.length; i++)
+        {
+            ArrayList<Tile> temp = i.hasProtection();
+            if(temp.size > 0)
+            {
+                Unit strongest = temp.get(0).getUnit();
+                for(int i = 1; i < temp.size(); i++)
+                {
+                    if(temp.get(i).getUnit().getStrength() > strongest.getStrength())
+                    {
+                        strongest = temp.get(i).getUnit();
+                    }
+                }
+                i.setProtection(strongest.getStrength());
+            }
+            else
+            {
+                i.setProtection(0);
+            }
+        }
+    }
+    
     
     
     
