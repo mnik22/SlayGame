@@ -62,7 +62,7 @@ public class Territory {
             {
                 u.getTile().setUnit(null);
                 t.setUnit(u);
-                u.canMove(false);
+                u.move(false);
             }
             else
             {

@@ -7,11 +7,6 @@ public abstract class Unit {
 	protected boolean canMove;
 	protected Tile tile; //the tile that the unit is standing on.
 	
-	public Unit(Tile t)
-	{
-	    tile = t;
-	}
-	
 	public int getCost()
 	{
 		return unitCost;
@@ -37,7 +32,7 @@ public abstract class Unit {
 	    tile = t;
 	}
 	
-	public void getTile()
+	public Tile getTile()
 	{
 	    return tile;
 	}
