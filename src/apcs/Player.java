@@ -12,19 +12,19 @@ import java.util.ArrayList;
 
 public class Player
 {
-    private Team t;
+    private Team team;
     
     public Player(Color c)
     {
-        t = new Team(c);
+        team = new Team(c);
     }
 
     public boolean hasNextPlay()
     {
-        ArrayList<Territory> territories = t.getTerritories(); 
-        for(Territory terr: territories)
+        ArrayList<Territory> territories = team.getTerritories(); 
+        for(Territory t: territories)
         {
-            if(terr.canPurchaseUnits() || terr.canMoveUnit())
+            if(t.canPurchaseUnits() || t.canMoveUnit())
                 return true;
         }
         return false;
