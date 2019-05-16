@@ -44,6 +44,11 @@ public class Team
         return territories;
     }
     
+    public int getNumTerritories()
+    {
+        return territories.size();
+    }
+    
     public Color getColor()
     {
         return color;
