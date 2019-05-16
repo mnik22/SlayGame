@@ -5,7 +5,12 @@ public abstract class Unit {
 	protected int unitStrength;
 	protected int unitCost;
 	protected boolean canMove;
+	protected Tile tile; //the tile that the unit is standing on.
 	
+	public Unit(Tile t)
+	{
+	    tile = t;
+	}
 	
 	public int getCost()
 	{
@@ -25,5 +30,15 @@ public abstract class Unit {
 	public void move(boolean b)
 	{
 	    canMove = b;
+	}
+	
+	public void setTile(Tile t)
+	{
+	    tile = t;
+	}
+	
+	public void getTile()
+	{
+	    return tile;
 	}
 }

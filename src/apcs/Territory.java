@@ -9,10 +9,12 @@ public class Territory {
     private int money;
     private boolean canPurchaseUnits;
     private boolean canMoveUnit;
+    private Team team;
     
     
-    public Territory()
+    public Territory(Team t)
     {
+        team = t;
         int rnd = (int)(Math.random()*tiles.size());
         capital = tiles.get(rnd);                       //these three lines randomly sets the capital when the territory is initiated
         capital.setCapital(true);
@@ -35,6 +37,11 @@ public class Territory {
         return null;
     }
     
+    public Team getTeam()
+    {
+        return team;
+    }
+    
     public boolean isAdjacent(Tile t)
     {
         for(int i = 0; i < tiles.size(); i++)
@@ -47,26 +54,30 @@ public class Territory {
         return false;
     }
     
-    public void captureTile(Tile t, Unit u)
+    public void moveUnit(Unit u, Tile t)
     {
-        if(u.getStrength() > t.getProtection())
+        if(t.getTeam().equals(team))
         {
-            if(t.hasUnit())
+            if(u.getStrength() > t.getProtection())
+            {
+                u.getTile().setUnit(null);
+                t.setUnit(u);
+                u.canMove(false);
+            }
+            else
             {
                 
             }
         }
         else
         {
-            
+            if(!t.hasUnit())
+            {
+                
+            }
         }
-        
     }
     
-    public void moveTile(Tile t, Unit u)
-    {
-        
-    }
 
     public void updateCanMoveUnit()
     {
@@ -165,6 +176,10 @@ public class Territory {
         availbleUnits();
     }
     
+    public int getNumTiles()
+    {
+        return tiles.size();
+    }
     
    
 }
