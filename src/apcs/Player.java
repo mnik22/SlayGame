@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 
-public class Player
+public abstract class Player
 {
     private Color color;
     private ArrayList<Territory> territories = new ArrayList<Territory>();
@@ -20,21 +20,16 @@ public class Player
         color = c;
     }
 
-    public boolean hasNextPlay()
+    public boolean endTurn() 
     {
         for(Territory t: territories)
         {
             if(t.canPurchaseUnits() || t.canMoveUnit())
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
-    public void playRound()
-    {
-        
-    }
-    
     public void addTerritory(Territory t)
     {
         territories.add(t);
@@ -80,5 +75,8 @@ public class Player
         }
         return num;
     }
+    
+    public abstract void playRound();
+
 
 }

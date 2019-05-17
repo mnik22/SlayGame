@@ -23,7 +23,7 @@ public class AIPlayer extends Player
 
     public void playRound()
     {
-        while(hasNextPlay())
+        while(!endTurn())
         {
            for(Territory territory: territories)
            {
