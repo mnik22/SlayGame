@@ -161,17 +161,21 @@ public class Tile extends Polygon {
         return unit;
     }
     
-    public void setUnit(Unit u) //this method assumes that you can pass a unit into this tile.
+    public void setUnit(Unit u) //this method assumes that you can pass a unit into this tile. //this also could possible not work like it should
     {
         unit = u;
         
         if(unit != null)
         {
+            if(u.getStrength() > protection)
+            {
+                protection = u.getStrength();
+            }
             for(int i = 0; i < adjacentTiles.length; i++)
             {
-                //if(adjacentTiles[i]) //this line as well as method is not done.
+                if(u.getStrength() > adjacentTiles[i].getProtection() && adjacentTiles[i].getPlayer().equals(player))
                 {
-                    
+                    adjacentTiles[i].setProtection(u.getStrength());
                 }
             }
         }

@@ -57,24 +57,30 @@ public class Territory {
     
     public void moveUnit(Unit u, Tile t)
     {
-        if(t.getPlayer().equals(player))
+        if(isAdjacent(t))
         {
-            if(u.getStrength() > t.getProtection())
+            if(!t.getPlayer().equals(player))
             {
-                u.getTile().setUnit(null);
-                t.setUnit(u);
-                u.move(false);
+                if(u.getStrength() > t.getProtection())
+                {
+                    u.getTile().setUnit(null);
+                    t.setUnit(u);
+                    t.setPlayer(player);
+                    tiles.add(t);
+                    u.move(false);
+                }
+                else
+                {
+                    //maybe play a noise or something
+                }
             }
             else
             {
-                
-            }
-        }
-        else
-        {
-            if(!t.hasUnit())
-            {
-                
+                if(!t.hasUnit())
+                {
+                    u.getTile().setUnit(null);
+                    t.setUnit(u);
+                }
             }
         }
     }
