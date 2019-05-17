@@ -161,27 +161,27 @@ public class Tile extends Polygon {
         return unit;
     }
     
-    public void setUnit(Unit u)
+    public void setUnit(Unit u) //this method assumes that you can pass a unit into this tile.
     {
         unit = u;
         
         if(unit != null)
         {
-            if(protection < unit.getStrength())
-            {
-                protection = unit.getStrength();
-            }
             for(int i = 0; i < adjacentTiles.length; i++)
             {
-                if(adjacentTiles[i].getProtection() < unit.getStrength() && adjacentTiles[i].getTeam() == team)
+                //if(adjacentTiles[i]) //this line as well as method is not done.
                 {
-                    adjacentTiles[i].protection = unit.getStrength();
+                    
                 }
             }
         }
         else
         {   //for removing a person from a tile
-            
+            removeProtection();
+            for(int i = 0; i < adjacentTiles.length; i++)
+            {
+                adjacentTiles[i].removeProtection();
+            }
             
         }
     }

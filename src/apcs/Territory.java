@@ -18,6 +18,7 @@ public class Territory {
         int rnd = (int)(Math.random()*tiles.size());
         capital = tiles.get(rnd);                       //these three lines randomly sets the capital when the territory is initiated
         capital.setCapital(true);
+        capital.setUnit(new Capital(capital));
     }
     
     public void addTile(Tile t)
