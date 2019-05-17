@@ -182,5 +182,10 @@ public class Territory {
         return tiles.size();
     }
     
+    public ArrayList<Tile> getTiles()
+    {
+        return tiles;
+    }
+    
    
 }
