@@ -20,7 +20,7 @@ public class Tile extends Polygon {
     private int protection;
     private Unit unit;
     
-    private Team team;
+    private Player player;
     
     private boolean isCapital;
     
@@ -43,14 +43,14 @@ public class Tile extends Polygon {
         }
     }
     
-    public Team getTeam()
+    public Player getPlayer()
     {
-        return team;
+        return player;
     }
     
-    public void setTeam(Team t)
+    public void setPlayer(Player p)
     {
-        team = t;
+        player = p;
     }
     
     public void setAdjacent()
