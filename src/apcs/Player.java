@@ -70,5 +70,15 @@ public class Player
     {
         return color.equals(p.getColor());
     }
+    
+    public int getNumTiles()
+    {
+        int num = 0;
+        for (Territory t: territories)
+        {
+            num += t.getNumTiles();
+        }
+        return num;
+    }
 
 }
