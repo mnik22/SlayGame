@@ -31,7 +31,12 @@ public class AIPlayer extends Player
                for (Tile tile : tiles)
                {
                    if(tile.hasUnit())
-                       territory.moveUnit(tile.getUnit(), tiles.get((int) (Math.random() * tiles.size())));
+                   {
+                       int rand = (int) (Math.random() * tiles.size());
+                       while(tiles.get(rand).getProtection() > 0)
+                           rand = (int) (Math.random() * tiles.size());
+                       territory.moveUnit(tile.getUnit(), tiles.get(rand));
+                   }
                }
            }
         }
