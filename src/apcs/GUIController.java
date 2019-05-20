@@ -172,6 +172,28 @@ public class GUIController {
         
     }
     
+    public void setSavings(int amt) {
+        
+        savingsLabel.setText("" + amt);
+        
+    }
     
+    public void setIncome(int amt) {
+        
+        incomeLabel.setText("" + amt);
+        
+    }
+    
+    public void setWages(int amt) {
+        
+        wagesLabel.setText("" + amt);
+        
+    }
+    
+    public void setBalance(int amt) {
+        
+        balanceLabel.setText("" + amt);
+        
+    }
 
 }
