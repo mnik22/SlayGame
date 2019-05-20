@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 
-public abstract class Player
+public class Player
 {
     private Color color;
     private ArrayList<Territory> territories = new ArrayList<Territory>();
@@ -76,7 +76,20 @@ public abstract class Player
         return num;
     }
     
-    public abstract void playRound();
+    public void playRound()
+    {
+        //this updates the canMove variable for every unit a player has
+        //must call super.playRound() at the beginning of every subClass of
+        //Player's playRound() method
+        for(Territory territory: territories)
+        {
+            ArrayList<Tile> tiles = territory.getTiles();
+            for (Tile tile : tiles)
+            {
+                tile.getUnit().move(true);
+            }
+        }
+    }
 
 
 }
