@@ -12,6 +12,8 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +36,10 @@ public class GUIController {
     private Label wagesLabel;
     private Label balanceLabel;
     
+    private BarChart<ImageView, Integer> propertiesBarChart;
+    private Image playerImage;
+    private Image computerImage;
+    
     private ImageView pesantSelectorImageView;
     private ImageView castleSelectorImageView;
     private Image castleImage;
@@ -47,6 +53,7 @@ public class GUIController {
     private ImageView baronImageView;
     private Image baronImage;
     
+    @SuppressWarnings({ "unchecked" })
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
         
         this.map = map;
@@ -81,6 +88,41 @@ public class GUIController {
         
         try {
             
+            /*
+             * Money Displaying Code
+             */
+            
+            savingsLabel = (Label) root.lookup("#savingsLabel");
+            incomeLabel = (Label) root.lookup("#incomeLabel");
+            wagesLabel = (Label) root.lookup("#wagesLabel");
+            balanceLabel = (Label) root.lookup("#balanceLabel");
+            
+            /*
+             * Chart Code
+             */
+            
+            playerImage = new Image(new FileInputStream("src/Player.png"));
+            computerImage = new Image(new FileInputStream("src/Computer.png"));
+            propertiesBarChart = (BarChart<ImageView, Integer>) root.lookup("#propertiesBarChart");
+            propertiesBarChart.setTitle("Territory Summary");
+            
+            XYChart.Series<ImageView, Integer> series1 = new XYChart.Series<>();   
+            for (int i = 0; i < players.length; i++) {
+                
+                if (players[i] instanceof HumanPlayer)
+                    series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(playerImage), players[i].getNumTiles()));
+                
+                else if (players[i] instanceof AIPlayer)
+                    series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(computerImage), players[i].getNumTiles()));
+                
+            }
+            
+//            propertiesBarChart.getData().add(series1);
+            
+            /*
+             * Playable Objects Code
+             */
+                
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
@@ -102,6 +144,10 @@ public class GUIController {
                 db.setContent(content);
                 mouseEvent.consume();
             });
+            
+            /*
+             * Number of Each Object Code
+             */
             
             pesantImageView = (ImageView) root.lookup("#pesantImageView");
             pesantImageView.setImage(pesantImage);

@@ -40,7 +40,7 @@
                   <Label id="balanceLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <BarChart prefHeight="124.0" prefWidth="200.0">
+            <BarChart id="propertiesBarChart" prefHeight="124.0" prefWidth="200.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
