@@ -163,13 +163,12 @@ public class Tile extends Polygon {
     
     public void setUnit(Unit u) //this method assumes that you can pass a unit into this tile. //this also could possible not work like it should
     {
-        unit = u;
-        
-        if(unit != null)
+        if(u != null)
         {
             if(u.getStrength() > protection)
             {
                 protection = u.getStrength();
+                unit = u;
             }
             for(int i = 0; i < adjacentTiles.length; i++)
             {
@@ -181,6 +180,7 @@ public class Tile extends Polygon {
         }
         else
         {   //for removing a person from a tile
+            unit = u;
             removeProtection();
             for(int i = 0; i < adjacentTiles.length; i++)
             {
@@ -211,13 +211,42 @@ public class Tile extends Polygon {
         {
             for(int i = 0; i < adjacentTiles.length; i++)
             {
-                if(adjacentTiles[i].hasUnit())
+                if(adjacentTiles[i].hasUnit() && adjacentTiles[i].getPlayer().equals(player))
                 {
                     temp.add(adjacentTiles[i]);
                 }
             }
         }
         return temp;
+    }
+    
+    public void setProtection()
+    {
+        ArrayList<Tile> temp = hasProtection();
+        int strongest = 0;
+        if(unit != null)
+        {
+            strongest = unit.getStrength();
+        }
+        for(int i = 0; i < temp.size(); i++)
+        {
+            if(temp.get(i).getProtection() > strongest)
+            {
+                strongest = temp.get(i).getProtection();
+            }
+        }
+        setProtection(strongest);
+    }
+    
+    public void setAdjacentProtection()
+    {
+        for(int i = 0; i < adjacentTiles.length; i++)
+        {
+            if(adjacentTiles[i].getPlayer().equals(player))
+            {
+                adjacentTiles[i].setProtection();
+            }
+        }
     }
     
     public void removeProtection() //you should remove the Unit on this tile before calling this method

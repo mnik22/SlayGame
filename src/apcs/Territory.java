@@ -63,10 +63,14 @@ public class Territory {
             {
                 if(u.getStrength() > t.getProtection())
                 {
-                    u.getTile().setUnit(null);
+                    Tile old = u.getTile();
+                    old.setUnit(null);
+                    old.setProtection();
                     t.setUnit(u);
                     t.setPlayer(player);
                     tiles.add(t);
+                    t.setProtection();
+                    t.setAdjacentProtection();
                     u.move(false);
                 }
                 else
@@ -80,6 +84,8 @@ public class Territory {
                 {
                     u.getTile().setUnit(null);
                     t.setUnit(u);
+                    t.setProtection();
+                    t.setAdjacentProtection();
                 }
             }
         }
