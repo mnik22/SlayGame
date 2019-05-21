@@ -9,6 +9,8 @@ package apcs;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -168,6 +170,16 @@ public class GUIController {
             baronImageView.setImage(baronImage);
             
             finishTurnButton = (Button) root.lookup("#finishTurnButton");
+            finishTurnButton.setOnAction(new EventHandler<ActionEvent>() {
+                
+                @Override
+                public void handle(ActionEvent arg0) {
+
+                    // TODO: Add in code to finish a turn.
+                    
+                }
+                
+            });
             
         } catch (IOException e) {
             
