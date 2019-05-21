@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,6 +53,8 @@ public class GUIController {
     private Image knightImage;
     private ImageView baronImageView;
     private Image baronImage;
+    
+    private Button finishTurnButton;
     
     @SuppressWarnings({ "unchecked" })
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
@@ -163,6 +166,8 @@ public class GUIController {
             baronImage = new Image(new FileInputStream("src/Baron.png"));
             baronImageView = (ImageView) root.lookup("#baronImageView");
             baronImageView.setImage(baronImage);
+            
+            finishTurnButton = (Button) root.lookup("#finishTurnButton");
             
         } catch (IOException e) {
             
