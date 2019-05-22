@@ -199,13 +199,28 @@ public class Territory {
     {
         if(u instanceof Peasant)
         {
-            money -= 5; //peasant costs 5
+            if(money >= 5)
+            {
+                money -= 5; //peasant costs 5
+                t.setUnit(u);
+            }
+            else
+            {
+                //play noise
+            }
         }
         else if(u instanceof Castle)
         {
-            money -= 10; //castle costs 10
+            if(money >= 10)
+            {
+                money -= 10; //castle costs 10
+                t.setUnit(u);
+            }
+            else
+            {
+                //play noise
+            }
         }
-        t.setUnit(u);
         availbleUnits();
     }
     
