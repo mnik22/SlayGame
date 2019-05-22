@@ -31,25 +31,6 @@ public class Driver extends Application {
         GUIMap = new Tile[(NUM_TILES * 2) + 1][(NUM_TILES * 2) + 1];
         colors = new Color[NUM_PLAYERS];
         
-        int count = 0;
-        while (count <= NUM_TILES) {
-            
-            /* Width = Number of Columns
-             * Height = Number of Rows
-             */
-            
-            int randPosW = (int)(Math.random() * GUIMap[0].length);
-            int randPosH = (int)(Math.random() * GUIMap.length);
-            
-            if (GUIMap[randPosH][randPosW] == null) {
-                
-                GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
-                count++;
-                
-            }
-            
-        }
-        
         // TODO: Actually initialize the colors
         for (int i = 0; i < colors.length; i++)
             colors[i] = Color.CYAN;
@@ -60,6 +41,34 @@ public class Driver extends Application {
             players[i] = new AIPlayer(colors[i]);
         
         currentPlayer = players[0];
+        
+        int count = 0;
+        int playerIndex = 0;
+        while (count <= NUM_TILES) {
+            
+            /* Width = Number of Columns
+             * Height = Number of Rows
+             */
+            
+            if (playerIndex == NUM_PLAYERS - 1)
+                playerIndex = 0;
+            
+            int randPosW = (int)(Math.random() * GUIMap[0].length);
+            int randPosH = (int)(Math.random() * GUIMap.length);
+            
+            if (GUIMap[randPosH][randPosW] == null) {
+                
+                GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
+                GUIMap[randPosH][randPosW].setPlayer(players[playerIndex]);
+                count++;
+                
+//                Territory t = new Territory(players[playerIndex]);
+//                players[playerIndex].addTerritory(t);
+                playerIndex++;
+                
+            }
+            
+        }
         
         makeMap();
         
