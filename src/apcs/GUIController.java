@@ -39,7 +39,7 @@ public class GUIController {
     private Label wagesLabel;
     private Label balanceLabel;
     
-    private BarChart<ImageView, Integer> propertiesBarChart;
+    private BarChart<String, Integer> propertiesBarChart;
     private Image playerImage;
     private Image computerImage;
     
@@ -108,21 +108,21 @@ public class GUIController {
             
             playerImage = new Image(new FileInputStream("src/Player.png"));
             computerImage = new Image(new FileInputStream("src/Computer.png"));
-            propertiesBarChart = (BarChart<ImageView, Integer>) root.lookup("#propertiesBarChart");
+            propertiesBarChart = (BarChart<String, Integer>) root.lookup("#propertiesBarChart");
             propertiesBarChart.setTitle("Territory Summary");
             
-            XYChart.Series<ImageView, Integer> series1 = new XYChart.Series<>();   
+            XYChart.Series<String, Integer> series1 = new XYChart.Series<>();   
             for (int i = 0; i < players.length; i++) {
                 
                 if (players[i] instanceof HumanPlayer)
-                    series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(playerImage), players[i].getNumTiles()));
+                    series1.getData().add(new XYChart.Data<String, Integer>("H", players[i].getNumTiles()));
                 
                 else if (players[i] instanceof AIPlayer)
-                    series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(computerImage), players[i].getNumTiles()));
+                    series1.getData().add(new XYChart.Data<String, Integer>("C", players[i].getNumTiles()));
                 
             }
             
-//            propertiesBarChart.getData().add(series1);
+            propertiesBarChart.getData().addAll(series1);
             
             /*
              * Playable Objects Code
@@ -175,7 +175,11 @@ public class GUIController {
                 @Override
                 public void handle(ActionEvent arg0) {
 
-                    // TODO: Add in code to finish a turn.
+                    if (Driver.currentPlayer instanceof HumanPlayer) {
+                        
+                        Driver.currentPlayer.endTurn();
+                        
+                    }
                     
                 }
                 
@@ -186,6 +190,24 @@ public class GUIController {
             e.printStackTrace();
             
         }
+        
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void updateGraph() {
+        
+//        XYChart.Series<ImageView, Integer> series1 = new XYChart.Series<>();   
+//        for (int i = 0; i < players.length; i++) {
+//            
+//            if (players[i] instanceof HumanPlayer)
+//                series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(playerImage), players[i].getNumTiles()));
+//            
+//            else if (players[i] instanceof AIPlayer)
+//                series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(computerImage), players[i].getNumTiles()));
+//            
+//        }
+//        
+//        propertiesBarChart.getData().setAll(series1);
         
     }
     
