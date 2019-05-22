@@ -19,8 +19,8 @@ public class Driver extends Application {
     private static final int NUM_TILES = 50;
     private Tile[][] GUIMap;
     private Color[] colors;
-    private Player currentPlayer;
     
+    static Player currentPlayer;
     static Tile[][] map;
     static Player[] players;
     
@@ -154,12 +154,6 @@ public class Driver extends Application {
             
             currentPlayer = players[playerNum];
         }
-    }
-    
-    public Player getCurrentPlayer() {
-        
-        return currentPlayer;
-        
     }
     
     private boolean gameWon()
