@@ -219,5 +219,10 @@ public class Territory {
         return tiles;
     }
     
+    public int getMoney()
+    {
+        return money;
+    }
+    
    
 }
