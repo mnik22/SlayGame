@@ -19,6 +19,7 @@ public class Driver extends Application {
     private static final int NUM_TILES = 50;
     private Tile[][] GUIMap;
     private Color[] colors;
+    private Player currentPlayer;
     
     static Tile[][] map;
     static Player[] players;
@@ -57,6 +58,8 @@ public class Driver extends Application {
         players[0] = new HumanPlayer(colors[0]);
         for (int i = 1; i < players.length; i++)
             players[i] = new AIPlayer(colors[i]);
+        
+        currentPlayer = players[0];
         
         makeMap();
         
@@ -148,7 +151,15 @@ public class Driver extends Application {
                 playerNum++;
             else
                 playerNum = 0;
+            
+            currentPlayer = players[playerNum];
         }
+    }
+    
+    public Player getCurrentPlayer() {
+        
+        return currentPlayer;
+        
     }
     
     private boolean gameWon()
