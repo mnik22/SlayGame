@@ -48,6 +48,11 @@ public class Tile extends Polygon {
         return player;
     }
     
+    public Tile[] getAdjacentTiles()
+    {
+        return adjacentTiles;
+    }
+    
     public void setPlayer(Player p)
     {
         player = p;

@@ -1,5 +1,6 @@
 package apcs;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Territory {
@@ -53,6 +54,25 @@ public class Territory {
             }
         }
         return false;
+    }
+    
+    public ArrayList<Tile> adjacentEnemyTiles()
+    {
+        ArrayList<Tile> temp = new ArrayList<Tile>();
+        
+        
+        for(int i = 0; i < tiles.size(); i++)
+        {
+            Tile[] evenMoreTemp = temp.get(i).getAdjacentTiles();
+            for(int k = 0; k < evenMoreTemp.length; k++)
+            {
+                if(!evenMoreTemp[i].getPlayer().equals(player) && !temp.contains(evenMoreTemp[i]))
+                {
+                    temp.add(evenMoreTemp[i]);
+                }
+            }
+        }
+        return temp;
     }
     
     public void moveUnit(Unit u, Tile t)
@@ -147,7 +167,7 @@ public class Territory {
     
     public int[] availbleUnits()
     {
-        int[] temp = new int[2]; //the first slot is how many peasants you can buy and the second is how many castles you can buy.
+        int[] temp = new int[2]; //the first index is how many peasants you can buy and the second is how many castles you can buy.
         int cost = 0;
         for(int i = 0; i < tiles.size(); i++)
         {
