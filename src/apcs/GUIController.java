@@ -62,19 +62,25 @@ public class GUIController {
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
         
         this.map = map;
+        this.players = players;
+        this.primaryStage = primaryStage;
         
         for (int r = 0; r < map.length; r++) {
             
             for (int c = 0; c < map[0].length; c++) {
                 
-//                map[r][c].setStyle("-fx-background-color: #156136;");
+                if (map[r][c] != null) {
+                    
+                    String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
+                    hexColor = hexColor.substring(2, hexColor.length());
+                    System.out.println(hexColor);
+                    
+                    map[r][c].setStyle("-fx-background-color: #" + hexColor + ";");
+                }
                 
             }
             
         }
-        
-        this.players = players;
-        this.primaryStage = primaryStage;
         
         try {
             
