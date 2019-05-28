@@ -43,28 +43,36 @@ public class Driver extends Application {
         currentPlayer = players[0];
         
         int count = 0;
-        int playerIndex = 0;
+        int[] tilesRemaining = {20,20,20,20,20,20}; //dosent work, need to find the even amount of tiles that everyone will get.
         while (count <= NUM_TILES) {
             
             /* Width = Number of Columns
              * Height = Number of Rows
              */
-            
-            if (playerIndex == NUM_PLAYERS - 1)
-                playerIndex = 0;
-            
-            int randPosW = (int)(Math.random() * GUIMap[0].length);
-            int randPosH = (int)(Math.random() * GUIMap.length);
-            
-            if (GUIMap[randPosH][randPosW] == null) {
+            int rnd = (int)(Math.random()*6);
+            if(tilesRemaining[rnd] > 0)
+            {
+                int randPosW = (int)(Math.random() * GUIMap[0].length);
+                int randPosH = (int)(Math.random() * GUIMap.length);
                 
-                GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
-                GUIMap[randPosH][randPosW].setPlayer(players[playerIndex]);
-                count++;
+                if (GUIMap[randPosH][randPosW] == null) {
+                    
+                    GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
+                    GUIMap[randPosH][randPosW].setPlayer(players[rnd]);
+//                    if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
+//                    {
+//                        
+//                    }
+                    count++;
+                    tilesRemaining[rnd]--;
+            }
+            
+            
+            
                 
 //                Territory t = new Territory(players[playerIndex]);
 //                players[playerIndex].addTerritory(t);
-                playerIndex++;
+                
                 
             }
             
@@ -78,45 +86,45 @@ public class Driver extends Application {
     
     private void makeMap() {
         
-        // TODO: OutOfBoundsException in line marked with @
         
-//        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
-//        
-//        int GUIMapCol = 0;
-//        
-//        for (int r = 0; r < map.length; r++) {
-//            
-//            GUIMapCol = 0;
-//            
-//            for (int c = 0; c < map[0].length; c++) {
-//                
-//                // Handle an Even Row
-//                if (r % 2 == 0 || r == 0) {
-//                    if (c == map[0].length)
-//                        map[r][c] = null; 
-//                    else if (c % 2 == 0 || c == 0) {
-//@                       map[r][c] = GUIMap[r][GUIMapCol];
-//                        GUIMapCol++;
-//                    }
-//                    else
-//                        map[r][c] = null;
-//                    
-//                // Handle an Odd Row
-//                } else {
-//                    if (c == 0)
-//                        map[r][c] = null;
-//                    else if (c % 2 == 0)
-//                        map[r][c] = null;
-//                    else {
-//                        map[r][c] = GUIMap[r][GUIMapCol];
-//                        GUIMapCol++;
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
-//        }
+        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
+        
+        int GUIMapCol = 0;
+        
+        for (int r = 0; r < map.length; r++) {
+            
+            
+            
+            for (int c = 0; c < map[0].length; c++) {
+                
+                GUIMapCol = 0;
+                // Handle an Even Row
+                if (r % 2 == 0 || r == 0) {
+                    if (c == map[0].length)
+                        map[r][c] = null; 
+                    else if (c % 2 == 0 || c == 0) {
+                        map[r][c] = GUIMap[r][GUIMapCol]; //there might still be an out of bounds exception on this line.
+                        GUIMapCol++;
+                    }
+                    else
+                        map[r][c] = null;
+                    
+                // Handle an Odd Row
+                } else {
+                    if (c == 0)
+                        map[r][c] = null;
+                    else if (c % 2 == 0)
+                        map[r][c] = null;
+                    else {
+                        map[r][c] = GUIMap[r][GUIMapCol];
+                        GUIMapCol++;
+                    }
+                    
+                }
+                
+            }
+            
+        }
         
     }
     
