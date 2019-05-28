@@ -183,7 +183,7 @@ public class GUIController {
 
                     if (Driver.currentPlayer instanceof HumanPlayer) {
                         
-                        Driver.currentPlayer.endTurn();
+                        Driver.currentPlayer.buttonEndTurn();
                         
                     }
                     
