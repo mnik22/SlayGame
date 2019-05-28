@@ -41,7 +41,7 @@ public class AIPlayer extends Player
                            rand = (int) (Math.random() * adjacents.size());
                            tileCount++;
                        }
-                       if(adjacents.get(rand).getProtection() > 0)
+                       if(adjacents.get(rand).getProtection() == 0)
                            territory.moveUnit(tile.getUnit(), adjacents.get(rand));
                    }
                }
@@ -53,7 +53,7 @@ public class AIPlayer extends Player
                        int randTile = (int) (Math.random() * tiles.size());
                        while(tiles.get(randTile).getProtection() > 0)
                            randTile = (int) (Math.random() * tiles.size());
-                       if(adjacents.get(randTile).getProtection() > 0)
+                       if(adjacents.get(randTile).getProtection() == 0)
                            territory.buyUnit(adjacents.get(randTile), new Castle(adjacents.get(randTile)));
                    }
                    else
@@ -61,7 +61,7 @@ public class AIPlayer extends Player
                        int randAdjacent = (int) (Math.random() * adjacents.size());
                        while(adjacents.get(randAdjacent).getProtection() > 0)
                            randAdjacent = (int) (Math.random() * adjacents.size());
-                       if(adjacents.get(randAdjacent).getProtection() > 0)
+                       if(adjacents.get(randAdjacent).getProtection() == 0)
                            territory.buyUnit(adjacents.get(randAdjacent), new Peasant(adjacents.get(randAdjacent)));
                    }
                    
