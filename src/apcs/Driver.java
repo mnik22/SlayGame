@@ -28,7 +28,7 @@ public class Driver extends Application {
     public void start(Stage primaryStage) {
         
         
-        GUIMap = new Tile[(NUM_TILES * 2) + 1][(NUM_TILES * 2) + 1];
+        GUIMap = new Tile[39][49];
         colors = new Color[NUM_PLAYERS];
         
         // TODO: Actually initialize the colors
@@ -138,44 +138,44 @@ public class Driver extends Application {
     private void makeMap() {
         
         
-        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
-        
-        int GUIMapCol = 0;
-        
-        for (int r = 0; r < map.length; r++) {
-            
-            
-            
-            for (int c = 0; c < map[0].length; c++) {
-                
-                GUIMapCol = 0;
-                // Handle an Even Row
-                if (r % 2 == 0 || r == 0) {
-                    if (c == map[0].length)
-                        map[r][c] = null; 
-                    else if (c % 2 == 0 || c == 0) {
-                        map[r][c] = GUIMap[r][GUIMapCol]; //there might still be an out of bounds exception on this line.
-                        GUIMapCol++;
-                    }
-                    else
-                        map[r][c] = null;
-                    
-                // Handle an Odd Row
-                } else {
-                    if (c == 0)
-                        map[r][c] = null;
-                    else if (c % 2 == 0)
-                        map[r][c] = null;
-                    else {
-                        map[r][c] = GUIMap[r][GUIMapCol];
-                        GUIMapCol++;
-                    }
-                    
-                }
-                
-            }
-            
-        }
+//        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
+//        
+//        int GUIMapCol = 0;
+//        
+//        for (int r = 0; r < map.length; r++) {
+//            
+//            
+//            
+//            for (int c = 0; c < map[0].length; c++) {
+//                
+//                GUIMapCol = 0;
+//                // Handle an Even Row
+//                if (r % 2 == 0 || r == 0) {
+//                    if (c == map[0].length)
+//                        map[r][c] = null; 
+//                    else if (c % 2 == 0 || c == 0) {
+//                        map[r][c] = GUIMap[r][GUIMapCol]; //there might still be an out of bounds exception on this line.
+//                        GUIMapCol++;
+//                    }
+//                    else
+//                        map[r][c] = null;
+//                    
+//                // Handle an Odd Row
+//                } else {
+//                    if (c == 0)
+//                        map[r][c] = null;
+//                    else if (c % 2 == 0)
+//                        map[r][c] = null;
+//                    else {
+//                        map[r][c] = GUIMap[r][GUIMapCol];
+//                        GUIMapCol++;
+//                    }
+//                    
+//                }
+//                
+//            }
+//            
+//        }
         
     }
     
