@@ -37,7 +37,7 @@ public class Player
     public void buttonEndTurn()
     {
         endTurn = true;
-        endTurn();              //TODO: fix endTurn - will not actually end a turn with a button click right now
+        endTurn();
     }
 
     public void addTerritory(Territory t)
