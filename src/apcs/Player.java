@@ -88,7 +88,7 @@ public class Player
     
     public void playRound()
     {
-        //this updates the endTurn varialbe and the canMove variable for every 
+        //this updates the endTurn variable and the canMove variable for every 
         //unit a player has must call super.playRound() at the beginning 
         //of every subClass of Player's playRound() method
         endTurn = false;
