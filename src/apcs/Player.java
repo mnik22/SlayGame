@@ -39,7 +39,15 @@ public class Player
         endTurn = true;
         endTurn();
     }
-
+    
+    public void endOfTurnStuff()
+    {
+        for(int i = 0; i < territories.size(); i++)
+        {
+            territories.get(i).maintenance();
+        }
+    }
+    
     public void addTerritory(Territory t)
     {
         territories.add(t);
@@ -97,7 +105,10 @@ public class Player
             ArrayList<Tile> tiles = territory.getTiles();
             for (Tile tile : tiles)
             {
-                tile.getUnit().move(true);
+                if(tile.hasUnit() && (!(tile.getUnit() instanceof Capital )|| !(tile.getUnit() instanceof Castle)))
+                {
+                    tile.getUnit().move(true);
+                }
             }
         }
     }
