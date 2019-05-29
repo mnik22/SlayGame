@@ -60,6 +60,7 @@ public class Driver extends Application {
                     GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
                     GUIMap[randPosH][randPosW].setPlayer(players[rnd]);
                     GUIMap[randPosH][randPosW].getPoints().addAll(loadCoords(randPosW, randPosH));
+                    System.out.println("Coords: " + GUIMap[randPosH][randPosW].getPoints().toString());
 //                    if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
 //                    {
 //                        
@@ -85,7 +86,7 @@ public class Driver extends Application {
         
     }
 
-    private double[] loadCoords(int x, int y) {
+    private Double[] loadCoords(int x, int y) {
 
         double top;
         double middle;
@@ -123,7 +124,7 @@ public class Driver extends Application {
         }
 
         // For a linked hexagon array.
-        double[] coords = { second, top,
+        Double[] coords = { second, top,
                 third, top,
                 fourth, middle,
                 third, bottom,
