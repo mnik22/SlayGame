@@ -13,9 +13,10 @@ public class Territory {
     private Player player;
     
     
-    public Territory(Player p)
+    public Territory(Player p, ArrayList<Tile> startingTiles)
     {
         player = p;
+        tiles.addAll(startingTiles); //might need a collection instead of an arraylist as the parameter.
         int rnd = (int)(Math.random()*tiles.size());
         capital = tiles.get(rnd);                       //these three lines randomly sets the capital when the territory is initiated
         capital.setCapital(true);
@@ -25,6 +26,11 @@ public class Territory {
     public void addTile(Tile t)
     {
         tiles.add(t);
+    }
+    
+    public void addTiles(ArrayList<Tile> newTiles)
+    {
+        tiles.addAll(newTiles);
     }
     
     public Tile removeTile(Tile t)
