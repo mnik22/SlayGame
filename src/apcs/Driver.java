@@ -16,7 +16,7 @@ public class Driver extends Application {
     
     private GUIController guiController;
     private static final int NUM_PLAYERS = 6;
-    private static final int NUM_TILES = 50;
+    private static final int NUM_TILES = 60;
     private Tile[][] GUIMap;
     private Color[] colors;
     
@@ -43,7 +43,7 @@ public class Driver extends Application {
         currentPlayer = players[0];
         
         int count = 0;
-        int[] tilesRemaining = {20,20,20,20,20,20}; //dosent work, need to find the even amount of tiles that everyone will get.
+        int[] tilesRemaining = {10,10,10,10,10,10}; // Each player gets 1/6 of the total tiles.
         while (count <= NUM_TILES) {
             
             /* Width = Number of Columns
@@ -59,6 +59,7 @@ public class Driver extends Application {
                     
                     GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
                     GUIMap[randPosH][randPosW].setPlayer(players[rnd]);
+                    GUIMap[randPosH][randPosW].getPoints().addAll(loadCoords(randPosW, randPosH));
 //                    if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
 //                    {
 //                        
@@ -82,6 +83,55 @@ public class Driver extends Application {
         
         guiController = new GUIController(primaryStage, GUIMap, players);
         
+    }
+
+    private double[] loadCoords(int x, int y) {
+
+        double top;
+        double middle;
+        double bottom;
+
+        double first;
+        double second;
+        double third;
+        double fourth;
+
+        if (y == 0) {
+            top = Math.sqrt(75);
+            middle = 10;
+            bottom = 2 * Math.sqrt(75);
+        } else if (y == 1) {
+            top = 10;
+            middle = 2 * Math.sqrt(75);
+            bottom = 3 * Math.sqrt(75);
+        } else {
+            top = y * Math.sqrt(75);
+            middle = (y + 1) * Math.sqrt(75);
+            bottom = (y + 2) * Math.sqrt(75);
+        }
+
+        if (y % 2 == 0) {
+            first = x * 30;
+            second = first + 5;
+            third = second + 10;
+            fourth = third + 5;
+        } else {
+            first = (x * 30) + 15;
+            second = first + 5;
+            third = second + 10;
+            fourth = third + 5;
+        }
+
+        // For a linked hexagon array.
+        double[] coords = { second, top,
+                third, top,
+                fourth, middle,
+                third, bottom,
+                second, bottom,
+                first, middle };
+
+        return coords;
+
     }
     
     private void makeMap() {
