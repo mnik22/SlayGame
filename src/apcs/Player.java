@@ -14,20 +14,30 @@ public class Player
 {
     private Color color;
     private ArrayList<Territory> territories = new ArrayList<Territory>();
+    private boolean endTurn;
     
     public Player(Color c)
     {
         color = c;
+        endTurn = false;
     }
 
     public boolean endTurn() 
     {
+        if(endTurn)
+            return endTurn;
         for(Territory t: territories)
         {
             if(t.canPurchaseUnits() || t.canMoveUnit())
                 return false;
         }
         return true;
+    }
+    
+    public void buttonEndTurn()
+    {
+        endTurn = true;
+        endTurn();              //TODO: fix endTurn - will not actually end a turn with a button click right now
     }
 
     public void addTerritory(Territory t)
@@ -78,9 +88,10 @@ public class Player
     
     public void playRound()
     {
-        //this updates the canMove variable for every unit a player has
-        //must call super.playRound() at the beginning of every subClass of
-        //Player's playRound() method
+        //this updates the endTurn varialbe and the canMove variable for every 
+        //unit a player has must call super.playRound() at the beginning 
+        //of every subClass of Player's playRound() method
+        endTurn = false;
         for(Territory territory: territories)
         {
             ArrayList<Tile> tiles = territory.getTiles();
