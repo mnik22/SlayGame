@@ -173,6 +173,15 @@ public class Driver extends Application {
             }
             
         }
+        
+        for (int r = 0; r < map.length; r++)
+        {
+            for (int c = 0; c < map.length; c++)
+            {
+                if(map[r][c] != null)
+                    map[r][c].setAdjacent();
+            }
+        }
 //        System.out.println("mapMade");
         
     }
