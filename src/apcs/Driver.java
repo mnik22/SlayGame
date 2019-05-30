@@ -22,7 +22,7 @@ public class Driver extends Application {
     
     static Player currentPlayer;
     static Tile[][] map;
-    static Player[] players;
+    public static Player[] players;
     
     @Override
     public void start(Stage primaryStage) {
