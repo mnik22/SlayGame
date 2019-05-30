@@ -41,8 +41,8 @@ public class GUIController {
     private Label balanceLabel;
     
     private BarChart<String, Integer> propertiesBarChart;
-    private Image playerImage;
-    private Image computerImage;
+//    private Image playerImage;
+//    private Image computerImage;
     
     private ImageView pesantSelectorImageView;
     private ImageView castleSelectorImageView;
@@ -92,7 +92,10 @@ public class GUIController {
                     if (map[r][c] != null) {
                         
                         String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
-                        hexColor = hexColor.substring(2, hexColor.length());
+                        hexColor = String.format("#%02x%02x%02x", 
+                                map[r][c].getPlayer().getColor().getRed(), 
+                                map[r][c].getPlayer().getColor().getGreen(), 
+                                map[r][c].getPlayer().getColor().getBlue());  
                         System.out.println(hexColor);
                         
                         map[r][c].setStyle("-fx-background-color: #" + hexColor + ";");
@@ -116,8 +119,8 @@ public class GUIController {
              * Chart Code
              */
             
-            playerImage = new Image(new FileInputStream("src/Player.png"));
-            computerImage = new Image(new FileInputStream("src/Computer.png"));
+//            playerImage = new Image(new FileInputStream("src/Player.png"));
+//            computerImage = new Image(new FileInputStream("src/Computer.png"));
             propertiesBarChart = (BarChart<String, Integer>) root.lookup("#propertiesBarChart");
             propertiesBarChart.setTitle("Territory Summary");
             
