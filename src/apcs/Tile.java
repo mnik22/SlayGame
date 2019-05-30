@@ -87,7 +87,8 @@ public class Tile extends Polygon {
         }
         else
         {
-            if(horizontalPos == 2)
+            if(horizontalPos == 0);
+            else if(horizontalPos == 2)
             {
                 left = null;
                 topLeft = null;
@@ -108,7 +109,8 @@ public class Tile extends Polygon {
                 right = Driver.map[horizontalPos + 2][verticalPos];
             }
         }
-        if(verticalPos == 1)
+        if(horizontalPos == 0 && verticalPos == 0);
+        else if(verticalPos == 1)
         {
             topRight = null;
             topLeft = null;
