@@ -44,7 +44,7 @@ public class Driver extends Application {
         
         int count = 0;
         int[] tilesRemaining = {10,10,10,10,10,10}; // Each player gets 1/6 of the total tiles.
-        while (count <= NUM_TILES) {
+        while (count < NUM_TILES) {
             
             /* Width = Number of Columns
              * Height = Number of Rows
