@@ -1,4 +1,4 @@
-/*Name:	
+/*Name: 
  *Date:
  *Period:
  *Teacher:
@@ -15,8 +15,6 @@ import javafx.stage.Stage;
 public class Driver extends Application {
     
     private GUIController guiController;
-    private final int MAP_PANE_WIDTH = 1000;
-    private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
     private static final int NUM_TILES = 60;
     private Tile[][] GUIMap;
@@ -62,22 +60,13 @@ public class Driver extends Application {
                     GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
                     GUIMap[randPosH][randPosW].setPlayer(players[rnd]);
                     GUIMap[randPosH][randPosW].getPoints().addAll(loadCoords(randPosW, randPosH));
-                    
-                    if (!GUIMap[randPosH][randPosW].getPoints().contains(-1)) {
-                        
-                        count++;
-                        tilesRemaining[rnd]--;
-                        
-                    } else {
-                        
-                        GUIMap[randPosH][randPosW] = null;
-                        
-                    }
+                    System.out.println("Coords: " + GUIMap[randPosH][randPosW].getPoints().toString());
 //                    if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
 //                    {
 //                        
 //                    }
-                
+                    count++;
+                    tilesRemaining[rnd]--;
             }
             
             
@@ -108,44 +97,30 @@ public class Driver extends Application {
         double third;
         double fourth;
 
-        if ((y * 2) * Math.sqrt(75) < MAP_PANE_HEIGHT && (x * 30) + 20 < MAP_PANE_WIDTH) {
-            
-            if (y == 0) {
-                top = Math.sqrt(75);
-                middle = 10;
-                bottom = 2 * Math.sqrt(75);
-            } else if (y == 1) {
-                top = 10;
-                middle = 2 * Math.sqrt(75);
-                bottom = 3 * Math.sqrt(75);
-            } else {
-                top = y * Math.sqrt(75);
-                middle = (y + 1) * Math.sqrt(75);
-                bottom = (y + 2) * Math.sqrt(75);
-            }
-
-            if (y % 2 == 0) {
-                first = x * 30;
-                second = first + 5;
-                third = second + 10;
-                fourth = third + 5;
-            } else {
-                first = (x * 30) + 15;
-                second = first + 5;
-                third = second + 10;
-                fourth = third + 5;
-            }
-            
+        if (y == 0) {
+            top = Math.sqrt(75);
+            middle = 10;
+            bottom = 2 * Math.sqrt(75);
+        } else if (y == 1) {
+            top = 10;
+            middle = 2 * Math.sqrt(75);
+            bottom = 3 * Math.sqrt(75);
         } else {
-            
-            top = -1;
-            middle = -1;
-            bottom = -1;
-            first = -1;
-            second = -1;
-            third = -1;
-            fourth = -1;
-            
+            top = y * Math.sqrt(75);
+            middle = (y + 1) * Math.sqrt(75);
+            bottom = (y + 2) * Math.sqrt(75);
+        }
+
+        if (y % 2 == 0) {
+            first = x * 30;
+            second = first + 5;
+            third = second + 10;
+            fourth = third + 5;
+        } else {
+            first = (x * 30) + 15;
+            second = first + 5;
+            third = second + 10;
+            fourth = third + 5;
         }
 
         // For a linked hexagon array.
@@ -199,14 +174,16 @@ public class Driver extends Application {
             
         }
         
-        for (int r = 0; r < map.length; r++)
-        {
-            for (int c = 0; c < map.length; c++)
-            {
-                if(map[r][c] != null)
-                    map[r][c].setAdjacent();
-            }
-        }
+        
+        //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
+//        for (int r = 0; r < map.length; r++)
+//        {
+//            for (int c = 0; c < map.length; c++)
+//            {
+//                if(map[r][c] != null)
+//                    map[r][c].setAdjacent();              
+//            }
+//        }
 //        System.out.println("mapMade");
         
     }
