@@ -24,7 +24,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.shape.Polygon;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -33,6 +33,7 @@ public class GUIController {
     private Player[] players;
     private Parent root;
     private Stage primaryStage;
+    private Pane mapPane;
     
     private Label savingsLabel;
     private Label incomeLabel;
@@ -65,26 +66,9 @@ public class GUIController {
         this.players = players;
         this.primaryStage = primaryStage;
         
-        for (int r = 0; r < map.length; r++) {
-            
-            for (int c = 0; c < map[0].length; c++) {
-                
-                if (map[r][c] != null) {
-                    
-                    String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
-                    hexColor = hexColor.substring(2, hexColor.length());
-                    System.out.println(hexColor);
-                    
-                    map[r][c].setStyle("-fx-background-color: #" + hexColor + ";");
-                }
-                
-            }
-            
-        }
-        
         try {
             
-            root = FXMLLoader.load(getClass().getResource("main.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Main.fxml"));
             root.setStyle("-fx-background-color: #70BDFF;");
             root.lookup("#rightSideVBox").setStyle("-fx-background-color: #976729;");
             primaryStage.setTitle("Slay Game");
@@ -98,6 +82,26 @@ public class GUIController {
         }
         
         try {
+            
+            mapPane = (Pane) root.lookup("#mapPane");
+            
+            for (int r = 0; r < map.length; r++) {
+                
+                for (int c = 0; c < map[0].length; c++) {
+                    
+                    if (map[r][c] != null) {
+                        
+                        String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
+                        hexColor = hexColor.substring(2, hexColor.length());
+                        System.out.println(hexColor);
+                        
+                        map[r][c].setStyle("-fx-background-color: #" + hexColor + ";");
+                        mapPane.getChildren().add(map[r][c]);
+                    }
+                    
+                }
+                
+            }
             
             /*
              * Money Displaying Code
