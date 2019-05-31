@@ -135,7 +135,7 @@ public class Tile extends Polygon {
         else
         {
             if(checkTopRight != 1)
-                topRight = Driver.map[horizontalPos + 2][verticalPos + 1];
+                topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
             if(checkTopLeft != 1)
                 topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
         }
