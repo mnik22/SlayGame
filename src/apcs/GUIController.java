@@ -9,6 +9,8 @@ package apcs;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +23,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -83,29 +88,6 @@ public class GUIController {
         
         try {
             
-            mapPane = (Pane) root.lookup("#mapPane");
-            
-            for (int r = 0; r < map.length; r++) {
-                
-                for (int c = 0; c < map[0].length; c++) {
-                    
-                    if (map[r][c] != null) {
-                        
-                        String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
-                        hexColor = String.format("#%02x%02x%02x", 
-                                map[r][c].getPlayer().getColor().getRed(), 
-                                map[r][c].getPlayer().getColor().getGreen(), 
-                                map[r][c].getPlayer().getColor().getBlue());  
-                        System.out.println(hexColor);
-                        
-                        map[r][c].setStyle("-fx-background-color: #" + hexColor + ";");
-                        mapPane.getChildren().add(map[r][c]);
-                    }
-                    
-                }
-                
-            }
-            
             /*
              * Money Displaying Code
              */
@@ -144,23 +126,23 @@ public class GUIController {
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
-            castleSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, mouseEvent -> {
+            castleSelectorImageView.addEventHandler(DragEvent.DRAG_ENTERED, event -> {
                 Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(castleSelectorImageView.getImage());
                 db.setContent(content);
-                mouseEvent.consume();
+                event.consume();
             });
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
             pesantSelectorImageView.setImage(pesantImage);
-            pesantSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, mouseEvent -> {
+            pesantSelectorImageView.addEventHandler(DragEvent.DRAG_ENTERED, event -> {
                 Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(pesantSelectorImageView.getImage());
                 db.setContent(content);
-                mouseEvent.consume();
+                event.consume();
             });
             
             /*
@@ -197,6 +179,39 @@ public class GUIController {
                 }
                 
             });
+            
+            /*
+             * Draw the Map
+             */
+            
+            mapPane = (Pane) root.lookup("#mapPane");
+            
+            for (int r = 0; r < map.length; r++) {
+                
+                for (int c = 0; c < map[0].length; c++) {
+                    
+                    if (map[r][c] != null) {
+                        
+                        String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
+                        hexColor = String.format("#%02X%02X%02X", 
+                                map[r][c].getPlayer().getColor().getRed(), 
+                                map[r][c].getPlayer().getColor().getGreen(), 
+                                map[r][c].getPlayer().getColor().getBlue());  
+                        System.out.println(hexColor);
+                        
+                        map[r][c].setStyle("-fx-background-color: " + hexColor + ";");
+                        final Tile tile = map[r][c];
+                        map[r][c].addEventHandler(DragEvent.DRAG_DROPPED, event -> {
+                            tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                            event.setDropCompleted(true);
+                            event.consume();
+                        });
+                        mapPane.getChildren().add(map[r][c]);
+                    }
+                    
+                }
+                
+            }
             
         } catch (IOException e) {
             
