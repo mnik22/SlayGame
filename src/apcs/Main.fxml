@@ -17,7 +17,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1">
    <right>
-      <VBox id="rightSideVBox" prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
+      <VBox id="rightSideVBox" prefHeight="800.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane>
               <columnConstraints>
@@ -96,6 +96,6 @@
       </VBox>
    </right>
    <center>
-      <Pane id="mapPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane id="mapPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
