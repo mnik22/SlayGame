@@ -17,6 +17,9 @@ public class Tile extends Polygon {
     private int horizontalPos;
     private int verticalPos;
     
+    private int guiHorizontalPos;
+    private int guiVerticalPos;
+    
     private int protection;
     private Unit unit;
     
@@ -26,10 +29,15 @@ public class Tile extends Polygon {
     
     public Tile(int x, int y)
     {
+        guiHorizontalPos = x;
+        guiVerticalPos = y;
+    }
+    
+    public void setPosition(int x, int y)
+    {
         horizontalPos = x;
         verticalPos = y;
     }
-    
     
     public boolean isAdjacent(Tile t)
     {

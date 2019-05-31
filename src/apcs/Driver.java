@@ -152,6 +152,8 @@ public class Driver extends Application {
                         map[r][c] = null; 
                     else if (c % 2 == 0) {
                         map[r][c] = GUIMap[r][GUIMapCol]; //there might still be an out of bounds exception on this line.
+                        if(map[r][c] != null)                        
+                            map[r][c].setPosition(r, c);
                         GUIMapCol++;
                     }
                     else
@@ -165,6 +167,8 @@ public class Driver extends Application {
                         map[r][c] = null;
                     else {
                         map[r][c] = GUIMap[r][GUIMapCol];
+                        if(map[r][c] != null)                        
+                            map[r][c].setPosition(r, c);
                         GUIMapCol++;
                     }
                     
@@ -176,14 +180,14 @@ public class Driver extends Application {
         
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
-//        for (int r = 0; r < map.length; r++)
-//        {
-//            for (int c = 0; c < map.length; c++)
-//            {
-//                if(map[r][c] != null)
-//                    map[r][c].setAdjacent();              
-//            }
-//        }
+        for (int r = 0; r < map.length; r++)
+        {
+            for (int c = 0; c < map.length; c++)
+            {
+                if(map[r][c] != null)
+                    map[r][c].setAdjacent();              
+            }
+        }
 //        System.out.println("mapMade");
         
     }
