@@ -1,9 +1,3 @@
-/*Name:	
- *Date:
- *Period:
- *Teacher:
- *Description:
- */
 package apcs;
 
 import java.awt.Color;
@@ -26,10 +20,10 @@ public class HumanPlayer extends Player
         
         //end stuff
         super.endOfTurnStuff();
-//        for(int i = 0; i < players.length; i++) // this needs to access all the players to see if they have enough money to maintaine their territories.
-//        {
-//            
-//        }
+        for(int i = 0; i < Driver.players.length; i++) 
+        {
+            Driver.players[i].checkEndOfTurnStatus();
+        }
         
     }
     

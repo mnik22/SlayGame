@@ -1,9 +1,4 @@
-/*Name:	
- *Date:
- *Period:
- *Teacher:
- *Description:
- */
+
 package apcs;
 
 import java.awt.Color;
@@ -45,6 +40,17 @@ public class Player
         for(int i = 0; i < territories.size(); i++)
         {
             territories.get(i).maintenance();
+        }
+    }
+    
+    public void checkEndOfTurnStatus()
+    {
+        for(int i = 0; i < territories.size(); i++)
+        {
+            if(territories.get(i).getMoney() < territories.get(i).costThisTurn())
+            {
+                territories.get(i).destroyTheChild();
+            }
         }
     }
     
