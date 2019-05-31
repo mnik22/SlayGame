@@ -180,14 +180,14 @@ public class Driver extends Application {
         
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
-        for (int r = 0; r < map.length; r++)
-        {
-            for (int c = 0; c < map.length; c++)
-            {
-                if(map[r][c] != null)
-                    map[r][c].setAdjacent();              
-            }
-        }
+//        for (int r = 0; r < map.length; r++)
+//        {
+//            for (int c = 0; c < map.length; c++)
+//            {
+//                if(map[r][c] != null)
+//                    map[r][c].setAdjacent();              
+//            }
+//        }
 //        System.out.println("mapMade");
         
     }
@@ -239,7 +239,11 @@ public class Driver extends Application {
     
     private boolean gameWon()
     {
-        // TODO Auto-generated method stub
+        for (int i = 0; i < players.length; i++)
+        {
+            if(players[i].getNumTiles() == NUM_TILES)
+                return true;
+        }
         return false;
     }
 
