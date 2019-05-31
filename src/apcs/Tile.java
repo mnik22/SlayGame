@@ -12,7 +12,9 @@ public class Tile extends Polygon {
     private Tile topRight;
     private Tile right;
     private Tile bottomRight;
+    
     private Tile[] adjacentTiles;
+    
     
     private int horizontalPos;
     private int verticalPos;
@@ -70,6 +72,13 @@ public class Tile extends Polygon {
     {
         //pre: should be run when the board is initiated to set the tile adjacents.
         // as of this edition this should be run with a board that has a border of null spaces around it.
+        
+        
+        int checkTopLeft = 0;
+        int checkTopRight = 0;
+        int checkBottomLeft = 0;
+        int checkBottomRight = 0;
+        
         if(verticalPos%2 == 1)
         {
             if(horizontalPos == 1)
@@ -85,8 +94,8 @@ public class Tile extends Polygon {
             if(horizontalPos == Driver.map.length - 3)
             {
                 right = null;
-                topRight = null;
-                bottomRight = null;
+                topRight = null; checkTopRight = 1;
+                bottomRight = null; checkBottomRight = 1;
             }
             else
             {
@@ -99,8 +108,8 @@ public class Tile extends Polygon {
             else if(horizontalPos == 2)
             {
                 left = null;
-                topLeft = null;
-                bottomLeft = null;
+                topLeft = null; checkTopLeft = 1;
+                bottomLeft = null; checkBottomLeft = 1;
             }
             else
             {
@@ -109,8 +118,8 @@ public class Tile extends Polygon {
             if(horizontalPos == Driver.map.length - 2)
             {
                 right = null;
-                topRight = null;
-                bottomRight = null;
+                topRight = null; checkTopRight = 1;
+                bottomRight = null; checkBottomRight = 1;
             }
             else
             {
@@ -125,8 +134,10 @@ public class Tile extends Polygon {
         }
         else
         {
-            topRight = Driver.map[horizontalPos + 2][verticalPos + 1];
-            topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
+            if(checkTopRight != 1)
+                topRight = Driver.map[horizontalPos + 2][verticalPos + 1];
+            if(checkTopLeft != 1)
+                topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
         }
         if(verticalPos == Driver.map[0].length - 2)
         {
@@ -135,15 +146,21 @@ public class Tile extends Polygon {
         }
         else
         {
-            bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
-            bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
+            if(checkBottomRight != 1)
+                bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
+            if(checkBottomLeft != 1)
+                bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
         }
+        
+        adjacentTiles = new Tile[6];
+
         adjacentTiles[0] = topRight;
         adjacentTiles[1] = right;
         adjacentTiles[2] = bottomRight;
         adjacentTiles[3] = bottomLeft;
         adjacentTiles[4] = left;
         adjacentTiles[5] = topLeft;
+        
     }
     
     public boolean isCapital()
