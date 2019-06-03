@@ -27,9 +27,8 @@ public class HumanPlayer extends Player
         
     }
     
-    public boolean endTurn() //might need parameter to connect to GUI button
+    public boolean endTurn() 
     {
-        //connect to GUI
         return super.endTurn();
     }
 }
