@@ -109,32 +109,32 @@ public class Driver extends Application {
         double third;
         double fourth;
 
-        if ((y + 2) * Math.sqrt(75) <= MAP_PANE_HEIGHT && (x * 30) + 35 <= MAP_PANE_WIDTH) {
+        if ((y + 2) * Math.sqrt(300) <= MAP_PANE_HEIGHT && (x * 60) + 70 <= MAP_PANE_WIDTH) {
             
             if (y == 0) {
-                top = Math.sqrt(75);
-                middle = 10;
-                bottom = 2 * Math.sqrt(75);
+                top = Math.sqrt(300);
+                middle = 20;
+                bottom = 2 * Math.sqrt(300);
             } else if (y == 1) {
-                top = 10;
-                middle = 2 * Math.sqrt(75);
-                bottom = 3 * Math.sqrt(75);
+                top = 20;
+                middle = 2 * Math.sqrt(300);
+                bottom = 3 * Math.sqrt(300);
             } else {
-                top = y * Math.sqrt(75);
-                middle = (y + 1) * Math.sqrt(75);
-                bottom = (y + 2) * Math.sqrt(75);
+                top = y * Math.sqrt(300);
+                middle = (y + 1) * Math.sqrt(300);
+                bottom = (y + 2) * Math.sqrt(300);
             }
 
             if (y % 2 == 0) {
-                first = x * 30;
-                second = first + 5;
-                third = second + 10;
-                fourth = third + 5;
+                first = x * 60;
+                second = first + 10;
+                third = second + 20;
+                fourth = third + 10;
             } else {
-                first = (x * 30) + 15;
-                second = first + 5;
-                third = second + 10;
-                fourth = third + 5;
+                first = (x * 60) + 30;
+                second = first + 10;
+                third = second + 20;
+                fourth = third + 10;
             }
             
         } else {
