@@ -13,10 +13,8 @@ public class HumanPlayer extends Player
     public void playRound()
     {
         super.playRound();
-        while(!endTurn())
-        {
-            //needs to connect to GUI
-        }
+        do endTurn();
+        while(!endTurn());
         
         //end stuff
         super.endOfTurnStuff();
