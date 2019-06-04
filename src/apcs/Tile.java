@@ -2,9 +2,13 @@ package apcs;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
 
 public class Tile extends Polygon {
+    
+    private ImageView imageView;
     
     private Tile topLeft;
     private Tile left;
@@ -166,6 +170,11 @@ public class Tile extends Polygon {
         adjacentTiles[4] = left;
         adjacentTiles[5] = topLeft;
         
+//        for(int i = 0; i < adjacentTiles.length; i++)
+//        {
+//            System.out.println(adjacentTiles[i]);
+//        }
+        
     }
     
     public boolean isCapital()
@@ -311,7 +320,17 @@ public class Tile extends Polygon {
     }
     
     
+    //Image View Stuff
+    public void setImageCoords(int x,int y)
+    {
+        imageView.setX(x);
+        imageView.setY(y);
+    }
     
+    public void setImage(Image i)
+    {
+        imageView = new ImageView(i);
+    }
     
     
     
