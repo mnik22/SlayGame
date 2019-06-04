@@ -97,15 +97,14 @@ public class Tile extends Polygon {
                 topRight = null; checkTopRight = 1;
                 bottomRight = null; checkBottomRight = 1;
             }
-            else
+            else if(horizontalPos < Driver.map.length - 2)
             {
                 right = Driver.map[horizontalPos + 2][verticalPos];
             }
         }
         else
         {
-            if(horizontalPos == 0);
-            else if(horizontalPos == 2)
+            if(horizontalPos == 2)
             {
                 left = null;
                 topLeft = null; checkTopLeft = 1;
@@ -121,23 +120,27 @@ public class Tile extends Polygon {
                 topRight = null; checkTopRight = 1;
                 bottomRight = null; checkBottomRight = 1;
             }
-            else
+            else if(horizontalPos < Driver.map.length - 2)
             {
                 right = Driver.map[horizontalPos + 2][verticalPos];
             }
         }
-        if(horizontalPos == 0 && verticalPos == 0);
-        else if(verticalPos == 1)
+        if(verticalPos == 1)
         {
             topRight = null;
             topLeft = null;
         }
         else
         {
-            if(checkTopRight != 1)
-                topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
-            if(checkTopLeft != 1)
-                topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
+            if(horizontalPos < Driver.map.length - 2 && verticalPos < Driver.map[0].length - 1)
+            {
+                if(checkTopRight != 1 )
+                    topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
+            }
+            if(horizontalPos > 1 && verticalPos < Driver.map[0].length - 1)
+                if(checkTopLeft != 1)
+                    topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
+            
         }
         if(verticalPos == Driver.map[0].length - 2)
         {
@@ -146,10 +149,12 @@ public class Tile extends Polygon {
         }
         else
         {
-            if(checkBottomRight != 1)
-                bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
-            if(checkBottomLeft != 1)
-                bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
+            if(horizontalPos < Driver.map.length - 2 && verticalPos < 0)
+                if(checkBottomRight != 1)
+                    bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
+            if(horizontalPos < 1 && verticalPos < 0)
+                if(checkBottomLeft != 1)
+                    bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
         }
         
         adjacentTiles = new Tile[6];
