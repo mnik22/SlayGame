@@ -66,6 +66,8 @@ public class GUIController {
     
     private Button finishTurnButton;
     
+    private Image dragImage;
+    
     @SuppressWarnings({ "unchecked" })
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
         
@@ -128,22 +130,24 @@ public class GUIController {
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
-            castleSelectorImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            castleSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
                 Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(castleSelectorImageView.getImage());
                 db.setContent(content);
+                dragImage = castleImage;
                 event.consume();
             });
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
             pesantSelectorImageView.setImage(pesantImage);
-            pesantSelectorImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            pesantSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
                 Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(pesantSelectorImageView.getImage());
                 db.setContent(content);
+                dragImage = pesantImage;
                 event.consume();
             });
             
@@ -207,9 +211,8 @@ public class GUIController {
                         map[r][c].setStroke(javafx.scene.paint.Color.rgb(0, 0, 0, 1));
                         
                         final Tile tile = map[r][c];
-                        map[r][c].addEventHandler(DragEvent.DRAG_DROPPED, event -> {
-                            tile.setFill(new ImagePattern(event.getDragboard().getImage()));
-                            event.setDropCompleted(true);
+                        tile.addEventHandler(MouseDragEvent.MOUSE_DRAG_RELEASED, event -> {
+                            tile.setImage(dragImage);
                             event.consume();
                         });
                         mapPane.getChildren().add(map[r][c]);
