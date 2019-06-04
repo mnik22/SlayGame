@@ -35,6 +35,9 @@ public class Tile extends Polygon {
     
     public Tile(int x, int y)
     {
+        imageView = new ImageView();
+        imageView.setFitWidth(10);
+        imageView.setFitHeight(10);
         guiHorizontalPos = x;
         guiVerticalPos = y;
     }
@@ -321,7 +324,7 @@ public class Tile extends Polygon {
     
     
     //Image View Stuff
-    public void setImageCoords(int x,int y)
+    public void setImageCoords(double x,double y)
     {
         imageView.setX(x);
         imageView.setY(y);
@@ -329,7 +332,7 @@ public class Tile extends Polygon {
     
     public void setImage(Image i)
     {
-        imageView = new ImageView(i);
+        imageView.setImage(i);
     }
     
     
