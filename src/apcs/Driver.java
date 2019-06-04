@@ -18,7 +18,7 @@ public class Driver extends Application {
     private final int MAP_PANE_WIDTH = 1000;
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
-    private static final int NUM_TILES = 60;
+    private static final int NUM_TILES = 180;
     private Tile[][] GUIMap;
     private Color[] colors;
     
@@ -35,7 +35,7 @@ public class Driver extends Application {
         
         // TODO: Actually initialize the colors
         for (int i = 0; i < colors.length; i++)
-            colors[i] = Color.CYAN;
+            colors[i] = Color.GREEN;
         
         players = new Player[NUM_PLAYERS];
         players[0] = new HumanPlayer(colors[0]);
@@ -45,7 +45,7 @@ public class Driver extends Application {
         currentPlayer = players[0];
         
         int count = 0;
-        int[] tilesRemaining = {10,10,10,10,10,10}; // Each player gets 1/6 of the total tiles.
+        int[] tilesRemaining = { NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6 }; // Each player gets 1/6 of the total tiles.
         while (count < NUM_TILES) {
             
             /* Width = Number of Columns
@@ -59,19 +59,16 @@ public class Driver extends Application {
                 
                 if (GUIMap[randPosH][randPosW] == null) {
                     
-                        GUIMap[randPosH][randPosW] = new Tile(randPosW, randPosH);
-                        GUIMap[randPosH][randPosW].setPlayer(players[rnd]);
-                        GUIMap[randPosH][randPosW].getPoints().addAll(loadCoords(randPosW, randPosH));
-                        System.out.println("Coords: " + GUIMap[randPosH][randPosW].getPoints().toString());
+                        Tile temp = new Tile(randPosW, randPosH);
+                        temp.setPlayer(players[rnd]);
+                        temp.getPoints().addAll(loadCoords(randPosW, randPosH));
+                        System.out.println("Coords: " + temp.getPoints().toString());
                         
-                        if (!GUIMap[randPosH][randPosW].getPoints().contains(-1)) {
+                        if (!temp.getPoints().contains(-1.0)) {
                             
+                            GUIMap[randPosH][randPosW] = temp;
                             count++;
                             tilesRemaining[rnd]--;
-                            
-                        } else {
-                            
-                            GUIMap[randPosH][randPosW] = null;
                             
                         }
 //                        if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
@@ -206,9 +203,9 @@ public class Driver extends Application {
         
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
-//        for (int r = 0; r < map.length; r++)
+//        for (int r = 1; r < map.length; r++)
 //        {
-//            for (int c = 0; c < map.length; c++)
+//            for (int c = 1; c < map[0].length; c++)
 //            {
 //                if(map[r][c] != null)
 //                    map[r][c].setAdjacent();              

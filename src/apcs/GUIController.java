@@ -6,8 +6,10 @@
  */
 package apcs;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 
 
 
@@ -126,7 +128,7 @@ public class GUIController {
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
-            castleSelectorImageView.addEventHandler(DragEvent.DRAG_ENTERED, event -> {
+            castleSelectorImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
                 Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(castleSelectorImageView.getImage());
@@ -137,7 +139,7 @@ public class GUIController {
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
             pesantSelectorImageView.setImage(pesantImage);
-            pesantSelectorImageView.addEventHandler(DragEvent.DRAG_ENTERED, event -> {
+            pesantSelectorImageView.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
                 Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.COPY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(pesantSelectorImageView.getImage());
@@ -185,6 +187,7 @@ public class GUIController {
              */
             
             mapPane = (Pane) root.lookup("#mapPane");
+            System.out.println(mapPane.getWidth() + ", " + mapPane.getHeight());
             
             for (int r = 0; r < map.length; r++) {
                 
@@ -192,14 +195,17 @@ public class GUIController {
                     
                     if (map[r][c] != null) {
                         
-                        String hexColor = Integer.toHexString(map[r][c].getPlayer().getColor().getRGB());
-                        hexColor = String.format("#%02X%02X%02X", 
-                                map[r][c].getPlayer().getColor().getRed(), 
-                                map[r][c].getPlayer().getColor().getGreen(), 
-                                map[r][c].getPlayer().getColor().getBlue());  
-                        System.out.println(hexColor);
+                        Color playerColor = map[r][c].getPlayer().getColor() ;
+                        int red = playerColor.getRed();
+                        int green = playerColor.getGreen();
+                        int blue = playerColor.getBlue();
+                        int alpha = playerColor.getAlpha();
+                        double opacity = alpha / 255.0 ;
+                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
                         
-                        map[r][c].setStyle("-fx-background-color: " + hexColor + ";");
+                        map[r][c].setFill(fillColor);
+                        map[r][c].setStroke(javafx.scene.paint.Color.rgb(0, 0, 0, 1));
+                        
                         final Tile tile = map[r][c];
                         map[r][c].addEventHandler(DragEvent.DRAG_DROPPED, event -> {
                             tile.setFill(new ImagePattern(event.getDragboard().getImage()));
