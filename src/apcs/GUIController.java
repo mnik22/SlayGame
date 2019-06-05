@@ -134,10 +134,18 @@ public class GUIController {
             castleSelectorImageView.setImage(castleImage);
             castleSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
-                    Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.ANY);
+                    Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(castleSelectorImageView.getImage());
                     db.setContent(content);
+                    event.consume();
+                }
+            });
+            castleSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    if (event.getTransferMode() == TransferMode.MOVE) {
+                        castleSelectorImageView.setImage(null);
+                    }
                     event.consume();
                 }
             });
@@ -147,10 +155,18 @@ public class GUIController {
             pesantSelectorImageView.setImage(pesantImage);
             pesantSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
-                    Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.ANY);
+                    Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(pesantSelectorImageView.getImage());
                     db.setContent(content);
+                    event.consume();
+                }
+            });
+            pesantSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    if (event.getTransferMode() == TransferMode.MOVE) {
+                        pesantSelectorImageView.setImage(null);
+                    }
                     event.consume();
                 }
             });
@@ -203,6 +219,8 @@ public class GUIController {
                     
                     if (map[r][c] != null) {
                         
+                        final Tile tile = map[r][c];
+                        
                         Color playerColor = map[r][c].getPlayer().getColor() ;
                         int red = playerColor.getRed();
                         int green = playerColor.getGreen();
@@ -211,34 +229,46 @@ public class GUIController {
                         double opacity = alpha / 255.0 ;
                         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
                         
-                        map[r][c].setFill(fillColor);
-                        map[r][c].setStroke(fillColor);
+                        tile.setFill(fillColor);
+                        tile.setStroke(fillColor);
                         
-                        final Tile tile = map[r][c];
                         tile.setOnDragOver(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
                                 if (event.getGestureSource() != tile &&
-                                        event.getDragboard().hasString()) {
-                                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                                        event.getDragboard().hasImage()) {
+                                    event.acceptTransferModes(TransferMode.MOVE);
                                 }
-                                tile.unitFill(new ImagePattern(event.getDragboard().getImage()));
                                 event.consume();
                             }
                         });
-//                        tile.setOnDragDropped(new EventHandler<DragEvent>() {
-//                            public void handle(DragEvent event) {
-//                                Dragboard db = event.getDragboard();
-//                                boolean success = false;
-//                                if (db.hasString()) {
-//                                   tile.unitFill(new ImagePattern(db.getImage()));
-//                                   success = true;
-//                                }
-//                                event.setDropCompleted(success);
-//                                event.consume();
-//                            }
-//                        });
-                        map[r][c].setImage(castleImage);
-                        mapPane.getChildren().add(map[r][c]);
+                        tile.setOnDragEntered(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+                                 if (event.getGestureSource() != tile &&
+                                         event.getDragboard().hasImage()) {
+                                     tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                                 }
+                                 event.consume();
+                            }
+                        });
+                        tile.setOnDragExited(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+                                tile.setFill(fillColor);
+                                event.consume();
+                            }
+                        });
+                        tile.setOnDragDropped(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+                                Dragboard db = event.getDragboard();
+                                boolean success = false;
+                                if (db.hasImage()) {
+                                   tile.unitFill(new ImagePattern(db.getImage()));
+                                   success = true;
+                                }
+                                event.setDropCompleted(success);
+                                event.consume();
+                            }
+                        });
+                        mapPane.getChildren().add(tile);
                     }
                     
                 }
