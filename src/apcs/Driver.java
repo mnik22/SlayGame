@@ -204,14 +204,14 @@ public class Driver extends Application {
         
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
-//        for (int r = 1; r < map.length; r++)
-//        {
-//            for (int c = 1; c < map[0].length; c++)
-//            {
-//                if(map[r][c] != null)
-//                    map[r][c].setAdjacent();              
-//            }
-//        }
+        for (int r = 1; r < map.length; r++)
+        {
+            for (int c = 1; c < map[0].length; c++)
+            {
+                if(map[r][c] != null)
+                    map[r][c].setAdjacent();              
+            }
+        }
 //        System.out.println("mapMade");
         
     }
