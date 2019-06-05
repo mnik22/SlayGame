@@ -13,6 +13,7 @@ import java.io.IOException;
 
 
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
@@ -130,25 +132,27 @@ public class GUIController {
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
-            castleSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
-                Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.COPY);
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(castleSelectorImageView.getImage());
-                db.setContent(content);
-                dragImage = castleImage;
-                event.consume();
+            castleSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putImage(castleSelectorImageView.getImage());
+                    db.setContent(content);
+                    event.consume();
+                }
             });
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
             pesantSelectorImageView.setImage(pesantImage);
-            pesantSelectorImageView.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
-                Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.COPY);
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(pesantSelectorImageView.getImage());
-                db.setContent(content);
-                dragImage = pesantImage;
-                event.consume();
+            pesantSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putImage(pesantSelectorImageView.getImage());
+                    db.setContent(content);
+                    event.consume();
+                }
             });
             
             /*
@@ -208,13 +212,32 @@ public class GUIController {
                         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
                         
                         map[r][c].setFill(fillColor);
-                        map[r][c].setStroke(javafx.scene.paint.Color.rgb(0, 0, 0, 1));
+                        map[r][c].setStroke(fillColor);
                         
                         final Tile tile = map[r][c];
-                        tile.addEventHandler(MouseDragEvent.MOUSE_DRAG_RELEASED, event -> {
-                            tile.setImage(dragImage);
-                            event.consume();
+                        tile.setOnDragOver(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+                                if (event.getGestureSource() != tile &&
+                                        event.getDragboard().hasString()) {
+                                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                                }
+                                tile.unitFill(new ImagePattern(event.getDragboard().getImage()));
+                                event.consume();
+                            }
                         });
+//                        tile.setOnDragDropped(new EventHandler<DragEvent>() {
+//                            public void handle(DragEvent event) {
+//                                Dragboard db = event.getDragboard();
+//                                boolean success = false;
+//                                if (db.hasString()) {
+//                                   tile.unitFill(new ImagePattern(db.getImage()));
+//                                   success = true;
+//                                }
+//                                event.setDropCompleted(success);
+//                                event.consume();
+//                            }
+//                        });
+                        map[r][c].setImage(castleImage);
                         mapPane.getChildren().add(map[r][c]);
                     }
                     
