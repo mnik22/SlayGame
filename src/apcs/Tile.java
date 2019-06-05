@@ -1,9 +1,12 @@
 package apcs;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 public class Tile extends Polygon {
@@ -173,10 +176,10 @@ public class Tile extends Polygon {
         adjacentTiles[4] = left;
         adjacentTiles[5] = topLeft;
         
-//        for(int i = 0; i < adjacentTiles.length; i++)
-//        {
-//            System.out.println(adjacentTiles[i]);
-//        }
+        for(int i = 0; i < adjacentTiles.length; i++)
+        {
+            System.out.println(adjacentTiles[i]);
+        }
         
     }
     
@@ -236,6 +239,31 @@ public class Tile extends Polygon {
                 adjacentTiles[i].removeProtection();
             }
             
+        }
+    }
+    
+    public void unitFill(ImagePattern i)
+    {
+        super.setFill(i);
+        try
+        {
+            if(i.equals(new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))))
+            {
+                setUnit(new Peasant(this));
+            }
+            else if(i.equals(new ImagePattern(new Image(new FileInputStream("src/Castle.png")))))
+            {
+                setUnit(new Castle(this));
+            }
+            else
+            {
+                System.out.println("Something went wrong with the image pattern thing");
+            }
+                
+        } catch (FileNotFoundException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     
