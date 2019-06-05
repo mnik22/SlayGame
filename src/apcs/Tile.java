@@ -213,14 +213,16 @@ public class Tile extends Polygon {
         return unit;
     }
     
-    public void setUnit(Unit u) //this method assumes that you can pass a unit into this tile. //this also could possible not work like it should
+    public boolean setUnit(Unit u) //this method assumes that you can pass a unit into this tile. //this also could possible not work like it should
     {
+        boolean test = false;
         if(u != null)
         {
             if(u.getStrength() > protection)
             {
                 protection = u.getStrength();
                 unit = u;
+                test = true;
             }
             for(int i = 0; i < adjacentTiles.length; i++)
             {
@@ -240,20 +242,23 @@ public class Tile extends Polygon {
             }
             
         }
+        return test;
     }
     
     public void unitFill(ImagePattern i)
     {
-        super.setFill(i);
+        
         try
         {
-            if(i.equals(new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))))
+            if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Pesant.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))).getWidth())
             {
-                setUnit(new Peasant(this));
+                if(setUnit(new Peasant(this)))
+                    super.setFill(i);
             }
-            else if(i.equals(new ImagePattern(new Image(new FileInputStream("src/Castle.png")))))
+            else if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Castle.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Castle.png")))).getWidth())
             {
-                setUnit(new Castle(this));
+                if(setUnit(new Castle(this)))
+                    super.setFill(i);
             }
             else
             {
