@@ -11,7 +11,7 @@ import javafx.scene.shape.Polygon;
 
 public class Tile extends Polygon {
     
-    private ImageView imageView;
+//    private ImageView imageView;
     
     private Tile topLeft;
     private Tile left;
@@ -38,9 +38,9 @@ public class Tile extends Polygon {
     
     public Tile(int x, int y)
     {
-        imageView = new ImageView();
-        imageView.setFitWidth(10);
-        imageView.setFitHeight(10);
+//        imageView = new ImageView();
+//        imageView.setFitWidth(10);
+//        imageView.setFitHeight(10);
         guiHorizontalPos = x;
         guiVerticalPos = y;
     }
@@ -223,6 +223,23 @@ public class Tile extends Polygon {
                 protection = u.getStrength();
                 unit = u;
                 test = true;
+                u.setTile(this);
+
+                try
+                {
+                    if(u instanceof Peasant)
+                    {
+                        setFill(new ImagePattern(new Image(new FileInputStream("src/Peasant"))));
+                    }
+                    else
+                    {
+                        setFill(new ImagePattern(new Image(new FileInputStream("src/Castle"))));                        
+                    }
+                } catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+                
             }
             for(int i = 0; i < adjacentTiles.length; i++)
             {
@@ -245,32 +262,32 @@ public class Tile extends Polygon {
         return test;
     }
     
-    public void unitFill(ImagePattern i)
-    {
-        
-        try
-        {
-            if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Pesant.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))).getWidth())
-            {
-                if(setUnit(new Peasant(this)))
-                    super.setFill(i);
-            }
-            else if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Castle.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Castle.png")))).getWidth())
-            {
-                if(setUnit(new Castle(this)))
-                    super.setFill(i);
-            }
-            else
-            {
-                System.out.println("Something went wrong with the image pattern thing");
-            }
-                
-        } catch (FileNotFoundException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    public void unitFill(ImagePattern i)
+//    {
+//        
+//        try
+//        {
+//            if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Pesant.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))).getWidth())
+//            {
+//                if(setUnit(new Peasant(this)))
+//                    super.setFill(i);
+//            }
+//            else if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Castle.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Castle.png")))).getWidth())
+//            {
+//                if(setUnit(new Castle(this)))
+//                    super.setFill(i);
+//            }
+//            else
+//            {
+//                System.out.println("Something went wrong with the image pattern thing");
+//            }
+//                
+//        } catch (FileNotFoundException e)
+//        {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
     
     public boolean hasUnit()
     {
@@ -356,18 +373,18 @@ public class Tile extends Polygon {
     }
     
     
-    //Image View Stuff
-    public void setImageCoords(double x,double y)
-    {
-        imageView.setX(x);
-        imageView.setY(y);
-    }
-    
-    public void setImage(Image i)
-    {
-        imageView.setImage(i);
-    }
-    
+    //Image View Stuff   --   not in use anymore.
+//    public void setImageCoords(double x,double y)
+//    {
+//        imageView.setX(x);
+//        imageView.setY(y);
+//    }
+//    
+//    public void setImage(Image i)
+//    {
+//        imageView.setImage(i);
+//    }
+//    
     
     
 }
