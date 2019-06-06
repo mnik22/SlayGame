@@ -89,13 +89,25 @@ public class Driver extends Application {
             }
             
         }
-        
         makeMap();
-        
         guiController = new GUIController(primaryStage, GUIMap, players);
         
-    }
+        new Thread(new Runnable() {
 
+            @Override
+            public void run() {
+                System.out.println("started thread");
+                newGame();
+                playGame();
+                System.out.println("running thread");
+            }
+                    
+        }).start();
+        
+    }
+    
+    
+            
     private Double[] loadCoords(int x, int y) {
 
         double top;
