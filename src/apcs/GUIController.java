@@ -14,6 +14,8 @@ import java.io.IOException;
 
 
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -68,7 +70,7 @@ public class GUIController {
     
     private Button finishTurnButton;
     
-    private Image dragImage;
+    private Unit dragUnit;
     
     @SuppressWarnings({ "unchecked" })
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
@@ -134,6 +136,7 @@ public class GUIController {
             castleSelectorImageView.setImage(castleImage);
             castleSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
+                    dragUnit = new Castle(null);
                     Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(castleSelectorImageView.getImage());
@@ -144,7 +147,15 @@ public class GUIController {
             castleSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
                 public void handle(DragEvent event) {
                     if (event.getTransferMode() == TransferMode.MOVE) {
-                        castleSelectorImageView.setImage(null);
+                        if (Driver.currentPlayer instanceof HumanPlayer) {
+                            boolean canBuyAnother = false;
+                            for (Territory t : Driver.currentPlayer.getTerritories()) {
+                                if (t.availbleUnits()[1] > 0)
+                                    canBuyAnother = true;
+                            }
+                            if (!canBuyAnother)
+                                castleSelectorImageView.setImage(null);
+                        }
                     }
                     event.consume();
                 }
@@ -155,6 +166,7 @@ public class GUIController {
             pesantSelectorImageView.setImage(pesantImage);
             pesantSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
+                    dragUnit = new Peasant(null);
                     Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(pesantSelectorImageView.getImage());
@@ -165,7 +177,15 @@ public class GUIController {
             pesantSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
                 public void handle(DragEvent event) {
                     if (event.getTransferMode() == TransferMode.MOVE) {
-                        pesantSelectorImageView.setImage(null);
+                        if (Driver.currentPlayer instanceof HumanPlayer) {
+                            boolean canBuyAnother = false;
+                            for (Territory t : Driver.currentPlayer.getTerritories()) {
+                                if (t.availbleUnits()[1] > 0)
+                                    canBuyAnother = true;
+                            }
+                            if (!canBuyAnother)
+                                pesantSelectorImageView.setImage(null);
+                        }
                     }
                     event.consume();
                 }
@@ -198,7 +218,7 @@ public class GUIController {
 
                     if (Driver.currentPlayer instanceof HumanPlayer) {
                         
-//                        Driver.currentPlayer.buttonEndTurn();
+                        Driver.currentPlayer.buttonEndTurn();
                         
                     }
                     
@@ -261,8 +281,8 @@ public class GUIController {
                                 Dragboard db = event.getDragboard();
                                 boolean success = false;
                                 if (db.hasImage()) {
-                                   tile.unitFill(new ImagePattern(db.getImage()));
-                                   success = true;
+                                    success = tile.setUnit(dragUnit);
+                                    dragUnit = null;
                                 }
                                 event.setDropCompleted(success);
                                 event.consume();
@@ -284,7 +304,7 @@ public class GUIController {
     }
     
     @SuppressWarnings("unchecked")
-    public void updateGraph() {
+    public void updateGraph(XYChart.Series<String, Integer> series) {
         
 //        XYChart.Series<ImageView, Integer> series1 = new XYChart.Series<>();   
 //        for (int i = 0; i < players.length; i++) {
