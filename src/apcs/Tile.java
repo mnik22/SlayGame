@@ -229,11 +229,11 @@ public class Tile extends Polygon {
                 {
                     if(u instanceof Peasant)
                     {
-                        setFill(new ImagePattern(new Image(new FileInputStream("src/Peasant"))));
+                        setFill(new ImagePattern(new Image(new FileInputStream("src/Peasant.png"))));
                     }
                     else
                     {
-                        setFill(new ImagePattern(new Image(new FileInputStream("src/Castle"))));                        
+                        setFill(new ImagePattern(new Image(new FileInputStream("src/Castle.png"))));                        
                     }
                 } catch (FileNotFoundException e)
                 {

@@ -73,7 +73,6 @@ public class Driver extends Application {
                         if (!temp.getPoints().contains(-1.0)) {
                             
                             GUIMap[randPosH][randPosW] = temp;
-                            GUIMap[randPosH][randPosW].setImageCoords(temp.getPoints().get(0) + 10, temp.getPoints().get(1) - Math.sqrt(300));
                             count++;
                             tilesRemaining[rnd]--;
                             
