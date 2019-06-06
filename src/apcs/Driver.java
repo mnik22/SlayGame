@@ -36,8 +36,12 @@ public class Driver extends Application {
         colors = new Color[NUM_PLAYERS];
         
         // TODO: Actually initialize the colors
-        for (int i = 0; i < colors.length; i++)
-            colors[i] = Color.GREEN;
+        colors[0] = Color.BLUE;
+        colors[1] = Color.GREEN;
+        colors[2] = Color.MAGENTA;
+        colors[3] = Color.RED;
+        colors[4] = Color.YELLOW;
+        colors[5] = Color.ORANGE;
         
         players = new Player[NUM_PLAYERS];
         players[0] = new HumanPlayer(colors[0]);
@@ -92,6 +96,12 @@ public class Driver extends Application {
             
         }
         makeMap();
+        
+        for (int j = 0; j < players.length; j++)
+        {
+            System.out.println("num tiles for p" + j + ": " + players[j].getNumTiles());
+        }
+        
         guiController = new GUIController(primaryStage, GUIMap, players);
         
         gameThread = new Thread(new Runnable() {
