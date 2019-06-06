@@ -1,11 +1,20 @@
 package apcs;
 
-public abstract class Unit {
+import java.io.FileInputStream;
+import java.io.InputStream;
 
-	protected int unitStrength;
+import javafx.scene.image.Image;
+
+public abstract class Unit extends Image {
+
+    protected int unitStrength;
 	protected int unitCost;
 	protected boolean canMove;
 	protected Tile tile; //the tile that the unit is standing on.
+	
+	public Unit(FileInputStream fileInputStream) {
+        super(fileInputStream);
+    }
 	
 	public int getCost()
 	{

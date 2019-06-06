@@ -6,11 +6,14 @@
  */
 package apcs;
 
+import java.io.FileInputStream;
+
 
 public class Capital extends Unit
 {
-    public Capital(Tile t)
+    public Capital(Tile t, FileInputStream i)
     {
+        super(i);
         unitCost = 0;
         unitStrength = 1;
         tile = t;
