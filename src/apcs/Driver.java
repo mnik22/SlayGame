@@ -22,6 +22,8 @@ public class Driver extends Application {
     private Tile[][] GUIMap;
     private Color[] colors;
     
+    private Thread gameThread;
+    
     static Player currentPlayer;
     static Tile[][] map;
     public static Player[] players;
@@ -92,7 +94,7 @@ public class Driver extends Application {
         makeMap();
         guiController = new GUIController(primaryStage, GUIMap, players);
         
-        new Thread(new Runnable() {
+        gameThread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -102,8 +104,9 @@ public class Driver extends Application {
                 System.out.println("running thread");
             }
                     
-        }).start();
+        });
         
+        gameThread.start();
     }
     
     
