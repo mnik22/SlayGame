@@ -12,10 +12,13 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -102,18 +105,19 @@ public class GUIController {
             propertiesBarChart = (BarChart<String, Integer>) root.lookup("#propertiesBarChart");
             propertiesBarChart.setTitle("Territory Summary");
             
-            XYChart.Series<String, Integer> series1 = new XYChart.Series<>();   
+            XYChart.Series<String, Integer> series = new XYChart.Series<>(); 
+            int cpuCount = 1;
             for (int i = 0; i < players.length; i++) {
                 
                 if (players[i] instanceof HumanPlayer)
-                    series1.getData().add(new XYChart.Data<String, Integer>("H", players[i].getNumTiles()));
+                    series.getData().add(new XYChart.Data<>("H", players[i].getNumTerritories()));
                 
                 else if (players[i] instanceof AIPlayer)
-                    series1.getData().add(new XYChart.Data<String, Integer>("C", players[i].getNumTiles()));
+                    series.getData().add(new XYChart.Data<>("C" + cpuCount, players[i].getNumTerritories()));
                 
             }
             
-            updateGraph(series1);
+            propertiesBarChart.getData().add(series);
             
             /*
              * Playable Objects Code
