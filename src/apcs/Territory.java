@@ -8,7 +8,7 @@ public class Territory {
 
     private Tile capital;
     private ArrayList<Tile> tiles = new ArrayList<Tile>();
-    private int money;
+    public int money;
     private Player player;
     
     
@@ -16,10 +16,6 @@ public class Territory {
     {
         player = p;
         tiles.addAll(startingTiles); //might need a collection instead of an arraylist as the parameter.
-        int rnd = (int)(Math.random()*tiles.size());
-        capital = tiles.get(rnd);                       //these three lines randomly sets the capital when the territory is initiated
-        capital.setCapital(true);
-        capital.setUnit(new Capital(capital));
     }
     
     public void addTile(Tile t)
@@ -47,6 +43,15 @@ public class Territory {
     public Player getPlayer()
     {
         return player;
+    }
+    
+    public void setCapital()
+    {
+    	//pre: there cannot be a capital already in this territory.
+        int rnd = (int)(Math.random()*tiles.size());
+        capital = tiles.get(rnd);                       
+        capital.setCapital(true);
+        capital.setUnit(new Capital(capital));
     }
     
     public boolean isAdjacent(Tile t)

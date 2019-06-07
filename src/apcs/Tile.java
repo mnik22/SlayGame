@@ -233,17 +233,19 @@ public class Tile extends Polygon {
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
-                                        
+                                        break;
                             case 2:     
                                         unit = new Knight(this);
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
+                                        break;
                             case 3:
                                         unit = new Baron(this);
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
+                                        break;
                             default:
                                     	//possibly put a noise or alert here
 //                                		Alert a = new Alert(AlertType.WARNING);
