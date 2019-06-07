@@ -176,10 +176,10 @@ public class Tile extends Polygon {
         adjacentTiles[4] = left;
         adjacentTiles[5] = topLeft;
         
-        for(int i = 0; i < adjacentTiles.length; i++)
-        {
-            System.out.println(adjacentTiles[i]);
-        }
+//        for(int i = 0; i < adjacentTiles.length; i++)
+//        {
+//            System.out.println(adjacentTiles[i]);
+//        }
         
     }
     
@@ -218,21 +218,37 @@ public class Tile extends Polygon {
         boolean test = false;
         if(u != null)
         {
-            if(u.getStrength() > protection)
+            if(Driver.currentPlayer.equals(player))
             {
-                protection = u.getStrength();
-                unit = u;
-                test = true;
-                u.setTile(this);
-                super.setFill(new ImagePattern(u));
-                
-            }
-            for(int i = 0; i < adjacentTiles.length; i++)
-            {
-                if(u.getStrength() > adjacentTiles[i].getProtection() && adjacentTiles[i].getPlayer().equals(player))
+                if(hasUnit())
                 {
-                    adjacentTiles[i].setProtection(u.getStrength());
+                    if(u instanceof Peasant)
+                    {
+                        int curProtect = unit.getStrength();
+                        switch(curProtect)
+                        {
+                            case 1:     
+                                        unit = new Spearman(this);
+                                        setAllProtection(2);
+                                        super.setFill(new ImagePattern(unit.getImage()));
+                            case 2:     
+                                        unit = new Knight(this);
+                                        setAllProtection(3);
+                                        super.setFill(new ImagePattern(unit.getImage()));
+                            case 3:
+                                        unit = new Baron(this);
+                                        setAllProtection(4);
+                                        super.setFill(new ImagePattern(unit.getImage()));
+                                       
+                            default:
+                        }
+                    }
                 }
+            
+            }
+            else
+            {
+                
             }
         }
         else
@@ -283,6 +299,18 @@ public class Tile extends Polygon {
     public void setProtection(int p)
     {
         protection = p;
+    }
+    public void setAllProtection(int p)
+    {
+        if(protection < p)
+            protection = p;
+        for(int i = 0; i < adjacentTiles.length; i++)
+        {
+            if(player.equals(adjacentTiles[i]) && p > adjacentTiles[i].getProtection())
+            {
+                adjacentTiles[i].setProtection(p);
+            }
+        }
     }
     public int getProtection()
     {
