@@ -1,11 +1,9 @@
 package apcs;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
@@ -239,10 +237,21 @@ public class Tile extends Polygon {
                                         unit = new Baron(this);
                                         setAllProtection(4);
                                         super.setFill(new ImagePattern(unit.getImage()));
-                                       
                             default:
+                                        //possibly put a noise or alert here
+                                Alert a = new Alert(AlertType.WARNING);
+                                a.setTitle("Warning");
+                                
                         }
                     }
+                    else
+                    {
+                        //possibly put a noise or alert here
+                    }
+                }
+                else
+                {
+                    
                 }
             
             }
