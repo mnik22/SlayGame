@@ -9,8 +9,6 @@ public class Territory {
     private Tile capital;
     private ArrayList<Tile> tiles = new ArrayList<Tile>();
     private int money;
-    private boolean canPurchaseUnits;
-    private boolean canMoveUnit;
     private Player player;
     
     
@@ -141,21 +139,15 @@ public class Territory {
     	}
     }
 
-    public void updateCanMoveUnit()
+    public boolean canMoveUnit()
     {
-        canMoveUnit = false;
         for (int i = 0; i <tiles.size(); i++) {
             if(tiles.get(i).getUnit().canMove())
             {
-                canMoveUnit = true;
-                i = tiles.size();
+                return true;
             }
         }
-    }
-
-    public boolean canMoveUnit()
-    {
-        return canMoveUnit;
+        return false;
     }
     
     public void updateTiles()
@@ -234,19 +226,13 @@ public class Territory {
         {
             temp[0] = (money-cost)/5;
             temp[1] = (money-cost)/10;
-            canPurchaseUnits = true;
         }
-        else
-        {
-            canPurchaseUnits = false;
-        }
-        
         return temp;       
     }
 
     public boolean canPurchaseUnits()
     {
-        return canPurchaseUnits;
+        return money >= 5;
     }
     
     public void buyUnit( Tile t, Unit u)
