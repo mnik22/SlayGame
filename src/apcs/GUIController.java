@@ -7,15 +7,8 @@
 package apcs;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-
-
-
-
-import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,11 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
@@ -44,7 +35,6 @@ public class GUIController {
     private Tile[][] map;
     private Player[] players;
     private Parent root;
-    private Stage primaryStage;
     private Pane mapPane;
     
     private Label savingsLabel;
@@ -76,7 +66,6 @@ public class GUIController {
         
         this.map = map;
         this.players = players;
-        this.primaryStage = primaryStage;
         
         try {
             
@@ -124,7 +113,7 @@ public class GUIController {
                 
             }
             
-            propertiesBarChart.getData().addAll(series1);
+            updateGraph(series1);
             
             /*
              * Playable Objects Code
@@ -294,6 +283,7 @@ public class GUIController {
                                 event.consume();
                             }
                         });
+                        
                         mapPane.getChildren().add(tile);
                     }
                     
@@ -312,18 +302,7 @@ public class GUIController {
     @SuppressWarnings("unchecked")
     public void updateGraph(XYChart.Series<String, Integer> series) {
         
-//        XYChart.Series<ImageView, Integer> series1 = new XYChart.Series<>();   
-//        for (int i = 0; i < players.length; i++) {
-//            
-//            if (players[i] instanceof HumanPlayer)
-//                series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(playerImage), players[i].getNumTiles()));
-//            
-//            else if (players[i] instanceof AIPlayer)
-//                series1.getData().add(new XYChart.Data<ImageView, Integer>(new ImageView(computerImage), players[i].getNumTiles()));
-//            
-//        }
-//        
-//        propertiesBarChart.getData().setAll(series1);
+        propertiesBarChart.getData().setAll(series);
         
     }
     
