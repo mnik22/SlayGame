@@ -280,19 +280,11 @@ public class GUIController {
                                 Dragboard db = event.getDragboard();
                                 boolean success = false;
                                 if (db.hasString()) {
-                                	if (db.getString().equals("Castle")) {
-                                		try {
-                                			success = tile.setUnit(new Castle(tile, new FileInputStream(new File("src/Castle.png"))));
-                                		} catch (IOException e) {
-                                			e.printStackTrace();
-                                		}
-                                	} else if (db.getString().equals("Pesant")) {
-                                		try {
-                                			success = tile.setUnit(new Peasant(tile, new FileInputStream(new File("src/Pesant.png"))));
-                                		} catch (IOException e) {
-                                			e.printStackTrace();
-                                		}
-                                	} else {
+                                	if (db.getString().equals("Castle"))
+                                			success = tile.setUnit(new Castle(tile));
+                                	else if (db.getString().equals("Pesant"))
+                                			success = tile.setUnit(new Peasant(tile));
+                                	else {
                                 		System.out.println("Cannot place unit.");
                                 	}
                                 } else {
