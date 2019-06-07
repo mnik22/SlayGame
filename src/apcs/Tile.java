@@ -224,21 +224,7 @@ public class Tile extends Polygon {
                 unit = u;
                 test = true;
                 u.setTile(this);
-
-                try
-                {
-                    if(u instanceof Peasant)
-                    {
-                        setFill(new ImagePattern(new Image(new FileInputStream("src/Peasant.png"))));
-                    }
-                    else
-                    {
-                        setFill(new ImagePattern(new Image(new FileInputStream("src/Castle.png"))));                        
-                    }
-                } catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
+                super.setFill(new ImagePattern(u));
                 
             }
             for(int i = 0; i < adjacentTiles.length; i++)

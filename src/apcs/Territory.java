@@ -1,6 +1,8 @@
 package apcs;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Territory {
@@ -20,7 +22,11 @@ public class Territory {
         int rnd = (int)(Math.random()*tiles.size());
         capital = tiles.get(rnd);                       //these three lines randomly sets the capital when the territory is initiated
         capital.setCapital(true);
-        capital.setUnit(new Capital(capital));
+        try {
+        	capital.setUnit(new Capital(capital, new FileInputStream(new File("src/Capital.png"))));
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
     }
     
     public void addTile(Tile t)

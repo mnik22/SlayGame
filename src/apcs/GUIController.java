@@ -7,6 +7,7 @@
 package apcs;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -69,8 +70,6 @@ public class GUIController {
     private Image baronImage;
     
     private Button finishTurnButton;
-    
-    private Unit dragUnit;
     
     @SuppressWarnings({ "unchecked" })
     public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
@@ -136,10 +135,10 @@ public class GUIController {
             castleSelectorImageView.setImage(castleImage);
             castleSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
-                    dragUnit = new Castle(null);
                     Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(castleSelectorImageView.getImage());
+                    content.putString("Castle");
                     db.setContent(content);
                     event.consume();
                 }
@@ -166,10 +165,10 @@ public class GUIController {
             pesantSelectorImageView.setImage(pesantImage);
             pesantSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
-                    dragUnit = new Peasant(null);
                     Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(pesantSelectorImageView.getImage());
+                    content.putString("Pesant");
                     db.setContent(content);
                     event.consume();
                 }
@@ -280,9 +279,24 @@ public class GUIController {
                             public void handle(DragEvent event) {
                                 Dragboard db = event.getDragboard();
                                 boolean success = false;
-                                if (db.hasImage()) {
-                                    success = tile.setUnit(dragUnit);
-                                    dragUnit = null;
+                                if (db.hasString()) {
+                                	if (db.getString().equals("Castle")) {
+                                		try {
+                                			success = tile.setUnit(new Castle(tile, new FileInputStream(new File("src/Castle.png"))));
+                                		} catch (IOException e) {
+                                			e.printStackTrace();
+                                		}
+                                	} else if (db.getString().equals("Pesant")) {
+                                		try {
+                                			success = tile.setUnit(new Peasant(tile, new FileInputStream(new File("src/Pesant.png"))));
+                                		} catch (IOException e) {
+                                			e.printStackTrace();
+                                		}
+                                	} else {
+                                		System.out.println("Cannot place unit.");
+                                	}
+                                } else {
+                                	System.out.println("No String found in the dragboard.");
                                 }
                                 event.setDropCompleted(success);
                                 event.consume();
