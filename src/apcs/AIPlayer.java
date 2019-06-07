@@ -56,26 +56,16 @@ public class AIPlayer extends Player
                        int randTile = (int) (Math.random() * tiles.size());
                        while(tiles.get(randTile).getProtection() > 0)
                            randTile = (int) (Math.random() * tiles.size());
-                       if(adjacents.get(randTile).getProtection() == 0) {
-                    	   try {
-                    		   territory.buyUnit(adjacents.get(randTile), new Castle(adjacents.get(randTile), new FileInputStream(new File("src/Castle.png"))));
-                    	   } catch (IOException e) {
-                    		   e.printStackTrace();
-                    	   }
-                       }
+                       if(adjacents.get(randTile).getProtection() == 0)
+                           territory.buyUnit(adjacents.get(randTile), new Castle(adjacents.get(randTile)));
                    }
                    else
                    {
                        int randAdjacent = (int) (Math.random() * adjacents.size());
                        while(adjacents.get(randAdjacent).getProtection() > 0)
                            randAdjacent = (int) (Math.random() * adjacents.size());
-                       if(adjacents.get(randAdjacent).getProtection() == 0) {
-                    	   try {
-                    		   territory.buyUnit(adjacents.get(randAdjacent), new Peasant(adjacents.get(randAdjacent), new FileInputStream(new File("src/Pesant.png"))));
-                    	   } catch (IOException e) {
-                    		   e.printStackTrace();
-                    	   }
-                       }
+                       if(adjacents.get(randAdjacent).getProtection() == 0)
+                           territory.buyUnit(adjacents.get(randAdjacent), new Peasant(adjacents.get(randAdjacent)));
                    }
                    
                }
