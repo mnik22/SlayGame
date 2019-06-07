@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 public class Knight extends Unit{
 
-	public Knight()
+	public Knight(Tile t)
 	{
 	    try {
 	        super.setImage(new Image(new FileInputStream(new File("src/Knight.png"))));
@@ -17,6 +17,7 @@ public class Knight extends Unit{
 	    }
 		super.unitCost = 18;
 		super.unitStrength = 2;
+		tile = t;
 	}
 	
 }

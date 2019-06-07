@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 public class Spearman extends Unit{
 
-	public Spearman()
+	public Spearman(Tile t)
 	{
 	    try {
             super.setImage(new Image(new FileInputStream(new File("src/Spearman.png"))));
