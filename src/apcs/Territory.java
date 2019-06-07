@@ -2,6 +2,8 @@ package apcs;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Paint;
+
 public class Territory {
 
     private Tile capital;
@@ -80,21 +82,18 @@ public class Territory {
         return temp;
     }
     
-    public void moveUnit(Unit u, Tile t)
+    public void moveUnit(Unit u, Tile t) //this method is for moving a unit already in play.
     {
+        Tile old = u.getTile();
         if(isAdjacent(t))
         {
             if(!t.getPlayer().equals(player))
             {
                 if(u.getStrength() > t.getProtection())
                 {
-                    Tile old = u.getTile();
-                    old.setUnit(null);
-                    old.setProtection();
-                    t.setUnit(u);
+                    t.setUnit(old.removeUnit());
                     t.setPlayer(player);
                     tiles.add(t);
-                    t.setProtection();
                     t.setAdjacentProtection();
                     u.move(false);
                 }
@@ -107,15 +106,40 @@ public class Territory {
             {
                 if(!t.hasUnit())
                 {
-                    u.getTile().setUnit(null);
-                    t.setUnit(u);
-                    t.setProtection();
+                    t.setUnit(old.removeUnit());
                     t.setAdjacentProtection();
+                }
+                else if(u instanceof Peasant)
+                {
+                	if(t.setUnit(u))
+                	{
+                		old.removeUnit();
+                		t.setAdjacentProtection();
+                		u.move(false);
+                	}
+                }
+                else
+                {
+                	//maybe play noise or something
                 }
             }
         }
+        else
+        {
+        	// maybe play noise or something
+        }
     }
     
+    public void resetMove()
+    {
+    	for(int i = 0; i < tiles.size(); i++)
+    	{
+    		if(tiles.get(i).hasUnit())
+    		{
+    			tiles.get(i).getUnit().move(true);
+    		}
+    	}
+    }
 
     public void updateCanMoveUnit()
     {
@@ -134,7 +158,19 @@ public class Territory {
         return canMoveUnit;
     }
     
-    //economy methods
+    public void updateTiles()
+    {
+    	for(int i = tiles.size()-1; i >= 0; i--)
+    	{
+    		if(tiles.get(i).getPlayer() != player)
+    		{
+    			tiles.remove(i);
+    		}
+    	}
+    }
+    
+    //ECONOMY METHODS
+    
     public boolean maintenance()
     {
         int cost = 0;

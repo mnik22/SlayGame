@@ -211,10 +211,13 @@ public class Tile extends Polygon {
         return unit;
     }
     
-    public boolean setUnit(Unit u) //this method assumes that you can pass a unit into this tile. //this also could possible not work like it should
+    //pre: a non null unit.
+    //post: returns true if it could set the unit false otherwise.
+	public boolean setUnit(Unit u) //this method is for creating new units or called from territories move unit method
     {
+    	Tile old = u.getTile();
         boolean test = false;
-        if(u != null)
+        if(u != null) //this line is mostly useless now but i'm keeping it.
         {
             if(Driver.currentPlayer.equals(player))
             {
@@ -223,25 +226,29 @@ public class Tile extends Polygon {
                     if(u instanceof Peasant)
                     {
                         int curProtect = unit.getStrength();
-                        switch(curProtect)
+                        switch(curProtect) //for upgrading with a peasant.
                         {
                             case 1:     
                                         unit = new Spearman(this);
-                                        setAllProtection(2);
+                                        setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
+                                        test = true;
+                                        
                             case 2:     
                                         unit = new Knight(this);
-                                        setAllProtection(3);
+                                        setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
+                                        test = true;
                             case 3:
                                         unit = new Baron(this);
-                                        setAllProtection(4);
+                                        setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
+                                        test = true;
                             default:
-                                        //possibly put a noise or alert here
-                                Alert a = new Alert(AlertType.WARNING);
-                                a.setTitle("Warning");
-                                
+                                    	//possibly put a noise or alert here
+//                                		Alert a = new Alert(AlertType.WARNING);
+//                                		a.setTitle("Warning");     
+                                		return false;
                         }
                     }
                     else
@@ -251,26 +258,42 @@ public class Tile extends Polygon {
                 }
                 else
                 {
-                    
+                    unit = u;
+                    setAdjacentProtection();
+                    super.setFill(new ImagePattern(unit.getImage()));
+                    test = true;
                 }
-            
             }
             else
             {
-                
+            	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
+         		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
+         		if(old != null)
+         		{
+         			unit = u;
+                    setAdjacentProtection();
+                    super.setFill(new ImagePattern(unit.getImage()));
+                    test = true;
+         		}
+         		else
+         		{
+         			//maybe make a noise or something
+         		}
             }
-        }
-        else
-        {   //for removing a person from a tile
-            unit = u;
-            removeProtection();
-            for(int i = 0; i < adjacentTiles.length; i++)
-            {
-                adjacentTiles[i].removeProtection();
-            }
-            
-        }
+	            
+       	}
+        
+
         return test;
+    }
+    
+    public Unit removeUnit()
+    {
+    	Unit u = unit;
+    	super.setFill(super.getStroke());
+    	unit = null;
+    	removeProtection();
+    	return u;
     }
     
 //    public void unitFill(ImagePattern i)
@@ -309,13 +332,14 @@ public class Tile extends Polygon {
     {
         protection = p;
     }
-    public void setAllProtection(int p)
+	public void setAdjacentProtection(int p) //sets this and adjacent tiles protection to p based on each tiles previous protection. //this also might be overlooked by the other setAdjacentProtection method as it does the samething but better.
     {
+		//might be useless
         if(protection < p)
             protection = p;
         for(int i = 0; i < adjacentTiles.length; i++)
         {
-            if(player.equals(adjacentTiles[i]) && p > adjacentTiles[i].getProtection())
+            if(player.equals(adjacentTiles[i].getPlayer()) && p > adjacentTiles[i].getProtection())
             {
                 adjacentTiles[i].setProtection(p);
             }
@@ -342,7 +366,7 @@ public class Tile extends Polygon {
         return temp;
     }
     
-    public void setProtection()
+    public void setProtection() //looks at this tile and all adjacent tiles to see which one has the greatest strength then it sets this tiles protection to that.
     {
         ArrayList<Tile> temp = hasProtection();
         int strongest = 0;
@@ -360,8 +384,9 @@ public class Tile extends Polygon {
         setProtection(strongest);
     }
     
-    public void setAdjacentProtection()
+    public void setAdjacentProtection() //updates this and adjacent tiles protection based on nearby units
     {
+    	setProtection();
         for(int i = 0; i < adjacentTiles.length; i++)
         {
             if(adjacentTiles[i].getPlayer().equals(player))
@@ -370,6 +395,7 @@ public class Tile extends Polygon {
             }
         }
     }
+    
     
     public void removeProtection() //you should remove the Unit on this tile before calling this method
     {

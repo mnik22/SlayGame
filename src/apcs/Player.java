@@ -39,7 +39,8 @@ public class Player
     {
         for(int i = 0; i < territories.size(); i++)
         {
-            territories.get(i).maintenance();
+        	territories.get(i).updateTiles();
+        	territories.get(i).resetMove();
         }
     }
     
