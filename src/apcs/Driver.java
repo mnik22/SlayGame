@@ -32,7 +32,7 @@ public class Driver extends Application {
     public void start(Stage primaryStage) {
         
         
-        GUIMap = new Tile[39][49];
+        GUIMap = new Tile[15][44];
         colors = new Color[NUM_PLAYERS];
         
         // TODO: Actually initialize the colors
@@ -50,69 +50,68 @@ public class Driver extends Application {
         
         currentPlayer = players[0];
         
-        Tile temp = new Tile(500, 400);
-//        int count = 0;
-//        int[] tilesRemaining = { NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6 }; // Each player gets 1/6 of the total tiles.
-//        while (count < NUM_TILES) {
-//            
-//            /* Width = Number of Columns
-//             * Height = Number of Rows
-//             */
-//            int rnd = (int)(Math.random()*6);
-//            if(tilesRemaining[rnd] > 0)
-//            {
-//                int randPosW = (int)(Math.random() * GUIMap[0].length);
-//                int randPosH = (int)(Math.random() * GUIMap.length);
-//                
-//                if (GUIMap[randPosH][randPosW] == null) {
-//                    
-//                        Tile temp = new Tile(randPosW, randPosH);
-//                        temp.setPlayer(players[rnd]);
-//                        temp.getPoints().addAll(loadCoords(randPosW, randPosH));
-//                        System.out.println("Coords: " + temp.getPoints().toString());
-//                        
-//                        if (!temp.getPoints().contains(-1.0)) {
-//                            double distance = Math.sqrt(Math.pow(Math.abs(randPosW - 500) - 500, 2) + Math.pow(Math.abs(randPosH - 400) - 400, 2));
-//                            double chanceOfTile = Math.random();
-//                            System.out.println("distance: " + distance);
-//                            if(distance < 10 && chanceOfTile <= 0.9)
-//                            {
-//                                GUIMap[randPosH][randPosW] = temp;
-//                                count++;
-//                                tilesRemaining[rnd]--;
-//                            }
-//                            else if(distance < 20 && chanceOfTile <= 0.7)
-//                            {
-//                                GUIMap[randPosH][randPosW] = temp;
-//                                count++;
-//                                tilesRemaining[rnd]--;
-//                            }
-//                            else if(distance < 30 && chanceOfTile <= 0.5)
-//                            {
-//                                GUIMap[randPosH][randPosW] = temp;
-//                                count++;
-//                                tilesRemaining[rnd]--;
-//                            }
-//                            else if((distance < 40 && chanceOfTile <= 0.3))
-//                            {
-//                                GUIMap[randPosH][randPosW] = temp;
-//                                count++;
-//                                tilesRemaining[rnd]--;
-//                            }
-//                            else if(Math.random() <= 0.1)
-//                            {
-//                                GUIMap[randPosH][randPosW] = temp;
-//                                count++;
-//                                tilesRemaining[rnd]--;
-//                            }
-//                            
-//                        }
+        int count = 0;
+        int[] tilesRemaining = { NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6 }; // Each player gets 1/6 of the total tiles.
+        while (count < NUM_TILES) {
+            
+            /* Width = Number of Columns
+             * Height = Number of Rows
+             */
+            int rnd = (int)(Math.random()*6);
+            if(tilesRemaining[rnd] > 0)
+            {
+                int randPosW = (int)(Math.random() * GUIMap[0].length);
+                int randPosH = (int)(Math.random() * GUIMap.length);
+                
+                if (GUIMap[randPosH][randPosW] == null) {
+                    
+                        Tile temp = new Tile(randPosW, randPosH);
+                        temp.setPlayer(players[rnd]);
+                        temp.getPoints().addAll(loadCoords(randPosW, randPosH));
+                        System.out.println("Coords: " + temp.getPoints().toString());
+                        
+                        if (!temp.getPoints().contains(-1.0)) {
+                            double distance = Math.sqrt(Math.pow(Math.abs(randPosW - 500) - 500, 2) + Math.pow(Math.abs(randPosH - 400) - 400, 2));
+                            double chanceOfTile = Math.random();
+                            System.out.println("distance: " + distance);
+                            if(distance < 10 && chanceOfTile <= 0.9)
+                            {
+                                GUIMap[randPosH][randPosW] = temp;
+                                count++;
+                                tilesRemaining[rnd]--;
+                            }
+                            else if(distance < 20 && chanceOfTile <= 0.7)
+                            {
+                                GUIMap[randPosH][randPosW] = temp;
+                                count++;
+                                tilesRemaining[rnd]--;
+                            }
+                            else if(distance < 30 && chanceOfTile <= 0.5)
+                            {
+                                GUIMap[randPosH][randPosW] = temp;
+                                count++;
+                                tilesRemaining[rnd]--;
+                            }
+                            else if((distance < 40 && chanceOfTile <= 0.3))
+                            {
+                                GUIMap[randPosH][randPosW] = temp;
+                                count++;
+                                tilesRemaining[rnd]--;
+                            }
+                            else if(Math.random() <= 0.1)
+                            {
+                                GUIMap[randPosH][randPosW] = temp;
+                                count++;
+                                tilesRemaining[rnd]--;
+                            }
+                            
+                        }
 ////                        if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
 ////                        {
 ////                            
 ////                        }
 //                    
-//            }
+            }
             
             
             
@@ -121,9 +120,9 @@ public class Driver extends Application {
 //                players[playerIndex].addTerritory(t);
                 
                 
-//            }
+            }
             
-//        }
+        }
         makeMap();
         
         for (int j = 0; j < players.length; j++)
@@ -161,21 +160,11 @@ public class Driver extends Application {
         double third;
         double fourth;
 
-        if ((y + 2) * Math.sqrt(300) <= MAP_PANE_HEIGHT && (x * 60) + 70 <= MAP_PANE_WIDTH) {
-            
-            if (y == 0) {
-                top = Math.sqrt(300);
-                middle = 20;
-                bottom = 2 * Math.sqrt(300);
-            } else if (y == 1) {
-                top = 20;
-                middle = 2 * Math.sqrt(300);
-                bottom = 3 * Math.sqrt(300);
-            } else {
-                top = y * Math.sqrt(300);
-                middle = (y + 1) * Math.sqrt(300);
-                bottom = (y + 2) * Math.sqrt(300);
-            }
+        if ((y + 4) * Math.sqrt(300) <= MAP_PANE_HEIGHT && (x * 60) + 83 <= MAP_PANE_WIDTH) {
+           
+            top = (y + 2) * Math.sqrt(300);
+            middle = (y + 3) * Math.sqrt(300);
+            bottom = (y + 4) * Math.sqrt(300);
 
             if (y % 2 == 0) {
                 first = x * 60;
@@ -188,6 +177,11 @@ public class Driver extends Application {
                 third = second + 20;
                 fourth = third + 10;
             }
+            
+            first += 13;
+            second += 13;
+            third += 13;
+            fourth += 13;
             
         } else {
             
