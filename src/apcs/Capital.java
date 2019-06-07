@@ -6,14 +6,22 @@
  */
 package apcs;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import javafx.scene.image.Image;
 
 
 public class Capital extends Unit
 {
-    public Capital(Tile t, FileInputStream i)
+    public Capital(Tile t)
     {
-        super(i);
+        try {
+            super.setImage(new Image(new FileInputStream(new File("src/Capital.png"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         unitCost = 0;
         unitStrength = 1;
         tile = t;

@@ -1,13 +1,22 @@
 package apcs;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
-public class Baron extends Unit{
+import javafx.scene.image.Image;
 
-	public Baron(FileInputStream i)
+public class Baron extends Unit {
+
+	public Baron()
 	{
-	    super(i);
+	    try {
+	        super.setImage(new Image(new FileInputStream(new File("src/Baron.png"))));
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 		super.unitCost = 54;
 		super.unitStrength = 3;
 	}
+	
 }
