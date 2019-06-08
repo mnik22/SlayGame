@@ -222,6 +222,7 @@ public class GUIController {
              * Draw the Map
              */
             
+            int tileCount = 0;
             mapPane = (Pane) root.lookup("#mapPane");
             System.out.println(mapPane.getWidth() + ", " + mapPane.getHeight());
             
@@ -289,11 +290,14 @@ public class GUIController {
                         });
                         
                         mapPane.getChildren().add(tile);
+                        tileCount++;
                     }
                     
                 }
                 
             }
+            
+            System.out.println("Tile Count: " + tileCount);
             
         } catch (IOException e) {
             
