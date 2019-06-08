@@ -263,42 +263,37 @@ public class Tile extends Polygon {
 	                {
 	                	//possibly put a noise or sumting.
 	                }
-                }
-                else
-                {
-                    //possibly put a noise or alert here
-                }
+	            }
+	            else
+	            {
+	            	newUnitTest(old, u);
+	                unit = u;
+	                u.setTile(this);
+	                setAdjacentProtection();
+	                super.setFill(new ImagePattern(unit.getImage()));
+	                test = true;
+	            }
             }
-            else
-            {
-            	newUnitTest(old, u);
-                unit = u;
-                u.setTile(this);
-                setAdjacentProtection();
-                super.setFill(new ImagePattern(unit.getImage()));
-                test = true;
-            }
-        }
-        else
-        {
-        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
-     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
-     		if(old != null)
-     		{
-     			unit = u;
-     			u.setTile(this);
-                setAdjacentProtection();
-                super.setFill(new ImagePattern(unit.getImage()));
-                test = true;
-     		}
-     		else
-     		{
-     			//maybe make a noise or something
-     		}
-        }
-                
-
-    return test;
+	        else
+	        {
+	        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
+	     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
+	     		if(old != null)
+	     		{
+	     			unit = u;
+	     			u.setTile(this);
+	                setAdjacentProtection();
+	                super.setFill(new ImagePattern(unit.getImage()));
+	                test = true;
+	     		}
+	     		else
+	     		{
+	     			//maybe make a noise or something
+	     		}
+	        }
+        }     
+	
+	    return test;
 }
     
     public Unit removeUnit()
