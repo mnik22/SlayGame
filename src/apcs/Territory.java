@@ -48,10 +48,13 @@ public class Territory {
     public void setCapital()
     {
     	//pre: there cannot be a capital already in this territory.
-        int rnd = (int)(Math.random()*tiles.size());
-        capital = tiles.get(rnd);                       
-        capital.setCapital(true);
-        capital.setUnit(new Capital(capital));
+    	if(tiles.size() > 1)
+    	{
+	        int rnd = (int)(Math.random()*tiles.size());
+	        capital = tiles.get(rnd);                       
+	        capital.setCapital(true);
+	        capital.setUnit(new Capital(capital));
+    	}
     }
     
     public boolean isAdjacent(Tile t)

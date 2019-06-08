@@ -256,7 +256,7 @@ public class Tile extends Polygon {
                                     	//possibly put a noise or alert here
 //                                		Alert a = new Alert(AlertType.WARNING);
 //                                		a.setTitle("Warning");     
-                                		return false;
+                                		test = false;
                         }
 	                }
 	                else
@@ -294,6 +294,7 @@ public class Tile extends Polygon {
         }     
 	
 	    return test;
+	    
 }
     
     public Unit removeUnit()
