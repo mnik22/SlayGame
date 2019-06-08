@@ -275,9 +275,9 @@ public class GUIController {
                                 boolean success = false;
                                 if (db.hasString()) {
                                 	if (db.getString().equals("Castle"))
-                                			success = tile.setUnit(new Castle(tile));
+                                			success = tile.setUnit(new Castle(null));
                                 	else if (db.getString().equals("Pesant"))
-                                			success = tile.setUnit(new Peasant(tile));
+                                			success = tile.setUnit(new Peasant(null));
                                 	else {
                                 		System.out.println("Cannot place unit.");
                                 	}
