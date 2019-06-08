@@ -91,9 +91,16 @@ public class Territory {
         if(isAdjacent(t))
         {
             if(!t.getPlayer().equals(player))
-            {
+            { //capturing
                 if(u.getStrength() > t.getProtection())
                 {
+                	Territory ter = t.getTerritory();
+                	ter.removeTile(t);
+                	if(t.isCapital())
+                	{
+                		t.setCapital(false);
+                		ter.setCapital();
+                	}
                     t.setUnit(old.removeUnit());
                     t.setPlayer(player);
                     tiles.add(t);
@@ -155,16 +162,6 @@ public class Territory {
         return false;
     }
     
-    public void updateTiles()
-    {
-    	for(int i = tiles.size()-1; i >= 0; i--)
-    	{
-    		if(tiles.get(i).getPlayer() != player)
-    		{
-    			tiles.remove(i);
-    		}
-    	}
-    }
     
     //ECONOMY METHODS
     
