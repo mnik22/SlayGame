@@ -95,7 +95,7 @@ public class Tile extends Polygon {
                 topLeft = null;
                 bottomLeft = null;
             }
-            else
+            else if(horizontalPos > 1)
             {
                 left = Driver.map[horizontalPos - 2][verticalPos];
             }
@@ -118,7 +118,7 @@ public class Tile extends Polygon {
                 topLeft = null; checkTopLeft = 1;
                 bottomLeft = null; checkBottomLeft = 1;
             }
-            else
+            else if(horizontalPos > 1)
             {
                 left = Driver.map[horizontalPos - 2][verticalPos];
             }
@@ -142,7 +142,7 @@ public class Tile extends Polygon {
         {
             if(horizontalPos < Driver.map.length - 2 && verticalPos < Driver.map[0].length - 1)
             {
-                if(checkTopRight != 1 )
+                if(checkTopRight != 1)
                     topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
             }
             if(horizontalPos > 1 && verticalPos < Driver.map[0].length - 1)
@@ -152,15 +152,15 @@ public class Tile extends Polygon {
         }
         if(verticalPos == Driver.map[0].length - 2)
         {
-            bottomRight = null;
-            bottomLeft = null;
+            bottomRight = null; 
+            bottomLeft = null;  
         }
         else
         {
-            if(horizontalPos < Driver.map.length - 2 && verticalPos < 0)
+            if(horizontalPos < Driver.map.length - 2 && verticalPos > 0)
                 if(checkBottomRight != 1)
                     bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
-            if(horizontalPos < 1 && verticalPos < 0)
+            if(horizontalPos > 1 && verticalPos > 0)
                 if(checkBottomLeft != 1)
                     bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
         }
