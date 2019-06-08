@@ -240,33 +240,17 @@ public class Territory {
         return money >= 5;
     }
     
-    public void buyUnit( Tile t, Unit u)
+    
+    public boolean containsTile(Tile t)
     {
-        if(u instanceof Peasant)
-        {
-            if(money >= 5)
-            {
-                money -= 5; //peasant costs 5
-                t.setUnit(u);
-            }
-            else
-            {
-                //play noise
-            }
-        }
-        else if(u instanceof Castle)
-        {
-            if(money >= 10)
-            {
-                money -= 10; //castle costs 10
-                t.setUnit(u);
-            }
-            else
-            {
-                //play noise
-            }
-        }
-        availbleUnits();
+    	for(int i = 0; i < tiles.size(); i++)
+    	{
+    		if(tiles.get(i).equals(t))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     public int getNumTiles()

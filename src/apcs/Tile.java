@@ -211,6 +211,12 @@ public class Tile extends Polygon {
         return unit;
     }
     
+    public void moveUnit(Unit u)
+    {
+    	Territory t = player.containsTile(this);
+    	t.moveUnit(u, this);
+    }
+    
     //pre: a non null unit.
     //post: returns true if it could set the unit false otherwise.
 	public boolean setUnit(Unit u) //this method is for creating new units or called from territories move unit method
@@ -228,19 +234,19 @@ public class Tile extends Polygon {
                         int curProtect = unit.getStrength();
                         switch(curProtect) //for upgrading with a peasant.
                         {
-                            case 1:     
+                            case 1:     newUnitTest(old, u);
                                         unit = new Spearman(this);
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
                                         break;
-                            case 2:     
+                            case 2:     newUnitTest(old, u);
                                         unit = new Knight(this);
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
                                         break;
-                            case 3:
+                            case 3:		newUnitTest(old, u);
                                         unit = new Baron(this);
                                         setAdjacentProtection();
                                         super.setFill(new ImagePattern(unit.getImage()));
@@ -252,42 +258,48 @@ public class Tile extends Polygon {
 //                                		a.setTitle("Warning");     
                                 		return false;
                         }
-                    }
-                    else
-                    {
-                        //possibly put a noise or alert here
-                    }
+	                }
+	                else
+	                {
+	                	//possibly put a noise or sumting.
+	                }
                 }
                 else
                 {
-                    unit = u;
-                    setAdjacentProtection();
-                    super.setFill(new ImagePattern(unit.getImage()));
-                    test = true;
+                    //possibly put a noise or alert here
                 }
             }
             else
             {
-            	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
-         		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
-         		if(old != null)
-         		{
-         			unit = u;
-                    setAdjacentProtection();
-                    super.setFill(new ImagePattern(unit.getImage()));
-                    test = true;
-         		}
-         		else
-         		{
-         			//maybe make a noise or something
-         		}
+            	newUnitTest(old, u);
+                unit = u;
+                u.setTile(this);
+                setAdjacentProtection();
+                super.setFill(new ImagePattern(unit.getImage()));
+                test = true;
             }
-	            
-       	}
-        
+        }
+        else
+        {
+        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
+     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
+     		if(old != null)
+     		{
+     			unit = u;
+     			u.setTile(this);
+                setAdjacentProtection();
+                super.setFill(new ImagePattern(unit.getImage()));
+                test = true;
+     		}
+     		else
+     		{
+     			//maybe make a noise or something
+     		}
+        }
+                
 
-        return test;
-    }
+    return test;
+}
     
     public Unit removeUnit()
     {
@@ -423,6 +435,59 @@ public class Tile extends Polygon {
         }
     }
     
+    public boolean chargeTerritory(Unit u)  //this method charges the territory that this tile is in for a unit bought
+    {
+    	//u has to be a peasant or a castle
+    	Territory t = getTerritory();
+    	if(u instanceof Peasant)
+    	{
+    		if(t.money > 5)
+    		{
+    			t.money -= 5;
+//    			t.availbleUnits();
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    		
+    	}
+    	else if(u instanceof Castle)
+    	{
+    		if(t.money > 10)
+    		{
+    			t.money -= 10;
+//   			t.availbleUnits();
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	else
+    	{
+    		System.out.println("Something went wrong with charging for a unit, the unit was a  " + u );
+    	}
+    	return false;
+    	
+    }
+    
+    public boolean newUnitTest(Tile old, Unit u) //this method sees if this unit has just been bought and then charges it if it should.
+    {
+    	//post: calls chargeTerritory if this is a new unit.
+    	if(old == null)
+    	{
+    		return chargeTerritory(u);
+    	}
+    	return false;
+    }
+    
+    public Territory getTerritory()
+    {
+    	return player.containsTile(this);
+    }
     
     //Image View Stuff   --   not in use anymore.
 //    public void setImageCoords(double x,double y)

@@ -101,6 +101,18 @@ public class Player
         return num;
     }
     
+    public Territory containsTile(Tile t)
+    {
+    	for(int i = 0; i < territories.size(); i++)
+    	{
+    		if(territories.get(i).containsTile(t))
+    		{
+    			return territories.get(i);
+    		}
+    	}
+    	return null;
+    }
+    
     public void playRound()
     {
         //this updates the endTurn variable and the canMove variable for every 
