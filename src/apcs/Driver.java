@@ -18,9 +18,13 @@ public class Driver extends Application {
     private final int MAP_PANE_WIDTH = 1000;
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
-    private static final int NUM_TILES = 180;
+    private static final int NUM_TILES = 6;
     private Tile[][] GUIMap;
     private Color[] colors;
+    private static final int CENTER_TILE_INDEX_W = 7;
+    private static final int CENTER_TILE_INDEX_H = 20;
+    private static final int CENTER_TILE_GUI_INDEX_ROW = 21;
+    private static final int CENTER_TILE_GUI_INDEX_COLUMN = 22;
     
     private Thread gameThread;
     
@@ -32,10 +36,9 @@ public class Driver extends Application {
     public void start(Stage primaryStage) {
         
         
-        GUIMap = new Tile[15][44];
+        GUIMap = new Tile[42][44];
         colors = new Color[NUM_PLAYERS];
         
-        // TODO: Actually initialize the colors
         colors[0] = Color.BLUE;
         colors[1] = Color.GREEN;
         colors[2] = Color.MAGENTA;
@@ -45,84 +48,40 @@ public class Driver extends Application {
         
         players = new Player[NUM_PLAYERS];
         players[0] = new HumanPlayer(colors[0]);
-        for (int i = 1; i < players.length; i++)
-            players[i] = new AIPlayer(colors[i]);
+        for (int i = 1; i < players.length; i++) 
+            players[i] = new AIPlayer(colors[i]); 
         
         currentPlayer = players[0];
         
         int count = 0;
-        int[] tilesRemaining = { NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6, NUM_TILES / 6 }; // Each player gets 1/6 of the total tiles.
-        while (count < NUM_TILES) {
-            
-            /* Width = Number of Columns
-             * Height = Number of Rows
-             */
-            int rnd = (int)(Math.random()*6);
-            if(tilesRemaining[rnd] > 0)
-            {
-                int randPosW = (int)(Math.random() * GUIMap[0].length);
-                int randPosH = (int)(Math.random() * GUIMap.length);
-                
-                if (GUIMap[randPosH][randPosW] == null) {
-                    
-                        Tile temp = new Tile(randPosW, randPosH);
-                        temp.setPlayer(players[rnd]);
-                        temp.getPoints().addAll(loadCoords(randPosW, randPosH));
-                        System.out.println("Coords: " + temp.getPoints().toString());
-                        
-                        if (!temp.getPoints().contains(-1.0)) {
-                            double distance = Math.sqrt(Math.pow(Math.abs(randPosW - 500) - 500, 2) + Math.pow(Math.abs(randPosH - 400) - 400, 2));
-                            double chanceOfTile = Math.random();
-                            System.out.println("distance: " + distance);
-                            if(distance < 10 && chanceOfTile <= 0.9)
-                            {
-                                GUIMap[randPosH][randPosW] = temp;
-                                count++;
-                                tilesRemaining[rnd]--;
-                            }
-                            else if(distance < 20 && chanceOfTile <= 0.7)
-                            {
-                                GUIMap[randPosH][randPosW] = temp;
-                                count++;
-                                tilesRemaining[rnd]--;
-                            }
-                            else if(distance < 30 && chanceOfTile <= 0.5)
-                            {
-                                GUIMap[randPosH][randPosW] = temp;
-                                count++;
-                                tilesRemaining[rnd]--;
-                            }
-                            else if((distance < 40 && chanceOfTile <= 0.3))
-                            {
-                                GUIMap[randPosH][randPosW] = temp;
-                                count++;
-                                tilesRemaining[rnd]--;
-                            }
-                            else if(Math.random() <= 0.1)
-                            {
-                                GUIMap[randPosH][randPosW] = temp;
-                                count++;
-                                tilesRemaining[rnd]--;
-                            }
-                            
-                        }
-////                        if(GUIMap[randPosH][randPosW]) //need to finish this, it is supposed to find if there are any adjacent of same player and then add it to the therrirtory or create a new one.
-////                        {
-////                            
-////                        }
-//                    
-            }
-            
-            
-            
+        int numTilesCreated = 0;
+        int[] tilesRemaining = { NUM_TILES / NUM_PLAYERS, NUM_TILES / NUM_PLAYERS, NUM_TILES / NUM_PLAYERS, NUM_TILES / NUM_PLAYERS, NUM_TILES / NUM_PLAYERS, NUM_TILES / NUM_PLAYERS}; // Each player gets 1/6 of the total tiles.
+        
+        //sets center tile
+        int rnd = (int) Math.random() * players.length;
+        Tile t = new Tile(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H);
+        t.setPlayer(players[rnd]);
+        t.getPoints().addAll(loadCoords(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H));
+        System.out.println("Coords: " + t.getPoints().toString());
+        GUIMap[CENTER_TILE_GUI_INDEX_ROW][CENTER_TILE_GUI_INDEX_COLUMN] = t;
+        
+//        while(count < NUM_TILES)
+//        {
+//            int rndPlayer = (int) Math.random() * players.length;
+//            Tile temp = new Tile(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H);
+//            
+//            System.out.println("called placeTile: " + count);
+//            placeTile(temp, CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H, CENTER_TILE_GUI_INDEX_ROW, CENTER_TILE_GUI_INDEX_COLUMN);
+//            count++;
+//        }
+//            
                 
 //                Territory t = new Territory(players[playerIndex]);
 //                players[playerIndex].addTerritory(t);
                 
                 
-            }
             
-        }
+            
         makeMap();
         
         for (int j = 0; j < players.length; j++)
@@ -147,6 +106,80 @@ public class Driver extends Application {
         gameThread.start();
     }
     
+//    private void placeTile(Tile t, int tileIndexW, int tileIndexH, int tileGuiIndexRow, int tileGuiIndexColumn)
+//    {
+//        int rndPos = (int) (Math.random()*6) + 1; //6 sides of a hexagon
+//        int rndPlayer = (int) Math.random() * players.length;
+//        switch(rndPos) {
+//        
+//            case 1:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow - 1][tileGuiIndexColumn] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW - 1, tileIndexH));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow - 1][tileGuiIndexColumn] = t;
+//                }
+//                else if (tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW-1, tileIndexH, tileGuiIndexRow-1, tileGuiIndexColumn);
+//                else
+//                    return;
+//                break;
+//            case 2:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow][tileGuiIndexColumn -1] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH -1));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow][tileGuiIndexColumn - 1] = t;
+//                }
+//                else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW, tileIndexH-1, tileGuiIndexRow, tileGuiIndexColumn -1 );
+//                else
+//                    return;
+//                break;
+//            case 3:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow -1][tileGuiIndexColumn -1] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW-1, tileIndexH -1));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] = t;
+//                }
+//                else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW-1, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn -1 );
+//                else
+//                    
+//                break;
+//            case 4:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW + 1, tileIndexH));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] = t;
+//                }
+//                else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW+1, tileIndexH, tileGuiIndexRow + 1, tileGuiIndexColumn);
+//                else 
+//                    return;
+//                break;
+//            case 5:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow][tileGuiIndexColumn + 1] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH + 1));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow][tileGuiIndexColumn + 1] = t;
+//                }
+//                else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW, tileIndexH + 1, tileGuiIndexRow, tileGuiIndexColumn + 1);
+//                else
+//                    return;
+//                break;
+//            case 6:
+//                if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length && GUIMap[tileGuiIndexRow  + 1][tileGuiIndexColumn + 1] == null) {
+//                    t.getPoints().addAll(loadCoords(tileIndexW + 1, tileIndexH + 1));
+//                    t.setPlayer(players[rndPlayer]);
+//                    GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn + 1] = t;
+//                }
+//                else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length && tileGuiIndexColumn < GUIMap[0].length)
+//                    placeTile(t, tileIndexW+1, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn+1 );
+//                else
+//                    return;
+//                break;
+//        }
+//    }
     
             
     private Double[] loadCoords(int x, int y) {
