@@ -211,10 +211,10 @@ public class Tile extends Polygon {
         return unit;
     }
     
-    public void moveUnit(Unit u)
+    public boolean moveUnit(Unit u)
     {
     	Territory t = player.containsTile(this);
-    	t.moveUnit(u, this);
+    	return(t.moveUnit(u, this));
     }
     
     //pre: a non null unit.

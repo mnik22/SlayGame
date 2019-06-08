@@ -85,8 +85,9 @@ public class Territory {
         return temp;
     }
     
-    public void moveUnit(Unit u, Tile t) //this method is for moving a unit already in play.
+    public boolean moveUnit(Unit u, Tile t) //this method is for moving a unit already in play.
     {
+    	boolean test = false;
         Tile old = u.getTile();
         if(isAdjacent(t))
         {
@@ -106,10 +107,12 @@ public class Territory {
                     tiles.add(t);
                     t.setAdjacentProtection();
                     u.move(false);
+                    test = true;
                 }
                 else
                 {
                     //maybe play a noise or something
+                	test = false;
                 }
             }
             else
@@ -118,6 +121,7 @@ public class Territory {
                 {
                     t.setUnit(old.removeUnit());
                     t.setAdjacentProtection();
+                    test = true;
                 }
                 else if(u instanceof Peasant)
                 {
@@ -126,18 +130,23 @@ public class Territory {
                 		old.removeUnit();
                 		t.setAdjacentProtection();
                 		u.move(false);
+                		test = true;
                 	}
                 }
                 else
                 {
                 	//maybe play noise or something
+                	test = false;
                 }
             }
         }
         else
         {
         	// maybe play noise or something
+        	test = false;
+
         }
+        return test;
     }
     
     public void resetMove()
