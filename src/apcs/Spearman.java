@@ -16,7 +16,7 @@ public class Spearman extends Unit{
             e.printStackTrace();
         }
 		super.unitCost = 6;
-		super.unitStrength = 1;
+		super.unitStrength = 2;
 	}
 	
 }

@@ -17,7 +17,7 @@ public class Peasant extends Unit{
 	    }
 	    tile = t;
 		super.unitCost = 2;
-		super.unitStrength = 0;
+		super.unitStrength = 1;
 		canMove = true;
 	}
 	

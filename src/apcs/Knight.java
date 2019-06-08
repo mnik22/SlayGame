@@ -16,7 +16,7 @@ public class Knight extends Unit{
 	        e.printStackTrace();
 	    }
 		super.unitCost = 18;
-		super.unitStrength = 2;
+		super.unitStrength = 3;
 		tile = t;
 	}
 	

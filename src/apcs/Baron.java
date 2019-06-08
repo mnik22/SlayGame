@@ -16,7 +16,7 @@ public class Baron extends Unit {
 	        e.printStackTrace();
 	    }
 		super.unitCost = 54;
-		super.unitStrength = 3;
+		super.unitStrength = 4;
 		tile = t;
 	}
 	
