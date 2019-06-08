@@ -12,13 +12,10 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,6 +58,8 @@ public class GUIController {
     private Image knightImage;
     private ImageView baronImageView;
     private Image baronImage;
+    
+    private Image capitalImage;
     
     private Button finishTurnButton;
     
@@ -131,7 +130,7 @@ public class GUIController {
                     Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(castleSelectorImageView.getImage());
-                    content.putString("Castle");
+                    content.putString("N_Castle");
                     db.setContent(content);
                     event.consume();
                 }
@@ -161,7 +160,7 @@ public class GUIController {
                     Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(pesantSelectorImageView.getImage());
-                    content.putString("Pesant");
+                    content.putString("N_Pesant");
                     db.setContent(content);
                     event.consume();
                 }
@@ -218,6 +217,8 @@ public class GUIController {
                 
             });
             
+            capitalImage = new Image(new FileInputStream("src/Capital.png"));
+            
             /*
              * Draw the Map
              */
@@ -257,7 +258,8 @@ public class GUIController {
                         tile.setOnDragEntered(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
                                  if (event.getGestureSource() != tile &&
-                                         event.getDragboard().hasImage()) {
+                                         event.getDragboard().hasImage() &&
+                                         tile.getUnit() == null) {
                                      tile.setFill(new ImagePattern(event.getDragboard().getImage()));
                                  }
                                  event.consume();
@@ -274,17 +276,95 @@ public class GUIController {
                                 Dragboard db = event.getDragboard();
                                 boolean success = false;
                                 if (db.hasString()) {
-                                	if (db.getString().equals("Castle"))
-                                			success = tile.setUnit(new Castle(null));
-                                	else if (db.getString().equals("Pesant"))
-                                			success = tile.setUnit(new Peasant(null));
-                                	else {
-                                		System.out.println("Cannot place unit.");
-                                	}
+                                    switch (db.getString()) {
+                                    
+                                    case "N_Pesant":
+                                        success = tile.setUnit(new Peasant(null));
+                                        break;
+                                    
+                                    case "Pesant":
+                                        success = tile.moveUnit(new Peasant(tile));
+                                        break;
+                                        
+                                    case "N_Castle":
+                                        success = tile.setUnit(new Castle(null));
+                                        break;
+                                        
+                                    case "Castle":
+                                        success = tile.moveUnit(new Castle(tile));
+                                        break;
+                                        
+                                    case "Baron":
+                                        success = tile.moveUnit(new Baron(tile));
+                                        break;
+                                        
+                                    case "Capital":
+                                        success = tile.moveUnit(new Capital(tile));
+                                        break;
+                                        
+                                    case "Knight":
+                                        success = tile.moveUnit(new Knight(tile));
+                                        break;
+                                        
+                                    case "Spearman":
+                                        success = tile.moveUnit(new Spearman(tile));
+                                        break;
+                                        
+                                    default:
+                                        System.out.println("Couldn't place unit here.");    
+                                        
+                                    }
                                 } else {
                                 	System.out.println("No String found in the dragboard.");
                                 }
                                 event.setDropCompleted(success);
+                                event.consume();
+                            }
+                        });
+                        tile.setOnDragDetected(new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent event) {
+                                Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
+                                ClipboardContent content = new ClipboardContent();
+                                if (tile.getUnit() != null) {
+                                    if (tile.getUnit() instanceof Peasant) {
+                                        content.putImage(pesantImage);
+                                        content.putString("Pesant");
+                                        db.setContent(content);
+                                    } else if (tile.getUnit() instanceof Castle) {
+                                        content.putImage(castleImage);
+                                        content.putString("Castle");
+                                        db.setContent(content);
+                                    } else if (tile.getUnit() instanceof Baron) {
+                                        content.putImage(baronImage);
+                                        content.putString("Baron");
+                                        db.setContent(content);
+                                    } else if (tile.getUnit() instanceof Capital) {
+                                        content.putImage(capitalImage);
+                                        content.putString("Capital");
+                                        db.setContent(content);
+                                    } else if (tile.getUnit() instanceof Knight) {
+                                        content.putImage(knightImage);
+                                        content.putString("Knight");
+                                        db.setContent(content);
+                                    } else if (tile.getUnit() instanceof Spearman) {
+                                        content.putImage(spearmanImage);
+                                        content.putString("Spearman");
+                                        db.setContent(content);
+                                    } else {
+                                        System.out.println("Unknown unit type.");
+                                    }
+                                } else {
+                                    System.out.println("There are no units to move on this tile.");
+                                }
+                                event.consume();
+                            }
+                        });
+                        tile.setOnDragDone(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+                                if (event.getTransferMode() == TransferMode.MOVE) {
+                                    tile.setFill(fillColor);
+                                    tile.setUnit(null);
+                                }
                                 event.consume();
                             }
                         });
@@ -312,6 +392,24 @@ public class GUIController {
         
         propertiesBarChart.getData().setAll(series);
         
+    }
+    
+    public void setTileFill(Tile t, Image i) {
+        mapPane.getChildren().remove(t);
+        t.setFill(new ImagePattern(i));
+        mapPane.getChildren().add(t);
+    }
+    
+    public void setTileFill(Tile t, Color c) {
+        mapPane.getChildren().remove(t);
+        int red = c.getRed();
+        int green = c.getGreen();
+        int blue = c.getBlue();
+        int alpha = c.getAlpha();
+        double opacity = alpha / 255.0 ;
+        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+        t.setFill(fillColor);
+        mapPane.getChildren().add(t);
     }
     
     public void setSavings(int amt) {
