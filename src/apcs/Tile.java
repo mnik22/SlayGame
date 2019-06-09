@@ -206,6 +206,16 @@ public class Tile extends Polygon {
         return verticalPos;
     }
     
+    public int getX()
+    {
+    	return guiHorizontalPos;
+    }
+    
+    public int getY()
+    {
+    	return guiVerticalPos;
+    }
+    
     public Unit getUnit()
     {
         return unit;
