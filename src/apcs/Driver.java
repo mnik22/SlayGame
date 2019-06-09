@@ -410,7 +410,17 @@ public class Driver extends Application {
         int playerNum = 0;
         while(playerNum < players.length && !gameWon())
         {
-            players[playerNum].playRound();
+        	//System.out.println(currentPlayer.getColor());
+        	if(playerNum == 0)
+        	{
+        		HumanPlayer temp = (HumanPlayer)players[playerNum];
+        		temp.playRound();
+        	}
+        	else
+        	{
+        		AIPlayer temp = (AIPlayer)players[playerNum];
+        		temp.playRound();
+        	}
             if(playerNum < players.length - 1)
                 playerNum++;
             else

@@ -27,7 +27,7 @@ public class Player
                 return false;
         }
         return true;
-    	//return false; // this is temporary the other stuff should be added back when we construct territories at the beginning.
+//    	return false;
     }
     
     public void buttonEndTurn()
