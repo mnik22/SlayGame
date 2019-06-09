@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 public class Driver extends Application {
     
-    private static GUIController guiController;
+    public static GUIController guiController;
     private final int MAP_PANE_WIDTH = 1000;
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
