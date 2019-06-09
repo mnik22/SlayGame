@@ -255,6 +255,7 @@ public class GUIController {
                         });
                         tile.setOnDragDropped(event -> {
                             Dragboard db = event.getDragboard();
+                            System.out.println(event.getDragboard().getString());
                             boolean success = false;
                             if (db.hasString()) {
                                 switch (db.getString()) {
@@ -268,11 +269,13 @@ public class GUIController {
                                         break;
 
                                     default:
-                                        int x = Integer.parseInt(db.getString().substring(0, 1));
-                                        int y = Integer.parseInt(db.getString().substring(3, 4));
+                                        int x = Integer.parseInt(db.getString().substring(0, db.getString().indexOf(','))); //x seems to always be 7 
+                                        int y = Integer.parseInt(db.getString().substring(db.getString().indexOf(' ') + 1, db.getString().length())); // y always seems to be 20
                                         Tile previousTile = map[y][x];
                                         if (previousTile.getUnit() != null)
+                                        {
                                             success = tile.moveUnit(previousTile.getUnit());
+                                        }
                                         else
                                             System.out.println("There is no unit here to move.");
 
