@@ -342,7 +342,9 @@ public class GUIController {
         
     }
     
-    public void setTileFill(Tile t) {
+    public void setTileFill(int x, int y) {
+
+        Tile t = map[y][x];
 
         if (t.getUnit() != null) {
             if (t.getUnit() instanceof Peasant) {
