@@ -342,23 +342,30 @@ public class GUIController {
         
     }
     
-    public void setTileFill(Tile tile) {
+    public void setTileFill(Tile t) {
 
-        if (tile.getUnit() != null) {
-            if (tile.getUnit() instanceof Peasant) {
-                tile.setFill(new ImagePattern(pesantImage));
-            } else if (tile.getUnit() instanceof Castle) {
-                tile.setFill(new ImagePattern(castleImage));
-            } else if (tile.getUnit() instanceof Baron) {
-                tile.setFill(new ImagePattern(baronImage));
-            } else if (tile.getUnit() instanceof Capital) {
-                tile.setFill(new ImagePattern(capitalImage));
-            } else if (tile.getUnit() instanceof Knight) {
-                tile.setFill(new ImagePattern(knightImage));
-            } else if (tile.getUnit() instanceof Spearman) {
-                tile.setFill(new ImagePattern(spearmanImage));
+        if (t.getUnit() != null) {
+            if (t.getUnit() instanceof Peasant) {
+                t.setFill(new ImagePattern(pesantImage));
+            } else if (t.getUnit() instanceof Castle) {
+                t.setFill(new ImagePattern(castleImage));
+            } else if (t.getUnit() instanceof Baron) {
+                t.setFill(new ImagePattern(baronImage));
+            } else if (t.getUnit() instanceof Capital) {
+                t.setFill(new ImagePattern(capitalImage));
+            } else if (t.getUnit() instanceof Knight) {
+                t.setFill(new ImagePattern(knightImage));
+            } else if (t.getUnit() instanceof Spearman) {
+                t.setFill(new ImagePattern(spearmanImage));
             } else {
-                System.out.println("Unknown unit type.");
+                Color c = t.getPlayer().getColor();
+                int red = c.getRed();
+                int green = c.getGreen();
+                int blue = c.getBlue();
+                int alpha = c.getAlpha();
+                double opacity = alpha / 255.0 ;
+                javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+                t.setFill(fillColor);
             }
         }
 
