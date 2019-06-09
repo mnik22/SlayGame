@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -281,37 +282,19 @@ public class GUIController {
                                     case "N_Pesant":
                                         success = tile.setUnit(new Peasant(null));
                                         break;
-                                    
-                                    case "Pesant":
-                                        success = tile.moveUnit(new Peasant(tile));
-                                        break;
                                         
                                     case "N_Castle":
                                         success = tile.setUnit(new Castle(null));
                                         break;
                                         
-                                    case "Castle":
-                                        success = tile.moveUnit(new Castle(tile));
-                                        break;
-                                        
-                                    case "Baron":
-                                        success = tile.moveUnit(new Baron(tile));
-                                        break;
-                                        
-                                    case "Capital":
-                                        success = tile.moveUnit(new Capital(tile));
-                                        break;
-                                        
-                                    case "Knight":
-                                        success = tile.moveUnit(new Knight(tile));
-                                        break;
-                                        
-                                    case "Spearman":
-                                        success = tile.moveUnit(new Spearman(tile));
-                                        break;
-                                        
                                     default:
-                                        System.out.println("Couldn't place unit here.");    
+                                        int x = Integer.parseInt(db.getString().substring(0, 1));
+                                        int y = Integer.parseInt(db.getString().substring(3, 4));
+                                        Tile previousTile = map[y][x];
+                                        if (previousTile.getUnit() != null)
+                                            success = tile.moveUnit(previousTile.getUnit());
+                                        else
+                                            System.out.println("There is no unit here to move.");
                                         
                                     }
                                 } else {
@@ -328,34 +311,24 @@ public class GUIController {
                                 if (tile.getUnit() != null) {
                                     if (tile.getUnit() instanceof Peasant) {
                                         content.putImage(pesantImage);
-                                        content.putString("Pesant");
-                                        db.setContent(content);
                                     } else if (tile.getUnit() instanceof Castle) {
                                         content.putImage(castleImage);
-                                        content.putString("Castle");
-                                        db.setContent(content);
                                     } else if (tile.getUnit() instanceof Baron) {
                                         content.putImage(baronImage);
-                                        content.putString("Baron");
-                                        db.setContent(content);
                                     } else if (tile.getUnit() instanceof Capital) {
                                         content.putImage(capitalImage);
-                                        content.putString("Capital");
-                                        db.setContent(content);
                                     } else if (tile.getUnit() instanceof Knight) {
                                         content.putImage(knightImage);
-                                        content.putString("Knight");
-                                        db.setContent(content);
                                     } else if (tile.getUnit() instanceof Spearman) {
                                         content.putImage(spearmanImage);
-                                        content.putString("Spearman");
-                                        db.setContent(content);
                                     } else {
                                         System.out.println("Unknown unit type.");
                                     }
                                 } else {
                                     System.out.println("There are no units to move on this tile.");
                                 }
+//                                content.putString(tile.get); // TODO: Want to set this to be the GUIMap coords of this tile (x, y);
+                                db.setContent(content);
                                 event.consume();
                             }
                         });
