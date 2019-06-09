@@ -204,8 +204,14 @@ public class Tile extends Polygon {
     
     public boolean equals(Tile t)
     {
-    	System.out.println(horizontalPos + " " + t.getHor() + " " + verticalPos + " " + t.getVert());
-        return(horizontalPos == t.getHor() && verticalPos == t.getVert());
+    	if(t != null)
+    	{
+    		return(horizontalPos == t.getHor() && verticalPos == t.getVert());
+    	}
+    	else
+    	{
+    		return false;
+    	}
     }
     
     public int getHor()
@@ -385,10 +391,13 @@ public class Tile extends Polygon {
         {
             for(int i = 0; i < adjacentTiles.length; i++)
             {
-                if(adjacentTiles[i].hasUnit() && adjacentTiles[i].getPlayer().equals(player))
-                {
-                    temp.add(adjacentTiles[i]);
-                }
+            	if(adjacentTiles[i] != null)
+            	{
+	                if(adjacentTiles[i].hasUnit() && adjacentTiles[i].getPlayer().equals(player))
+	                {
+	                    temp.add(adjacentTiles[i]);
+	                }
+            	}
             }
         }
         return temp;
@@ -432,23 +441,26 @@ public class Tile extends Polygon {
     {
         for(int i = 0; i < adjacentTiles.length; i++)
         {
-            ArrayList<Tile> temp = adjacentTiles[i].hasProtection();
-            if(temp.size() > 0)
-            {
-                Unit strongest = temp.get(0).getUnit();
-                for(int k = 1; k < temp.size(); k++)
-                {
-                    if(temp.get(k).getUnit().getStrength() > strongest.getStrength())
-                    {
-                        strongest = temp.get(k).getUnit();
-                    }
-                }
-                adjacentTiles[i].setProtection(strongest.getStrength());
-            }
-            else
-            {
-                adjacentTiles[i].setProtection(0);
-            }
+        	if(adjacentTiles[i] != null)
+        	{
+	            ArrayList<Tile> temp = adjacentTiles[i].hasProtection();
+	            if(temp.size() > 0)
+	            {
+	                Unit strongest = temp.get(0).getUnit();
+	                for(int k = 1; k < temp.size(); k++)
+	                {
+	                    if(temp.get(k).getUnit().getStrength() > strongest.getStrength())
+	                    {
+	                        strongest = temp.get(k).getUnit();
+	                    }
+	                }
+	                adjacentTiles[i].setProtection(strongest.getStrength());
+	            }
+	            else
+	            {
+	                adjacentTiles[i].setProtection(0);
+	            }
+        	}
         }
     }
     
