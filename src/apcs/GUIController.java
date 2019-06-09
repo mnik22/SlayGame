@@ -342,32 +342,33 @@ public class GUIController {
         
     }
     
-    public void setTileFill(int x, int y) {
+    public void setTileFill(Tile t) {
 
-        Tile t = map[y][x];
+        int x = t.getX();
+        int y = t.getY();
 
-        if (t.getUnit() != null) {
-            if (t.getUnit() instanceof Peasant) {
-                t.setFill(new ImagePattern(pesantImage));
-            } else if (t.getUnit() instanceof Castle) {
-                t.setFill(new ImagePattern(castleImage));
-            } else if (t.getUnit() instanceof Baron) {
-                t.setFill(new ImagePattern(baronImage));
-            } else if (t.getUnit() instanceof Capital) {
-                t.setFill(new ImagePattern(capitalImage));
-            } else if (t.getUnit() instanceof Knight) {
-                t.setFill(new ImagePattern(knightImage));
-            } else if (t.getUnit() instanceof Spearman) {
-                t.setFill(new ImagePattern(spearmanImage));
+        if (map[y][x].getUnit() != null) {
+            if (map[y][x].getUnit() instanceof Peasant) {
+                map[y][x].setFill(new ImagePattern(pesantImage));
+            } else if (map[y][x].getUnit() instanceof Castle) {
+                map[y][x].setFill(new ImagePattern(castleImage));
+            } else if (map[y][x].getUnit() instanceof Baron) {
+                map[y][x].setFill(new ImagePattern(baronImage));
+            } else if (map[y][x].getUnit() instanceof Capital) {
+                map[y][x].setFill(new ImagePattern(capitalImage));
+            } else if (map[y][x].getUnit() instanceof Knight) {
+                map[y][x].setFill(new ImagePattern(knightImage));
+            } else if (map[y][x].getUnit() instanceof Spearman) {
+                map[y][x].setFill(new ImagePattern(spearmanImage));
             } else {
-                Color c = t.getPlayer().getColor();
+                Color c = map[y][x].getPlayer().getColor();
                 int red = c.getRed();
                 int green = c.getGreen();
                 int blue = c.getBlue();
                 int alpha = c.getAlpha();
                 double opacity = alpha / 255.0 ;
                 javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
-                t.setFill(fillColor);
+                map[y][x].setFill(fillColor);
             }
         }
 
