@@ -19,15 +19,15 @@ public class Player
 
     public boolean endTurn() 
     {
-//        if(endTurn)
-//            return endTurn;
-//        for(Territory t: territories)
-//        {
-//            if(t.canPurchaseUnits() || t.canMoveUnit())
-//                return false;
-//        }
-//        return true;
-    	return false; // this is temporary the other stuff should be added back when we construct territories at the beginning.
+        if(endTurn)
+            return endTurn;
+        for(Territory t: territories)
+        {
+            if(t.canPurchaseUnits() || t.canMoveUnit())
+                return false;
+        }
+        return true;
+    	//return false; // this is temporary the other stuff should be added back when we construct territories at the beginning.
     }
     
     public void buttonEndTurn()

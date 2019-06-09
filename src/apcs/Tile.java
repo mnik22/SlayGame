@@ -33,6 +33,7 @@ public class Tile extends Polygon {
     private Player player;
     
     private boolean isCapital;
+    private boolean hasTerritory;
     
     public Tile(int x, int y)
     {
@@ -59,6 +60,16 @@ public class Tile extends Polygon {
         {
             return false;
         }
+    }
+    
+    public boolean hasTerritory()
+    {
+    	return hasTerritory;
+    }
+    
+    public void setHasTerritory()
+    {
+    	hasTerritory = true;
     }
     
     public Player getPlayer()
@@ -235,6 +246,7 @@ public class Tile extends Polygon {
         boolean test = false;
         if(u != null) //this line is mostly useless now but i'm keeping it.
         {
+        	System.out.println(Driver.currentPlayer.equals(player));
             if(Driver.currentPlayer.equals(player))
             {
                 if(hasUnit())
@@ -278,6 +290,7 @@ public class Tile extends Polygon {
 	                u.setTile(this);
 	                setAdjacentProtection();
 	                test = true;
+	                System.out.println("The unit should be set: " + unit.getClass());
 	            }
             }
 	        else
@@ -297,7 +310,7 @@ public class Tile extends Polygon {
 	     		}
 	        }
         }     
-	
+        Driver.guiController.setTileFill(this);
 	    return test;
 	    
 }
@@ -347,19 +360,19 @@ public class Tile extends Polygon {
     {
         protection = p;
     }
-	public void setAdjacentProtection(int p) //sets this and adjacent tiles protection to p based on each tiles previous protection. //this also might be overlooked by the other setAdjacentProtection method as it does the samething but better.
-    {
-		//might be useless
-        if(protection < p)
-            protection = p;
-        for(int i = 0; i < adjacentTiles.length; i++)
-        {
-            if(player.equals(adjacentTiles[i].getPlayer()) && p > adjacentTiles[i].getProtection())
-            {
-                adjacentTiles[i].setProtection(p);
-            }
-        }
-    }
+//	public void setAdjacentProtection(int p) //sets this and adjacent tiles protection to p based on each tiles previous protection. //this also might be overlooked by the other setAdjacentProtection method as it does the samething but better.
+//    {
+//		//might be useless
+//        if(protection < p)
+//            protection = p;
+//        for(int i = 0; i < adjacentTiles.length; i++)
+//        {
+//            if(player.equals(adjacentTiles[i].getPlayer()) && p > adjacentTiles[i].getProtection())
+//            {
+//                adjacentTiles[i].setProtection(p);
+//            }
+//        }
+//    }
     public int getProtection()
     {
         return protection;
@@ -445,6 +458,7 @@ public class Tile extends Polygon {
     		if(t.money > 5)
     		{
     			t.money -= 5;
+    			
 //    			t.availbleUnits();
     			return true;
     		}
@@ -473,6 +487,7 @@ public class Tile extends Polygon {
     	}
     	return false;
     	
+    	
     }
     
     public boolean newUnitTest(Tile old, Unit u) //this method sees if this unit has just been bought and then charges it if it should.
@@ -480,6 +495,7 @@ public class Tile extends Polygon {
     	//post: calls chargeTerritory if this is a new unit.
     	if(old == null)
     	{
+    		System.out.println("This probs works");
     		return chargeTerritory(u);
     	}
     	return false;

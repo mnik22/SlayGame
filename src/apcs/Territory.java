@@ -12,10 +12,9 @@ public class Territory {
     private Player player;
     
     
-    public Territory(Player p, ArrayList<Tile> startingTiles)
+    public Territory(Player p)
     {
         player = p;
-        tiles.addAll(startingTiles); //might need a collection instead of an arraylist as the parameter.
     }
     
     public void addTile(Tile t)
@@ -43,6 +42,26 @@ public class Territory {
     public Player getPlayer()
     {
         return player;
+    }
+    
+    public boolean equals(Territory t)
+    {
+    	ArrayList<Tile> temp = t.getTiles();
+    	if(temp.size() == tiles.size())
+    	{
+    		for(int i = 0; i < temp.size(); i++)
+    		{
+    			if(!temp.get(i).equals(tiles.get(i)))
+    			{
+    				return false;
+    			}
+    		}
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    	return true;
     }
     
     public void setCapital()
@@ -166,10 +185,13 @@ public class Territory {
     public boolean canMoveUnit()
     {
         for (int i = 0; i <tiles.size(); i++) {
-            if(tiles.get(i).getUnit().canMove())
-            {
-                return true;
-            }
+        	if(tiles.get(i).getUnit() != null)
+        	{
+	            if(tiles.get(i).getUnit().canMove())
+	            {
+	                return true;
+	            }
+        	}
         }
         return false;
     }

@@ -349,6 +349,19 @@ public class Driver extends Application {
                     map[r][c].setAdjacent();              
             }
         }
+        
+        for(int r = 1; r < map.length; r++)
+        {
+        	for (int c = 1; c < map[0].length; c++)
+        	{
+        		if(map[r][c] != null)
+        		{
+        			setTerritories(map[r][c]);
+        		}
+        	}
+        }
+        
+        
 //        System.out.println("mapMade");
         
     }
@@ -408,5 +421,40 @@ public class Driver extends Application {
         return false;
     }
 
+    
+    public void setTerritories(Tile t)
+    {
+    	boolean check = true;
+    	for(int i = 0; i < t.getAdjacentTiles().length; i++)
+    	{
+    		if(t.getAdjacentTiles()[i] != null)
+    		{
+	    		if(t.getAdjacentTiles()[i].getPlayer().equals(t.getPlayer()) && t.getAdjacentTiles()[i].hasTerritory())
+	    		{
+	    			check = false;
+					Territory ter = t.getAdjacentTiles()[i].getTerritory();
+	    			if(!t.hasTerritory())
+	    			{
+		    			ter.addTile(t);
+		    			t.setHasTerritory();
+	    			}
+	    			else if(!ter.equals(t.getTerritory()))
+	    			{
+	    				Tile temp = t.getAdjacentTiles()[i];
+	    				ArrayList<Tile> meme = ter.getTiles();
+	    				ter.getPlayer().removeTerritory(ter);
+	    				t.getTerritory().addTiles(meme);    				
+	    			}
+	    		}
+    		}
+    	}
+    	if(check)
+    	{
+	    	Territory ter = new Territory(t.getPlayer());
+			t.getPlayer().addTerritory(ter);
+			ter.addTile(t);
+			t.setHasTerritory();
+    	}
+    }
 
 }
