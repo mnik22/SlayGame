@@ -153,19 +153,19 @@ public class Driver extends Application {
         
         guiController = new GUIController(primaryStage, GUIMap, players);
         
-//        gameThread = new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                System.out.println("started thread");
-//                newGame();
-//                playGame();
-//                System.out.println("running thread");
-//            }
-//                    
-//        });
-//        
-//        gameThread.start();
+        gameThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                System.out.println("started thread");
+                newGame();
+                playGame();
+                System.out.println("running thread");
+            }
+                    
+        });
+        
+        gameThread.start();
     }
     
     private void placeTile(Tile t, int tileIndexW, int tileIndexH, int tileGuiIndexRow, int tileGuiIndexColumn)
