@@ -204,6 +204,7 @@ public class Tile extends Polygon {
     
     public boolean equals(Tile t)
     {
+    	System.out.println(horizontalPos + " " + t.getHor() + " " + verticalPos + " " + t.getVert());
         return(horizontalPos == t.getHor() && verticalPos == t.getVert());
     }
     
@@ -310,7 +311,6 @@ public class Tile extends Polygon {
 	     		}
 	        }
         }     
-        Driver.guiController.setTileFill(this);
 	    return test;
 	    
 }
@@ -417,10 +417,13 @@ public class Tile extends Polygon {
     	setProtection();
         for(int i = 0; i < adjacentTiles.length; i++)
         {
-            if(adjacentTiles[i].getPlayer().equals(player))
-            {
-                adjacentTiles[i].setProtection();
-            }
+        	if(adjacentTiles[i] != null)
+        	{
+	            if(adjacentTiles[i].getPlayer().equals(player))
+	            {
+	                adjacentTiles[i].setProtection();
+	            }
+        	}
         }
     }
     

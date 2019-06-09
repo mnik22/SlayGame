@@ -361,6 +361,15 @@ public class Driver extends Application {
         	}
         }
         
+        for(int p = 0; p < players.length; p++)
+        {
+        	for(int t = 0; t < players[p].getTerritories().size(); t++)
+        	{
+        		players[p].getTerritories().get(t).setBeginningCapital();
+        	}
+        }
+        
+        
         
 //        System.out.println("mapMade");
         

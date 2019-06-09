@@ -64,6 +64,19 @@ public class Territory {
     	return true;
     }
     
+    public void setBeginningCapital()
+    {
+    	if(tiles.size() > 1)
+    	{
+    		int rnd = (int)(Math.random()*tiles.size());
+	        capital = tiles.get(rnd);                       
+	        capital.setCapital(true);
+	        capital.setUnit(new Capital(capital));
+//	        money = 5;
+//	        System.out.println("This is capital: " + capital + " and Unit " + capital.getUnit());
+    	}
+    }
+    
     public void setCapital()
     {
     	//pre: there cannot be a capital already in this territory.
@@ -95,13 +108,16 @@ public class Territory {
         
         for(int i = 0; i < tiles.size(); i++)
         {
-            Tile[] evenMoreTemp = temp.get(i).getAdjacentTiles();
+            Tile[] evenMoreTemp = tiles.get(i).getAdjacentTiles();
             for(int k = 0; k < evenMoreTemp.length; k++)
             {
-                if(!evenMoreTemp[i].getPlayer().equals(player) && !temp.contains(evenMoreTemp[i]))
-                {
-                    temp.add(evenMoreTemp[i]);
-                }
+            	if(evenMoreTemp[k] != null)
+            	{
+	                if(!evenMoreTemp[k].getPlayer().equals(player) && !temp.contains(evenMoreTemp[k]))
+	                {
+	                    temp.add(evenMoreTemp[k]);
+	                }
+            	}
             }
         }
         return temp;
