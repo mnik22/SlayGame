@@ -247,19 +247,16 @@ public class Tile extends Polygon {
                             case 1:     newUnitTest(old, u);
                                         unit = new Spearman(this);
                                         setAdjacentProtection();
-                                        super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
                                         break;
                             case 2:     newUnitTest(old, u);
                                         unit = new Knight(this);
                                         setAdjacentProtection();
-                                        super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
                                         break;
                             case 3:		newUnitTest(old, u);
                                         unit = new Baron(this);
                                         setAdjacentProtection();
-                                        super.setFill(new ImagePattern(unit.getImage()));
                                         test = true;
                                         break;
                             default:
@@ -280,7 +277,6 @@ public class Tile extends Polygon {
 	                unit = u;
 	                u.setTile(this);
 	                setAdjacentProtection();
-	                super.setFill(new ImagePattern(unit.getImage()));
 	                test = true;
 	            }
             }
@@ -293,7 +289,6 @@ public class Tile extends Polygon {
 	     			unit = u;
 	     			u.setTile(this);
 	                setAdjacentProtection();
-	                super.setFill(new ImagePattern(unit.getImage()));
 	                test = true;
 	     		}
 	     		else
