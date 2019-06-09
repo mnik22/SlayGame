@@ -76,9 +76,13 @@ public class Driver extends Application {
             {
                 Tile temp = new Tile(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H);
                 temp.setPlayer(players[rndPlayer]);
-                placeTile(temp, CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H, CENTER_TILE_GUI_INDEX_ROW, CENTER_TILE_GUI_INDEX_COLUMN);
-                count++;
-                tilesRemaining[rndPlayer]--;
+                boolean tilePlaced = false;
+                tilePlaced = placeTile(temp, CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H, CENTER_TILE_GUI_INDEX_ROW, CENTER_TILE_GUI_INDEX_COLUMN);
+                if(tilePlaced)
+                {
+                    count++;
+                    tilesRemaining[rndPlayer]--;
+                }
             }
         }
             
@@ -106,7 +110,7 @@ public class Driver extends Application {
         gameThread.start();
     }
     
-    private void placeTile(Tile t, int tileIndexW, int tileIndexH, int tileGuiIndexRow, int tileGuiIndexColumn)
+    private boolean placeTile(Tile t, int tileIndexW, int tileIndexH, int tileGuiIndexRow, int tileGuiIndexColumn)
     {
         int rndPos = (int) (Math.random()*6) + 1; //6 sides of a hexagon
         
@@ -116,115 +120,120 @@ public class Driver extends Application {
                 if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length - 2 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+2][tileGuiIndexColumn] == null) {
                     t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH + 2));
                     GUIMap[tileGuiIndexRow+2][tileGuiIndexColumn] = t;
+                    return true;
                 }
                 else if (tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1)
-                    placeTile(t, tileIndexW, tileIndexH +2, tileGuiIndexRow+2, tileGuiIndexColumn);
+                    return placeTile(t, tileIndexW, tileIndexH +2, tileGuiIndexRow+2, tileGuiIndexColumn);
                 else
-                    return;
-                break;
+                    return false;
             case 2: // top right
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn +1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW+1, tileIndexH+1));
                         GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn +1] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW + 1, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn +1 );
+                        return placeTile(t, tileIndexW + 1, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn +1 );
                     else
-                        return;
+                        return false;
                 }
                 else {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH+1));
                         GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn);
+                        return placeTile(t, tileIndexW, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn);
                     else
-                        return;
+                        return false;
                 }
-                break;
             case 3: //bottom right
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow -1][tileGuiIndexColumn +1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW +1, tileIndexH -1));
                         GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn +1] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW +1, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn +1);
+                        return placeTile(t, tileIndexW +1, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn +1);
                     else
-                        return;
+                        return false;
                 }
                 else {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow -1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH -1));
                         GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn);
+                        return placeTile(t, tileIndexW, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn);
                     else
-                        return;
+                        return false;
                 }
-                break;
             case 4: //bottom
                 if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow - 2][tileGuiIndexColumn] == null) {
                     t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH -2));
                     GUIMap[tileGuiIndexRow - 2][tileGuiIndexColumn] = t;
+                    return true;
                 }
                 else if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1)
-                    placeTile(t, tileIndexW, tileIndexH - 2, tileGuiIndexRow - 2, tileGuiIndexColumn);
+                    return placeTile(t, tileIndexW, tileIndexH - 2, tileGuiIndexRow - 2, tileGuiIndexColumn);
                 else 
-                    return;
-                break;
+                    return false;
             case 5: //bottom left
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn ] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW , tileIndexH-1));
                         GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn);
+                        return placeTile(t, tileIndexW, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn);
                     else
-                        return;
+                        return false;
                 }
                 else {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW - 1, tileIndexH-1));
                         GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW -1, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn - 1);
+                        return placeTile(t, tileIndexW -1, tileIndexH-1, tileGuiIndexRow-1, tileGuiIndexColumn - 1);
                     else
-                        return;
+                        return false;
                 }
-                break;
             case 6: //top left
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH + 1));
                         GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn);
+                        return placeTile(t, tileIndexW, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn);
                     else
-                        return;
+                        return false;
                 }
                 else {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn -1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW -1, tileIndexH + 1));
                         GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn -1] = t;
+                        return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
-                        placeTile(t, tileIndexW -1, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn-1);
+                        return placeTile(t, tileIndexW -1, tileIndexH+1, tileGuiIndexRow+1, tileGuiIndexColumn-1);
                     else
-                        return;
+                        return false;
                 }
-                break;
         }
+        return false;
     }
     
             
