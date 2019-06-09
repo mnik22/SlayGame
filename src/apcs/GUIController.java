@@ -126,61 +126,53 @@ public class GUIController {
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
             castleSelectorImageView.setImage(castleImage);
-            castleSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putImage(castleSelectorImageView.getImage());
-                    content.putString("N_Castle");
-                    db.setContent(content);
-                    event.consume();
-                }
+            castleSelectorImageView.setOnDragDetected(event -> {
+                Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(castleSelectorImageView.getImage());
+                content.putString("N_Castle");
+                db.setContent(content);
+                event.consume();
             });
-            castleSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
-                public void handle(DragEvent event) {
-                    if (event.getTransferMode() == TransferMode.MOVE) {
-                        if (Driver.currentPlayer instanceof HumanPlayer) {
-                            boolean canBuyAnother = false;
-                            for (Territory t : Driver.currentPlayer.getTerritories()) {
-                                if (t.availbleUnits()[1] > 0)
-                                    canBuyAnother = true;
-                            }
-                            if (!canBuyAnother)
-                                castleSelectorImageView.setImage(null);
+            castleSelectorImageView.setOnDragDone(event -> {
+                if (event.getTransferMode() == TransferMode.MOVE) {
+                    if (Driver.currentPlayer instanceof HumanPlayer) {
+                        boolean canBuyAnother = false;
+                        for (Territory t : Driver.currentPlayer.getTerritories()) {
+                            if (t.availbleUnits()[1] > 0)
+                                canBuyAnother = true;
                         }
+                        if (!canBuyAnother)
+                            castleSelectorImageView.setImage(null);
                     }
-                    event.consume();
                 }
+                event.consume();
             });
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
             pesantSelectorImageView.setImage(pesantImage);
-            pesantSelectorImageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putImage(pesantSelectorImageView.getImage());
-                    content.putString("N_Pesant");
-                    db.setContent(content);
-                    event.consume();
-                }
+            pesantSelectorImageView.setOnDragDetected(event -> {
+                Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(pesantSelectorImageView.getImage());
+                content.putString("N_Pesant");
+                db.setContent(content);
+                event.consume();
             });
-            pesantSelectorImageView.setOnDragDone(new EventHandler <DragEvent>() {
-                public void handle(DragEvent event) {
-                    if (event.getTransferMode() == TransferMode.MOVE) {
-                        if (Driver.currentPlayer instanceof HumanPlayer) {
-                            boolean canBuyAnother = false;
-                            for (Territory t : Driver.currentPlayer.getTerritories()) {
-                                if (t.availbleUnits()[1] > 0)
-                                    canBuyAnother = true;
-                            }
-                            if (!canBuyAnother)
-                                pesantSelectorImageView.setImage(null);
+            pesantSelectorImageView.setOnDragDone(event -> {
+                if (event.getTransferMode() == TransferMode.MOVE) {
+                    if (Driver.currentPlayer instanceof HumanPlayer) {
+                        boolean canBuyAnother = false;
+                        for (Territory t : Driver.currentPlayer.getTerritories()) {
+                            if (t.availbleUnits()[1] > 0)
+                                canBuyAnother = true;
                         }
+                        if (!canBuyAnother)
+                            pesantSelectorImageView.setImage(null);
                     }
-                    event.consume();
                 }
+                event.consume();
             });
             
             /*
@@ -203,19 +195,14 @@ public class GUIController {
             baronImageView.setImage(baronImage);
             
             finishTurnButton = (Button) root.lookup("#finishTurnButton");
-            finishTurnButton.setOnAction(new EventHandler<ActionEvent>() {
-                
-                @Override
-                public void handle(ActionEvent arg0) {
+            finishTurnButton.setOnAction(arg0 -> {
 
-                    if (Driver.currentPlayer instanceof HumanPlayer) {
-                        
-                        Driver.currentPlayer.buttonEndTurn();
-                        
-                    }
-                    
+                if (Driver.currentPlayer instanceof HumanPlayer) {
+
+                    Driver.currentPlayer.buttonEndTurn();
+
                 }
-                
+
             });
             
             capitalImage = new Image(new FileInputStream("src/Capital.png"));
@@ -227,66 +214,59 @@ public class GUIController {
             int tileCount = 0;
             mapPane = (Pane) root.lookup("#mapPane");
             System.out.println(mapPane.getWidth() + ", " + mapPane.getHeight());
-            
-            for (int r = 0; r < map.length; r++) {
-                
+
+            for (Tile[] tiles : map) {
+
                 for (int c = 0; c < map[0].length; c++) {
-                    
-                    if (map[r][c] != null) {
-                        
-                        final Tile tile = map[r][c];
-                        
-                        Color playerColor = map[r][c].getPlayer().getColor() ;
+
+                    if (tiles[c] != null) {
+
+                        final Tile tile = tiles[c];
+
+                        Color playerColor = tiles[c].getPlayer().getColor();
                         int red = playerColor.getRed();
                         int green = playerColor.getGreen();
                         int blue = playerColor.getBlue();
                         int alpha = playerColor.getAlpha();
-                        double opacity = alpha / 255.0 ;
+                        double opacity = alpha / 255.0;
                         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
-                        
+
                         tile.setFill(fillColor);
                         tile.setStroke(fillColor);
-                        
-                        tile.setOnDragOver(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                if (event.getGestureSource() != tile &&
-                                        event.getDragboard().hasImage()) {
-                                    event.acceptTransferModes(TransferMode.MOVE);
-                                }
-                                event.consume();
+
+                        tile.setOnDragOver(event -> {
+                            if (event.getGestureSource() != tile &&
+                                    event.getDragboard().hasImage()) {
+                                event.acceptTransferModes(TransferMode.MOVE);
                             }
+                            event.consume();
                         });
-                        tile.setOnDragEntered(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                 if (event.getGestureSource() != tile &&
-                                         event.getDragboard().hasImage() &&
-                                         tile.getUnit() == null) {
-                                     tile.setFill(new ImagePattern(event.getDragboard().getImage()));
-                                 }
-                                 event.consume();
+                        tile.setOnDragEntered(event -> {
+                            if (event.getGestureSource() != tile &&
+                                    event.getDragboard().hasImage() &&
+                                    tile.getUnit() == null) {
+                                tile.setFill(new ImagePattern(event.getDragboard().getImage()));
                             }
+                            event.consume();
                         });
-                        tile.setOnDragExited(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                tile.setFill(fillColor);
-                                event.consume();
-                            }
+                        tile.setOnDragExited(event -> {
+                            tile.setFill(fillColor);
+                            event.consume();
                         });
-                        tile.setOnDragDropped(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                Dragboard db = event.getDragboard();
-                                boolean success = false;
-                                if (db.hasString()) {
-                                    switch (db.getString()) {
-                                    
+                        tile.setOnDragDropped(event -> {
+                            Dragboard db = event.getDragboard();
+                            boolean success = false;
+                            if (db.hasString()) {
+                                switch (db.getString()) {
+
                                     case "N_Pesant":
                                         success = tile.setUnit(new Peasant(null));
                                         break;
-                                        
+
                                     case "N_Castle":
                                         success = tile.setUnit(new Castle(null));
                                         break;
-                                        
+
                                     default:
                                         int x = Integer.parseInt(db.getString().substring(0, 1));
                                         int y = Integer.parseInt(db.getString().substring(3, 4));
@@ -295,59 +275,54 @@ public class GUIController {
                                             success = tile.moveUnit(previousTile.getUnit());
                                         else
                                             System.out.println("There is no unit here to move.");
-                                        
-                                    }
+
+                                }
+                            } else {
+                                System.out.println("No String found in the dragboard.");
+                            }
+                            event.setDropCompleted(success);
+                            event.consume();
+                        });
+                        tile.setOnDragDetected(event -> {
+                            Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
+                            ClipboardContent content = new ClipboardContent();
+                            if (tile.getUnit() != null) {
+                                if (tile.getUnit() instanceof Peasant) {
+                                    content.putImage(pesantImage);
+                                } else if (tile.getUnit() instanceof Castle) {
+                                    content.putImage(castleImage);
+                                } else if (tile.getUnit() instanceof Baron) {
+                                    content.putImage(baronImage);
+                                } else if (tile.getUnit() instanceof Capital) {
+                                    content.putImage(capitalImage);
+                                } else if (tile.getUnit() instanceof Knight) {
+                                    content.putImage(knightImage);
+                                } else if (tile.getUnit() instanceof Spearman) {
+                                    content.putImage(spearmanImage);
                                 } else {
-                                	System.out.println("No String found in the dragboard.");
+                                    System.out.println("Unknown unit type.");
                                 }
-                                event.setDropCompleted(success);
-                                event.consume();
+                            } else {
+                                System.out.println("There are no units to move on this tile.");
                             }
+                            content.putString(tile.getX() + ", " + tile.getY());
+                            db.setContent(content);
+                            event.consume();
                         });
-                        tile.setOnDragDetected(new EventHandler<MouseEvent>() {
-                            public void handle(MouseEvent event) {
-                                Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
-                                ClipboardContent content = new ClipboardContent();
-                                if (tile.getUnit() != null) {
-                                    if (tile.getUnit() instanceof Peasant) {
-                                        content.putImage(pesantImage);
-                                    } else if (tile.getUnit() instanceof Castle) {
-                                        content.putImage(castleImage);
-                                    } else if (tile.getUnit() instanceof Baron) {
-                                        content.putImage(baronImage);
-                                    } else if (tile.getUnit() instanceof Capital) {
-                                        content.putImage(capitalImage);
-                                    } else if (tile.getUnit() instanceof Knight) {
-                                        content.putImage(knightImage);
-                                    } else if (tile.getUnit() instanceof Spearman) {
-                                        content.putImage(spearmanImage);
-                                    } else {
-                                        System.out.println("Unknown unit type.");
-                                    }
-                                } else {
-                                    System.out.println("There are no units to move on this tile.");
-                                }
-//                                content.putString(tile.get); // TODO: Want to set this to be the GUIMap coords of this tile (x, y);
-                                db.setContent(content);
-                                event.consume();
+                        tile.setOnDragDone(event -> {
+                            if (event.getTransferMode() == TransferMode.MOVE) {
+                                tile.setFill(fillColor);
+                                tile.setUnit(null);
                             }
+                            event.consume();
                         });
-                        tile.setOnDragDone(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                if (event.getTransferMode() == TransferMode.MOVE) {
-                                    tile.setFill(fillColor);
-                                    tile.setUnit(null);
-                                }
-                                event.consume();
-                            }
-                        });
-                        
+
                         mapPane.getChildren().add(tile);
                         tileCount++;
                     }
-                    
+
                 }
-                
+
             }
             
             System.out.println("Tile Count: " + tileCount);
@@ -367,14 +342,29 @@ public class GUIController {
         
     }
     
-    public void setTileFill(Tile t, Image i) {
-        mapPane.getChildren().remove(t);
-        t.setFill(new ImagePattern(i));
-        mapPane.getChildren().add(t);
+    public void setTileFill(Tile tile) {
+
+        if (tile.getUnit() != null) {
+            if (tile.getUnit() instanceof Peasant) {
+                tile.setFill(new ImagePattern(pesantImage));
+            } else if (tile.getUnit() instanceof Castle) {
+                tile.setFill(new ImagePattern(castleImage));
+            } else if (tile.getUnit() instanceof Baron) {
+                tile.setFill(new ImagePattern(baronImage));
+            } else if (tile.getUnit() instanceof Capital) {
+                tile.setFill(new ImagePattern(capitalImage));
+            } else if (tile.getUnit() instanceof Knight) {
+                tile.setFill(new ImagePattern(knightImage));
+            } else if (tile.getUnit() instanceof Spearman) {
+                tile.setFill(new ImagePattern(spearmanImage));
+            } else {
+                System.out.println("Unknown unit type.");
+            }
+        }
+
     }
     
     public void setTileFill(Tile t, Color c) {
-        mapPane.getChildren().remove(t);
         int red = c.getRed();
         int green = c.getGreen();
         int blue = c.getBlue();
@@ -382,7 +372,6 @@ public class GUIController {
         double opacity = alpha / 255.0 ;
         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
         t.setFill(fillColor);
-        mapPane.getChildren().add(t);
     }
     
     public void setSavings(int amt) {
