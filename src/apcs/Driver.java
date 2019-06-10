@@ -18,10 +18,10 @@ public class Driver extends Application {
     private final int MAP_PANE_WIDTH = 1000;
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
-    private static final int NUM_TILES = 1080;
+    private static final int NUM_TILES = 360;
     private Tile[][] GUIMap;
     private Color[] colors;
-    private static final int CENTER_TILE_INDEX_W = 7;
+    private static final int CENTER_TILE_INDEX_W = 8;
     private static final int CENTER_TILE_INDEX_H = 20;
     private static final int CENTER_TILE_GUI_INDEX_ROW = 21;
     private static final int CENTER_TILE_GUI_INDEX_COLUMN = 22;
@@ -358,21 +358,21 @@ public class Driver extends Application {
             
         }
 
-//        for (int r = 0; r < map.length; r++)
-//        {
-//            for (int c = 0; c < map[0].length; c++)
-//            {
-//            	if(map[r][c] == null)
-//            	{
-//            		System.out.print("x ");
-//            	}
-//            	else
-//            	{
-//            		System.out.print("0 ");
-//            	}
-//            }
-//            System.out.println();
-//        }
+        for (int r = 0; r < map.length; r++)
+        {
+            for (int c = 0; c < map[0].length; c++)
+            {
+            	if(map[r][c] == null)
+            	{
+            		System.out.print("x ");
+            	}
+            	else
+            	{
+            		System.out.print("0 ");
+            	}
+            }
+            System.out.println();
+        }
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
         for (int r = 1; r < map.length; r++)
