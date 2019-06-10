@@ -72,7 +72,7 @@ public class Territory {
 	        capital = tiles.get(rnd);                       
 	        capital.setCapital(true);
 	        capital.setUnit(new Capital(capital));
-//	        money = 5;
+	        money = 5;
 //	        System.out.println("This is capital: " + capital + " and Unit " + capital.getUnit());
     	}
     }
