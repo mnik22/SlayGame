@@ -119,7 +119,7 @@ public class Driver extends Application {
             case 1: //top
                 if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length - 2 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+2][tileGuiIndexColumn] == null) {
                     t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH + 2));
-                    GUIMap[tileGuiIndexRow+2][tileGuiIndexColumn] = t;
+                    GUIMap[tileGuiIndexRow+2][tileGuiIndexColumn] = new Tile(tileIndexW, tileIndexH + 2);
                     return true;
                 }
                 else if (tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -130,7 +130,7 @@ public class Driver extends Application {
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn +1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW+1, tileIndexH+1));
-                        GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn +1] = t;
+                        GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn +1] = new Tile(tileIndexW+1, tileIndexH+1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -142,7 +142,7 @@ public class Driver extends Application {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH+1));
-                        GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn] = t;
+                        GUIMap[tileGuiIndexRow+1][tileGuiIndexColumn] = new Tile(tileIndexW, tileIndexH+1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -154,7 +154,7 @@ public class Driver extends Application {
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow -1][tileGuiIndexColumn +1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW +1, tileIndexH -1));
-                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn +1] = t;
+                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn +1] = new Tile(tileIndexW +1, tileIndexH -1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -166,7 +166,7 @@ public class Driver extends Application {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow -1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH -1));
-                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = t;
+                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = new Tile(tileIndexW, tileIndexH -1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -177,7 +177,7 @@ public class Driver extends Application {
             case 4: //bottom
                 if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow - 2][tileGuiIndexColumn] == null) {
                     t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH -2));
-                    GUIMap[tileGuiIndexRow - 2][tileGuiIndexColumn] = t;
+                    GUIMap[tileGuiIndexRow - 2][tileGuiIndexColumn] = new Tile(tileIndexW, tileIndexH -2);
                     return true;
                 }
                 else if(tileGuiIndexRow > 2 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -2 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -188,7 +188,7 @@ public class Driver extends Application {
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn ] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW , tileIndexH-1));
-                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = t;
+                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn] = new Tile(tileIndexW , tileIndexH-1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -200,7 +200,7 @@ public class Driver extends Application {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW - 1, tileIndexH-1));
-                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] = t;
+                        GUIMap[tileGuiIndexRow-1][tileGuiIndexColumn - 1] = new Tile(tileIndexW - 1, tileIndexH-1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -212,7 +212,7 @@ public class Driver extends Application {
                 if(tileGuiIndexRow %2 == 0) {
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW, tileIndexH + 1));
-                        GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] = t;
+                        GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn] = new Tile(tileIndexW, tileIndexH + 1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
@@ -224,7 +224,7 @@ public class Driver extends Application {
                     
                     if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1 && GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn -1] == null) {
                         t.getPoints().addAll(loadCoords(tileIndexW -1, tileIndexH + 1));
-                        GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn -1] = t;
+                        GUIMap[tileGuiIndexRow + 1][tileGuiIndexColumn -1] = new Tile(tileIndexW -1, tileIndexH + 1);
                         return true;
                     }
                     else if(tileGuiIndexRow > 1 && tileGuiIndexColumn > 1 && tileGuiIndexRow < GUIMap.length -1 && tileGuiIndexColumn < GUIMap[0].length -1)
