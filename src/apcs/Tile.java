@@ -44,6 +44,12 @@ public class Tile extends Polygon {
         guiVerticalPos = y;
     }
     
+    public void setGUIPosition(int x, int y)
+    {
+    	guiHorizontalPos = x;
+    	guiVerticalPos = y;
+    }
+    
     public void setPosition(int x, int y)
     {
         horizontalPos = x;
