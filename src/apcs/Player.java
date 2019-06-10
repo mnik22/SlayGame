@@ -122,13 +122,19 @@ public class Player
         for(Territory territory: territories)
         {
             ArrayList<Tile> tiles = territory.getTiles();
+            int wages = 0;
             for (Tile tile : tiles)
             {
                 if(tile.hasUnit() && (!(tile.getUnit() instanceof Capital )|| !(tile.getUnit() instanceof Castle)))
                 {
                     tile.getUnit().move(true);
                 }
+                if (tile.hasUnit())
+                {
+                    wages += tile.getUnit().getCost();
+                }
             }
+            territory.setWages(wages);
         }
     }
 

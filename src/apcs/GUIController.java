@@ -309,6 +309,13 @@ public class GUIController {
                             }
                             event.consume();
                         });
+                        tile.setOnMouseClicked(event -> {
+                            Territory t = tile.getTerritory();
+                            setSavings(t.getMoney());
+                            setIncome(t.getNumTiles());
+                            setWages(t.getWages());
+                            setBalance((t.getMoney() + t.getNumTiles()) - t.getWages());
+                        });
 
                         mapPane.getChildren().add(tile);
                         tileCount++;

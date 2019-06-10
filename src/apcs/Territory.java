@@ -9,6 +9,7 @@ public class Territory {
     private Tile capital;
     private ArrayList<Tile> tiles = new ArrayList<Tile>();
     public int money;
+    private int wages;
     private Player player;
     
     
@@ -314,6 +315,13 @@ public class Territory {
     {
         return money;
     }
-    
+
+    public void setWages(int wages) {
+        this.wages = wages;
+    }
+
+    public int getWages() {
+        return wages;
+    }
    
 }
