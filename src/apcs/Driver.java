@@ -18,7 +18,7 @@ public class Driver extends Application {
     private final int MAP_PANE_WIDTH = 1000;
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
-    private static final int NUM_TILES = 360;
+    private static final int NUM_TILES = 1080;
     private Tile[][] GUIMap;
     private Color[] colors;
     private static final int CENTER_TILE_INDEX_W = 7;
@@ -299,16 +299,36 @@ public class Driver extends Application {
         
         map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
         
+//        for(int r = 0; r < GUIMap.length; r++)
+//        {
+//        	if(r >= 10)
+//        	 System.out.print(r + "");
+//        	else
+//        		System.out.print(r + " ");
+//        	for(int c = 0; c < GUIMap[0].length; c++)
+//        	{
+//        		if(GUIMap[r][c] != null)
+//        		{
+//        			System.out.print("0 ");
+//        		}
+//        		else
+//        		{
+//        			System.out.print("x ");
+//        		}
+//        	}
+//        	System.out.println("");
+//        }
+        
         int GUIMapCol = 0;
         
-        for (int r = 0; r < map.length - 1; r++) {
+        for (int r = 1; r < map.length - 1; r++) {
             GUIMapCol = 0;
-            for (int c = 0; c < map[0].length - 1; c++) {
+            for (int c = 1; c < map[0].length - 1; c++) {
                 
                 
                 // Handle an Even Row
                 if (r % 2 == 0) {
-                    if (c == map[0].length)
+                    if (c == map[0].length - 2)
                         map[r][c] = null; 
                     else if (c % 2 == 0) {
                         map[r][c] = GUIMap[r][GUIMapCol]; //there might still be an out of bounds exception on this line.
@@ -337,7 +357,22 @@ public class Driver extends Application {
             }
             
         }
-        
+
+//        for (int r = 0; r < map.length; r++)
+//        {
+//            for (int c = 0; c < map[0].length; c++)
+//            {
+//            	if(map[r][c] == null)
+//            	{
+//            		System.out.print("x ");
+//            	}
+//            	else
+//            	{
+//            		System.out.print("0 ");
+//            	}
+//            }
+//            System.out.println();
+//        }
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
         for (int r = 1; r < map.length; r++)
