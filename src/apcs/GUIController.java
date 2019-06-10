@@ -339,8 +339,20 @@ public class GUIController {
     }
     
     @SuppressWarnings("unchecked")
-    public void updateGraph(XYChart.Series<String, Integer> series) {
-        
+    public void updateGraph() {
+
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        int cpuCount = 1;
+        for (int i = 0; i < players.length; i++) {
+
+            if (players[i] instanceof HumanPlayer)
+                series.getData().add(new XYChart.Data<>("H", players[i].getNumTerritories()));
+
+            else if (players[i] instanceof AIPlayer)
+                series.getData().add(new XYChart.Data<>("C" + cpuCount, players[i].getNumTerritories()));
+
+        }
+
         propertiesBarChart.getData().setAll(series);
         
     }
