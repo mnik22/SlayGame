@@ -12,11 +12,11 @@ public class Tile extends Polygon {
 //    private ImageView imageView;
     
     private Tile topLeft;
-    private Tile left;
-    private Tile bottomLeft;
+    private Tile top;
     private Tile topRight;
-    private Tile right;
     private Tile bottomRight;
+    private Tile bottom;
+    private Tile bottomLeft;
     
     private Tile[] adjacentTiles;
     
@@ -52,7 +52,7 @@ public class Tile extends Polygon {
     
     public boolean isAdjacent(Tile t)
     {
-        if(t.equals(topLeft) || t.equals(left) || t.equals(bottomLeft) || t.equals(bottomRight) || t.equals(right) || t.equals(topRight))
+        if(t.equals(topLeft) || t.equals(top) || t.equals(bottomLeft) || t.equals(bottomRight) || t.equals(bottom) || t.equals(topRight))
         {
             return true;
         }
@@ -93,97 +93,157 @@ public class Tile extends Polygon {
         // as of this edition this should be run with a board that has a border of null spaces around it.
         
         
-        int checkTopLeft = 0;
-        int checkTopRight = 0;
-        int checkBottomLeft = 0;
-        int checkBottomRight = 0;
-        
-        if(verticalPos%2 == 1)
-        {
-            if(horizontalPos == 1)
-            {
-                left = null;
-                topLeft = null;
-                bottomLeft = null;
-            }
-            else if(horizontalPos > 1)
-            {
-                left = Driver.map[horizontalPos - 2][verticalPos];
-            }
-            if(horizontalPos == Driver.map.length - 3)
-            {
-                right = null;
-                topRight = null; checkTopRight = 1;
-                bottomRight = null; checkBottomRight = 1;
-            }
-            else if(horizontalPos < Driver.map.length - 2)
-            {
-                right = Driver.map[horizontalPos + 2][verticalPos];
-            }
-        }
-        else
-        {
-            if(horizontalPos == 2)
-            {
-                left = null;
-                topLeft = null; checkTopLeft = 1;
-                bottomLeft = null; checkBottomLeft = 1;
-            }
-            else if(horizontalPos > 1)
-            {
-                left = Driver.map[horizontalPos - 2][verticalPos];
-            }
-            if(horizontalPos == Driver.map.length - 2)
-            {
-                right = null;
-                topRight = null; checkTopRight = 1;
-                bottomRight = null; checkBottomRight = 1;
-            }
-            else if(horizontalPos < Driver.map.length - 2)
-            {
-                right = Driver.map[horizontalPos + 2][verticalPos];
-            }
-        }
-        if(verticalPos == 1)
-        {
-            topRight = null;
-            topLeft = null;
-        }
-        else
-        {
-            if(horizontalPos < Driver.map.length - 2 && verticalPos < Driver.map[0].length - 1)
-            {
-                if(checkTopRight != 1)
-                    topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
-            }
-            if(horizontalPos > 1 && verticalPos < Driver.map[0].length - 1)
-                if(checkTopLeft != 1)
-                    topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
-            
-        }
-        if(verticalPos == Driver.map[0].length - 2)
-        {
-            bottomRight = null; 
-            bottomLeft = null;  
-        }
-        else
-        {
-            if(horizontalPos < Driver.map.length - 2 && verticalPos > 0)
-                if(checkBottomRight != 1)
-                    bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
-            if(horizontalPos > 1 && verticalPos > 0)
-                if(checkBottomLeft != 1)
-                    bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
-        }
-        
+//        int checkTopLeft = 0;
+//        int checkTopRight = 0;
+//        int checkBottomLeft = 0;
+//        int checkBottomRight = 0;
+//        
+//        if(verticalPos%2 == 1)
+//        {
+//            if(horizontalPos == 1)
+//            {
+//                left = null;
+//                topLeft = null;
+//                bottomLeft = null;
+//            }
+//            else if(horizontalPos > 1)
+//            {
+//                left = Driver.map[horizontalPos - 2][verticalPos];
+//            }
+//            if(horizontalPos == Driver.map.length - 3)
+//            {
+//                right = null;
+//                topRight = null; checkTopRight = 1;
+//                bottomRight = null; checkBottomRight = 1;
+//            }
+//            else if(horizontalPos < Driver.map.length - 2)
+//            {
+//                right = Driver.map[horizontalPos + 2][verticalPos];
+//            }
+//        }
+//        else
+//        {
+//            if(horizontalPos == 2)
+//            {
+//                left = null;
+//                topLeft = null; checkTopLeft = 1;
+//                bottomLeft = null; checkBottomLeft = 1;
+//            }
+//            else if(horizontalPos > 1)
+//            {
+//                left = Driver.map[horizontalPos - 2][verticalPos];
+//            }
+//            if(horizontalPos == Driver.map.length - 2)
+//            {
+//                right = null;
+//                topRight = null; checkTopRight = 1;
+//                bottomRight = null; checkBottomRight = 1;
+//            }
+//            else if(horizontalPos < Driver.map.length - 2)
+//            {
+//                right = Driver.map[horizontalPos + 2][verticalPos];
+//            }
+//        }
+//        if(verticalPos == 1)
+//        {
+//            topRight = null;
+//            topLeft = null;
+//        }
+//        else
+//        {
+//            if(horizontalPos < Driver.map.length - 2 && verticalPos < Driver.map[0].length - 1)
+//            {
+//                if(checkTopRight != 1)
+//                    topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
+//            }
+//            if(horizontalPos > 1 && verticalPos < Driver.map[0].length - 1)
+//                if(checkTopLeft != 1)
+//                    topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
+//            
+//        }
+//        if(verticalPos == Driver.map[0].length - 2)
+//        {
+//            bottomRight = null; 
+//            bottomLeft = null;  
+//        }
+//        else
+//        {
+//            if(horizontalPos < Driver.map.length - 2 && verticalPos > 0)
+//                if(checkBottomRight != 1)
+//                    bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
+//            if(horizontalPos > 1 && verticalPos > 0)
+//                if(checkBottomLeft != 1)
+//                    bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
+//        }
+//        
+    	
+    	
         adjacentTiles = new Tile[6];
 
-        adjacentTiles[0] = topRight;
-        adjacentTiles[1] = right;
-        adjacentTiles[2] = bottomRight;
-        adjacentTiles[3] = bottomLeft;
-        adjacentTiles[4] = left;
-        adjacentTiles[5] = topLeft;
+    	if(verticalPos > 1 && horizontalPos < Driver.map.length) //top left
+    	{
+    		topLeft = Driver.map[horizontalPos - 1][verticalPos + 1];
+    	}
+    	else
+    	{
+    		topLeft = null;
+    	}
+    	
+    	
+    	if(verticalPos < Driver.map[0].length) //top
+    	{
+    		top = Driver.map[horizontalPos][verticalPos + 2];
+    	}
+    	else
+    	{
+    		top = null;
+    	}
+    	
+    	
+    	if(verticalPos < Driver.map[0].length && horizontalPos < Driver.map.length) //top right
+    	{
+    		topRight = Driver.map[horizontalPos + 1][verticalPos + 1];
+    	}
+    	else
+    	{
+    		topRight = null;
+    	}
+    	
+    	if(verticalPos > 2 && horizontalPos < Driver.map.length) //bottom right
+    	{
+    		bottomRight = Driver.map[horizontalPos + 1][verticalPos - 1];
+    	}
+    	else
+    	{
+    		bottomRight = null;
+    	}
+    	
+    	if(verticalPos > 2) //bottom
+    	{
+    		bottom = Driver.map[horizontalPos][verticalPos - 2];
+    	}
+    	else
+    	{
+    		bottom = null;
+    	}
+    	
+    	if(verticalPos > 2 && horizontalPos > 1)//bottom left
+    	{
+    		bottomLeft = Driver.map[horizontalPos - 1][verticalPos - 1];
+    	}
+    	else
+    	{
+    		bottomLeft = null;
+    	}
+    	
+        
+        adjacentTiles[0] = topLeft;
+        adjacentTiles[1] = top;
+        adjacentTiles[2] = topRight;
+        adjacentTiles[3] = bottomRight;
+        adjacentTiles[4] = bottom;
+        adjacentTiles[5] = bottomLeft;
+        
         
 //        for(int i = 0; i < adjacentTiles.length; i++)
 //        {
@@ -253,69 +313,80 @@ public class Tile extends Polygon {
         boolean test = false;
         if(u != null) //this line is mostly useless now but i'm keeping it.
         {
-        	System.out.println(Driver.currentPlayer.equals(player));
-            if(Driver.currentPlayer.equals(player))
-            {
-                if(hasUnit())
-                {
-                    if(u instanceof Peasant)
-                    {
-                        int curProtect = unit.getStrength();
-                        switch(curProtect) //for upgrading with a peasant.
-                        {
-                            case 1:     newUnitTest(old, u);
-                                        unit = new Spearman(this);
-                                        setAdjacentProtection();
-                                        test = true;
-                                        break;
-                            case 2:     newUnitTest(old, u);
-                                        unit = new Knight(this);
-                                        setAdjacentProtection();
-                                        test = true;
-                                        break;
-                            case 3:		newUnitTest(old, u);
-                                        unit = new Baron(this);
-                                        setAdjacentProtection();
-                                        test = true;
-                                        break;
-                            default:
-                                    	//possibly put a noise or alert here
-//                                		Alert a = new Alert(AlertType.WARNING);
-//                                		a.setTitle("Warning");     
-                                		test = false;
-                        }
-	                }
-	                else
-	                {
-	                	//possibly put a noise or sumting.
-	                }
-	            }
-	            else
+//        	System.out.println(Driver.currentPlayer.equals(player));
+        	if(!(u instanceof Capital))
+        	{
+	            if(Driver.currentPlayer.equals(player))
 	            {
-	            	newUnitTest(old, u);
-	                unit = u;
-	                u.setTile(this);
-	                setAdjacentProtection();
-	                test = true;
-	                System.out.println("The unit should be set: " + unit.getClass());
+	                if(hasUnit())
+	                {
+	                    if(u instanceof Peasant)
+	                    {
+	                        int curProtect = unit.getStrength();
+	                        switch(curProtect) //for upgrading with a peasant.
+	                        {
+	                            case 1:     newUnitTest(old, u);
+	                                        unit = new Spearman(this);
+	                                        setAdjacentProtection();
+	                                        test = true;
+	                                        break;
+	                            case 2:     newUnitTest(old, u);
+	                                        unit = new Knight(this);
+	                                        setAdjacentProtection();
+	                                        test = true;
+	                                        break;
+	                            case 3:		newUnitTest(old, u);
+	                                        unit = new Baron(this);
+	                                        setAdjacentProtection();
+	                                        test = true;
+	                                        break;
+	                            default:
+	                                    	//possibly put a noise or alert here
+	//                                		Alert a = new Alert(AlertType.WARNING);
+	//                                		a.setTitle("Warning");     
+	                                		test = false;
+	                        }
+		                }
+		                else
+		                {
+		                	//possibly put a noise or sumting.
+		                }
+		            }
+		            else
+		            {
+		            	newUnitTest(old, u);
+		                unit = u;
+		                u.setTile(this);
+		                setAdjacentProtection();
+		                test = true;
+		                System.out.println("The unit should be set: " + unit.getClass());
+		            }
 	            }
-            }
-	        else
-	        {
-	        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
-	     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
-	     		if(old != null)
-	     		{
-	     			unit = u;
-	     			u.setTile(this);
-	                setAdjacentProtection();
-	                test = true;
-	     		}
-	     		else
-	     		{
-	     			//maybe make a noise or something
-	     		}
-	        }
+		        else
+		        {
+		        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
+		     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
+		     		if(old != null)
+		     		{
+		     			unit = u;
+		     			u.setTile(this);
+		                setAdjacentProtection();
+		                test = true;
+		     		}
+		     		else
+		     		{
+		     			//maybe make a noise or something
+		     		}
+		        }
+        	}
+        	else
+        	{
+        		unit = u;
+                u.setTile(this);
+                setAdjacentProtection();
+                test = true;
+                System.out.println("The unit should be set: " + unit.getClass());
+        	}
         }     
 	    return test;
 	    
