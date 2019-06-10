@@ -13,7 +13,6 @@ public class HumanPlayer extends Player
     public void playRound()
     {
         super.playRound();
-        do endTurn();
         while(!endTurn());
         
         //end stuff
