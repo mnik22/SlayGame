@@ -102,7 +102,7 @@ public class GUIController {
                     series.getData().add(new XYChart.Data<>("H", player.getNumTerritories()));
 
                 else if (player instanceof AIPlayer)
-                    series.getData().add(new XYChart.Data<>("C" + cpuCount, player.getNumTerritories()));
+                    series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTerritories()));
 
             }
             
