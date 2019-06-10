@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,10 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
@@ -36,8 +31,7 @@ public class GUIController {
     private Tile[][] map;
     private Player[] players;
     private Parent root;
-    private Pane mapPane;
-    
+
     private Label savingsLabel;
     private Label incomeLabel;
     private Label wagesLabel;
@@ -50,22 +44,16 @@ public class GUIController {
     private ImageView pesantSelectorImageView;
     private ImageView castleSelectorImageView;
     private Image castleImage;
-    
-    private ImageView pesantImageView;
+
     private Image pesantImage;
-    private ImageView spearmanImageView;
     private Image spearmanImage;
-    private ImageView knightImageView;
     private Image knightImage;
-    private ImageView baronImageView;
     private Image baronImage;
     
     private Image capitalImage;
-    
-    private Button finishTurnButton;
-    
+
     @SuppressWarnings({ "unchecked" })
-    public GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
+    GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
         
         this.map = map;
         this.players = players;
@@ -90,7 +78,8 @@ public class GUIController {
             /*
              * Money Displaying Code
              */
-            
+
+            assert root != null;
             savingsLabel = (Label) root.lookup("#savingsLabel");
             incomeLabel = (Label) root.lookup("#incomeLabel");
             wagesLabel = (Label) root.lookup("#wagesLabel");
@@ -107,14 +96,14 @@ public class GUIController {
             
             XYChart.Series<String, Integer> series = new XYChart.Series<>(); 
             int cpuCount = 1;
-            for (int i = 0; i < players.length; i++) {
-                
-                if (players[i] instanceof HumanPlayer)
-                    series.getData().add(new XYChart.Data<>("H", players[i].getNumTerritories()));
-                
-                else if (players[i] instanceof AIPlayer)
-                    series.getData().add(new XYChart.Data<>("C" + cpuCount, players[i].getNumTerritories()));
-                
+            for (Player player : players) {
+
+                if (player instanceof HumanPlayer)
+                    series.getData().add(new XYChart.Data<>("H", player.getNumTerritories()));
+
+                else if (player instanceof AIPlayer)
+                    series.getData().add(new XYChart.Data<>("C" + cpuCount, player.getNumTerritories()));
+
             }
             
             propertiesBarChart.getData().add(series);
@@ -178,23 +167,23 @@ public class GUIController {
             /*
              * Number of Each Object Code
              */
-            
-            pesantImageView = (ImageView) root.lookup("#pesantImageView");
+
+            ImageView pesantImageView = (ImageView) root.lookup("#pesantImageView");
             pesantImageView.setImage(pesantImage);
             
             spearmanImage = new Image(new FileInputStream("src/Spearman.png"));
-            spearmanImageView = (ImageView) root.lookup("#spearmanImageView");
+            ImageView spearmanImageView = (ImageView) root.lookup("#spearmanImageView");
             spearmanImageView.setImage(spearmanImage);
             
             knightImage = new Image(new FileInputStream("src/Knight.png"));
-            knightImageView = (ImageView) root.lookup("#knightImageView");
+            ImageView knightImageView = (ImageView) root.lookup("#knightImageView");
             knightImageView.setImage(knightImage);
             
             baronImage = new Image(new FileInputStream("src/Baron.png"));
-            baronImageView = (ImageView) root.lookup("#baronImageView");
+            ImageView baronImageView = (ImageView) root.lookup("#baronImageView");
             baronImageView.setImage(baronImage);
-            
-            finishTurnButton = (Button) root.lookup("#finishTurnButton");
+
+            Button finishTurnButton = (Button) root.lookup("#finishTurnButton");
             finishTurnButton.setOnAction(arg0 -> {
 
                 if (Driver.currentPlayer instanceof HumanPlayer) {
@@ -212,7 +201,7 @@ public class GUIController {
              */
             
             int tileCount = 0;
-            mapPane = (Pane) root.lookup("#mapPane");
+            Pane mapPane = (Pane) root.lookup("#mapPane");
             System.out.println(mapPane.getWidth() + ", " + mapPane.getHeight());
 
             for (Tile[] tiles : map) {
@@ -269,8 +258,8 @@ public class GUIController {
                                         break;
 
                                     default:
-                                        int x = Integer.parseInt(db.getString().substring(0, db.getString().indexOf(','))); //x seems to always be 7 
-                                        int y = Integer.parseInt(db.getString().substring(db.getString().indexOf(' ') + 1, db.getString().length())); // y always seems to be 20
+                                        int x = Integer.parseInt(db.getString().substring(0, db.getString().indexOf(',')));
+                                        int y = Integer.parseInt(db.getString().substring(db.getString().indexOf(' ') + 1));
                                         Tile previousTile = map[y][x];
                                         if (previousTile.getUnit() != null)
                                         {
@@ -315,6 +304,7 @@ public class GUIController {
                         tile.setOnDragDone(event -> {
                             if (event.getTransferMode() == TransferMode.MOVE) {
                                 tile.setFill(fillColor);
+                                //noinspection ConstantConditions
                                 tile.setUnit(null);
                             }
                             event.consume();
@@ -337,19 +327,19 @@ public class GUIController {
         }
         
     }
-    
+
     @SuppressWarnings("unchecked")
     public void updateGraph() {
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         int cpuCount = 1;
-        for (int i = 0; i < players.length; i++) {
+        for (Player player : players) {
 
-            if (players[i] instanceof HumanPlayer)
-                series.getData().add(new XYChart.Data<>("H", players[i].getNumTerritories()));
+            if (player instanceof HumanPlayer)
+                series.getData().add(new XYChart.Data<>("H", player.getNumTerritories()));
 
-            else if (players[i] instanceof AIPlayer)
-                series.getData().add(new XYChart.Data<>("C" + cpuCount, players[i].getNumTerritories()));
+            else if (player instanceof AIPlayer)
+                series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTerritories()));
 
         }
 
