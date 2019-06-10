@@ -322,30 +322,37 @@ public class Tile extends Polygon {
 	                {
 	                    if(u instanceof Peasant)
 	                    {
-	                        int curProtect = unit.getStrength();
-	                        switch(curProtect) //for upgrading with a peasant.
-	                        {
-	                            case 1:     newUnitTest(old, u);
-	                                        unit = new Spearman(this);
-	                                        setAdjacentProtection();
-	                                        test = true;
-	                                        break;
-	                            case 2:     newUnitTest(old, u);
-	                                        unit = new Knight(this);
-	                                        setAdjacentProtection();
-	                                        test = true;
-	                                        break;
-	                            case 3:		newUnitTest(old, u);
-	                                        unit = new Baron(this);
-	                                        setAdjacentProtection();
-	                                        test = true;
-	                                        break;
-	                            default:
-	                                    	//possibly put a noise or alert here
-	//                                		Alert a = new Alert(AlertType.WARNING);
-	//                                		a.setTitle("Warning");     
-	                                		test = false;
-	                        }
+	                    	if(!(unit instanceof Capital) && !(unit instanceof Castle))
+	                    	{
+		                        int curProtect = unit.getStrength();
+		                        switch(curProtect) //for upgrading with a peasant.
+		                        {
+		                            case 1:     newUnitTest(old, u);
+		                                        unit = new Spearman(this);
+		                                        setAdjacentProtection();
+		                                        test = true;
+		                                        break;
+		                            case 2:     newUnitTest(old, u);
+		                                        unit = new Knight(this);
+		                                        setAdjacentProtection();
+		                                        test = true;
+		                                        break;
+		                            case 3:		newUnitTest(old, u);
+		                                        unit = new Baron(this);
+		                                        setAdjacentProtection();
+		                                        test = true;
+		                                        break;
+		                            default:
+		                                    	//possibly put a noise or alert here
+		//                                		Alert a = new Alert(AlertType.WARNING);
+		//                                		a.setTitle("Warning");     
+		                                		test = false;
+		                        }
+	                    	}
+	                    	else
+	                    	{
+	                    		//play a noise or something
+	                    	}
 		                }
 		                else
 		                {
