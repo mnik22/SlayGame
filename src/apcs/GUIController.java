@@ -114,14 +114,15 @@ public class GUIController {
                 
             castleImage = new Image(new FileInputStream("src/Castle.png"));
             castleSelectorImageView = (ImageView) root.lookup("#castleSelectorImageView");
-            castleSelectorImageView.setImage(castleImage);
             castleSelectorImageView.setOnDragDetected(event -> {
-                Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(castleSelectorImageView.getImage());
-                content.putString("N_Castle");
-                db.setContent(content);
-                event.consume();
+                if (Integer.parseInt(balanceLabel.getText()) - 10 >= 0) {
+                    Dragboard db = castleSelectorImageView.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putImage(castleSelectorImageView.getImage());
+                    content.putString("N_Castle");
+                    db.setContent(content);
+                    event.consume();
+                }
             });
             castleSelectorImageView.setOnDragDone(event -> {
                 if (event.getTransferMode() == TransferMode.MOVE) {
@@ -140,14 +141,15 @@ public class GUIController {
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
-            pesantSelectorImageView.setImage(pesantImage);
             pesantSelectorImageView.setOnDragDetected(event -> {
-                Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(pesantSelectorImageView.getImage());
-                content.putString("N_Pesant");
-                db.setContent(content);
-                event.consume();
+                if (Integer.parseInt(balanceLabel.getText()) - 5 >= 0) {
+                    Dragboard db = pesantSelectorImageView.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putImage(pesantSelectorImageView.getImage());
+                    content.putString("N_Pesant");
+                    db.setContent(content);
+                    event.consume();
+                }
             });
             pesantSelectorImageView.setOnDragDone(event -> {
                 if (event.getTransferMode() == TransferMode.MOVE) {
@@ -279,21 +281,7 @@ public class GUIController {
                             Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
                             ClipboardContent content = new ClipboardContent();
                             if (tile.getUnit() != null) {
-                                if (tile.getUnit() instanceof Peasant) {
-                                    content.putImage(pesantImage);
-                                } else if (tile.getUnit() instanceof Castle) {
-                                    content.putImage(castleImage);
-                                } else if (tile.getUnit() instanceof Baron) {
-                                    content.putImage(baronImage);
-                                } else if (tile.getUnit() instanceof Capital) {
-                                    content.putImage(capitalImage);
-                                } else if (tile.getUnit() instanceof Knight) {
-                                    content.putImage(knightImage);
-                                } else if (tile.getUnit() instanceof Spearman) {
-                                    content.putImage(spearmanImage);
-                                } else {
-                                    System.out.println("Unknown unit type.");
-                                }
+                                content.putImage(tile.getUnit().getImage());
                             } else {
                                 System.out.println("There are no units to move on this tile.");
                             }
@@ -315,6 +303,19 @@ public class GUIController {
                             setIncome(t.getNumTiles());
                             setWages(t.getWages());
                             setBalance((t.getMoney() + t.getNumTiles()) - t.getWages());
+
+                            if (canBuyCastle(t))
+                                castleSelectorImageView.setImage(castleImage);
+
+                            else if (castleSelectorImageView.getImage() != null)
+                                castleSelectorImageView.setImage(null);
+
+                            if (canBuyPesant(t))
+                                pesantSelectorImageView.setImage(pesantImage);
+
+                            else if (pesantSelectorImageView.getImage() != null)
+                                pesantSelectorImageView.setImage(null);
+
                         });
 
                         mapPane.getChildren().add(tile);
@@ -354,38 +355,9 @@ public class GUIController {
         
     }
     
-    public void setTileFill(Tile t) {
+    public void setTileFill(Tile t, Unit u) {
 
-        int x = t.getX();
-        int y = t.getY();
-
-        if (t.getUnit() != null) {
-            if (t.getUnit() instanceof Peasant) {
-                t.setFill(new ImagePattern(pesantImage));
-            } else if (t.getUnit() instanceof Castle) {
-                t.setFill(new ImagePattern(castleImage));
-            } else if (t.getUnit() instanceof Baron) {
-                t.setFill(new ImagePattern(baronImage));
-            } else if (t.getUnit() instanceof Capital) {
-                t.setFill(new ImagePattern(capitalImage));
-            } else if (t.getUnit() instanceof Knight) {
-                t.setFill(new ImagePattern(knightImage));
-            } else if (t.getUnit() instanceof Spearman) {
-                t.setFill(new ImagePattern(spearmanImage));
-            } else {
-                Color c = t.getPlayer().getColor();
-                int red = c.getRed();
-                int green = c.getGreen();
-                int blue = c.getBlue();
-                int alpha = c.getAlpha();
-                double opacity = alpha / 255.0 ;
-                javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
-                t.setFill(fillColor);
-            }
-
-            map[y][x] = t;
-
-        }
+        t.setFill(new ImagePattern(u.getImage()));
 
     }
     
@@ -398,7 +370,25 @@ public class GUIController {
         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
         t.setFill(fillColor);
     }
-    
+
+    private boolean canBuyCastle(Territory t) {
+
+        boolean canBuyCastle = false;
+        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 10 >= 0)
+            canBuyCastle = true;
+        return canBuyCastle;
+
+    }
+
+    private boolean canBuyPesant(Territory t) {
+
+        boolean canBuyPesant = false;
+        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 5 >= 0)
+            canBuyPesant = true;
+        return canBuyPesant;
+
+    }
+
     public void setSavings(int amt) {
         
         savingsLabel.setText("" + amt);
