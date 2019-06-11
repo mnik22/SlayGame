@@ -301,6 +301,8 @@ public class GUIController {
                         });
                         tile.setOnMouseClicked(event -> {
 
+                            Territory territory = tile.getTerritory();
+
                             for (Tile[] tempTiles : map) {
                                 for (Tile t : tempTiles) {
                                     if (t != null) {
@@ -317,8 +319,6 @@ public class GUIController {
                             }
 
                             if (tile.getPlayer() instanceof HumanPlayer) {
-
-                                Territory territory = tile.getTerritory();
 
                                 for (Tile t : territory.getTiles()) {
                                     Color color = t.getPlayer().getColor();
@@ -344,11 +344,13 @@ public class GUIController {
 
                             }
 
-                            if (castleSelectorImageView.getImage() != null)
-                                castleSelectorImageView.setImage(null);
+                            if (!territory.canPurchaseUnits()) {
+                                if (castleSelectorImageView.getImage() != null)
+                                    castleSelectorImageView.setImage(null);
 
-                            if (pesantSelectorImageView.getImage() != null)
-                                pesantSelectorImageView.setImage(null);
+                                if (pesantSelectorImageView.getImage() != null)
+                                    pesantSelectorImageView.setImage(null);
+                            }
 
                         });
 
