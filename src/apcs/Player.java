@@ -48,7 +48,7 @@ public class Player
     {
         for(int i = 0; i < territories.size(); i++)
         {
-            if(territories.get(i).getMoney() < territories.get(i).costThisTurn())
+            if(territories.get(i).getMoney() < territories.get(i).getWages())
             {
                 territories.get(i).destroyTheChild();
             }
