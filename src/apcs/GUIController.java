@@ -219,7 +219,7 @@ public class GUIController {
                         int green = playerColor.getGreen();
                         int blue = playerColor.getBlue();
                         int alpha = playerColor.getAlpha();
-                        double opacity = alpha / 255.0;
+                        double opacity = (alpha / 255.0) * 0.75;
                         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
 
                         tile.setFill(fillColor);
@@ -298,22 +298,54 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnMouseClicked(event -> {
-                            Territory t = tile.getTerritory();
-                            setSavings(t.getMoney());
-                            setIncome(t.getNumTiles());
-                            setWages(t.getWages());
-                            setBalance((t.getMoney() + t.getNumTiles()) - t.getWages());
 
-                            if (canBuyCastle(t))
-                                castleSelectorImageView.setImage(castleImage);
+                            for (Tile[] tempTiles : map) {
+                                for (Tile t : tempTiles) {
+                                    if (t != null) {
+                                        Color color = t.getPlayer().getColor();
+                                        int r = color.getRed();
+                                        int g = color.getGreen();
+                                        int b = color.getBlue();
+                                        int a = color.getAlpha();
+                                        double o = (a / 255.0) * 0.75;
+                                        javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
+                                        if (!t.hasUnit()) t.setFill(fill);
+                                    }
+                                }
+                            }
 
-                            else if (castleSelectorImageView.getImage() != null)
+                            if (tile.getPlayer() instanceof HumanPlayer) {
+
+                                Territory territory = tile.getTerritory();
+
+                                for (Tile t : territory.getTiles()) {
+                                    Color color = t.getPlayer().getColor();
+                                    int r = color.getRed();
+                                    int g = color.getGreen();
+                                    int b = color.getBlue();
+                                    int a = color.getAlpha();
+                                    double o = a / 255.0;
+                                    javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
+                                    if (!t.hasUnit()) t.setFill(fill);
+                                }
+
+                                setSavings(territory.getMoney());
+                                setIncome(territory.getNumTiles());
+                                setWages(territory.getWages());
+                                setBalance((territory.getMoney() + territory.getNumTiles()) - territory.getWages());
+
+                                if (canBuyCastle(territory))
+                                    castleSelectorImageView.setImage(castleImage);
+
+                                if (canBuyPesant(territory))
+                                    pesantSelectorImageView.setImage(pesantImage);
+
+                            }
+
+                            if (castleSelectorImageView.getImage() != null)
                                 castleSelectorImageView.setImage(null);
 
-                            if (canBuyPesant(t))
-                                pesantSelectorImageView.setImage(pesantImage);
-
-                            else if (pesantSelectorImageView.getImage() != null)
+                            if (pesantSelectorImageView.getImage() != null)
                                 pesantSelectorImageView.setImage(null);
 
                         });
@@ -354,6 +386,24 @@ public class GUIController {
         propertiesBarChart.getData().setAll(series);
         
     }
+
+    public boolean moveUnit(Tile source, Tile target) {
+
+        return false;
+
+    }
+
+    public boolean purchasePeasant (Tile target) {
+
+        if (target.getTerritory().canPurchaseUnits()) {
+            target.setUnit(new Peasant(target));
+            target.setFill(new ImagePattern(pesantImage));
+            return true;
+        }
+
+        return false;
+
+    }
     
     public void setTileFill(Tile t, Unit u) {
 
@@ -366,7 +416,7 @@ public class GUIController {
         int green = c.getGreen();
         int blue = c.getBlue();
         int alpha = c.getAlpha();
-        double opacity = alpha / 255.0 ;
+        double opacity = (alpha / 255.0) * 0.75;
         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
         t.setFill(fillColor);
     }
@@ -382,10 +432,13 @@ public class GUIController {
 
     private boolean canBuyPesant(Territory t) {
 
-        boolean canBuyPesant = false;
-        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 5 >= 0)
-            canBuyPesant = true;
-        return canBuyPesant;
+        return t.canPurchaseUnits();
+
+    }
+
+    private boolean canSetUnit(Tile t) {
+
+        return t.getTerritory().canPurchaseUnits();
 
     }
 
