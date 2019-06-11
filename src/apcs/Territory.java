@@ -240,18 +240,18 @@ public class Territory {
         }
     }
     
-    public int costThisTurn()
-    {
-        int temp = 0;
-        for(int i = 0; i < tiles.size(); i++)
-        {
-            if(tiles.get(i).getUnit() != null)
-            {
-                temp += tiles.get(i).getUnit().getCost();
-            }
-        }
-        return temp;
-    }
+//    public int costThisTurn()
+//    {
+//        int temp = 0;
+//        for(int i = 0; i < tiles.size(); i++)
+//        {
+//            if(tiles.get(i).getUnit() != null)
+//            {
+//                temp += tiles.get(i).getUnit().getCost();
+//            }
+//        }
+//        return temp;
+//    }
     
     public void destroyTheChild()
     {
