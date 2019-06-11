@@ -35,7 +35,7 @@ public class Tile extends Polygon {
     private boolean isCapital;
     private boolean hasTerritory;
     
-    public Tile(int x, int y)
+    public Tile(int y, int x)
     {
 //        imageView = new ImageView();
 //        imageView.setFitWidth(10);
@@ -50,7 +50,7 @@ public class Tile extends Polygon {
     	guiVerticalPos = y;
     }
     
-    public void setPosition(int x, int y)
+    public void setPosition(int y, int x)
     {
         horizontalPos = x;
         verticalPos = y;
@@ -97,150 +97,65 @@ public class Tile extends Polygon {
     {
         //pre: should be run when the board is initiated to set the tile adjacents.
         // as of this edition this should be run with a board that has a border of null spaces around it.
-        
-        
-//        int checkTopLeft = 0;
-//        int checkTopRight = 0;
-//        int checkBottomLeft = 0;
-//        int checkBottomRight = 0;
-//        
-//        if(verticalPos%2 == 1)
-//        {
-//            if(horizontalPos == 1)
-//            {
-//                left = null;
-//                topLeft = null;
-//                bottomLeft = null;
-//            }
-//            else if(horizontalPos > 1)
-//            {
-//                left = Driver.map[horizontalPos - 2][verticalPos];
-//            }
-//            if(horizontalPos == Driver.map.length - 3)
-//            {
-//                right = null;
-//                topRight = null; checkTopRight = 1;
-//                bottomRight = null; checkBottomRight = 1;
-//            }
-//            else if(horizontalPos < Driver.map.length - 2)
-//            {
-//                right = Driver.map[horizontalPos + 2][verticalPos];
-//            }
-//        }
-//        else
-//        {
-//            if(horizontalPos == 2)
-//            {
-//                left = null;
-//                topLeft = null; checkTopLeft = 1;
-//                bottomLeft = null; checkBottomLeft = 1;
-//            }
-//            else if(horizontalPos > 1)
-//            {
-//                left = Driver.map[horizontalPos - 2][verticalPos];
-//            }
-//            if(horizontalPos == Driver.map.length - 2)
-//            {
-//                right = null;
-//                topRight = null; checkTopRight = 1;
-//                bottomRight = null; checkBottomRight = 1;
-//            }
-//            else if(horizontalPos < Driver.map.length - 2)
-//            {
-//                right = Driver.map[horizontalPos + 2][verticalPos];
-//            }
-//        }
-//        if(verticalPos == 1)
-//        {
-//            topRight = null;
-//            topLeft = null;
-//        }
-//        else
-//        {
-//            if(horizontalPos < Driver.map.length - 2 && verticalPos < Driver.map[0].length - 1)
-//            {
-//                if(checkTopRight != 1)
-//                    topRight = Driver.map[horizontalPos + 2][verticalPos + 1]; //some cases this messes up
-//            }
-//            if(horizontalPos > 1 && verticalPos < Driver.map[0].length - 1)
-//                if(checkTopLeft != 1)
-//                    topLeft = Driver.map[horizontalPos - 2][verticalPos + 1];
-//            
-//        }
-//        if(verticalPos == Driver.map[0].length - 2)
-//        {
-//            bottomRight = null; 
-//            bottomLeft = null;  
-//        }
-//        else
-//        {
-//            if(horizontalPos < Driver.map.length - 2 && verticalPos > 0)
-//                if(checkBottomRight != 1)
-//                    bottomRight = Driver.map[horizontalPos + 2][verticalPos - 1];
-//            if(horizontalPos > 1 && verticalPos > 0)
-//                if(checkBottomLeft != 1)
-//                    bottomLeft = Driver.map[horizontalPos - 2][verticalPos - 1];
-//        }
-//        
-    	
     	
         adjacentTiles = new Tile[6];
-
-    	if(verticalPos > 1 && horizontalPos < Driver.map.length) //top left
-    	{
-    		topLeft = Driver.map[horizontalPos - 1][verticalPos + 1];
-    	}
-    	else
-    	{
-    		topLeft = null;
-    	}
-    	
-    	
-    	if(verticalPos < Driver.map[0].length) //top
-    	{
-    		top = Driver.map[horizontalPos][verticalPos + 2];
-    	}
-    	else
-    	{
-    		top = null;
-    	}
-    	
-    	
-    	if(verticalPos < Driver.map[0].length && horizontalPos < Driver.map.length) //top right
-    	{
-    		topRight = Driver.map[horizontalPos + 1][verticalPos + 1];
-    	}
-    	else
-    	{
-    		topRight = null;
-    	}
-    	
-    	if(verticalPos > 2 && horizontalPos < Driver.map.length) //bottom right
-    	{
-    		bottomRight = Driver.map[horizontalPos + 1][verticalPos - 1];
-    	}
-    	else
-    	{
-    		bottomRight = null;
-    	}
-    	
-    	if(verticalPos > 2) //bottom
-    	{
-    		bottom = Driver.map[horizontalPos][verticalPos - 2];
-    	}
-    	else
-    	{
-    		bottom = null;
-    	}
-    	
-    	if(verticalPos > 2 && horizontalPos > 1)//bottom left
-    	{
-    		bottomLeft = Driver.map[horizontalPos - 1][verticalPos - 1];
-    	}
-    	else
-    	{
-    		bottomLeft = null;
-    	}
+        
+        
+        //Driver.map[VERT][HOR]
+        
+        if(verticalPos < Driver.map.length && horizontalPos > 1) //topleft
+        {
+        	topLeft = Driver.map[verticalPos + 1][horizontalPos - 1];
+        }
+        else
+        {
+        	topLeft = null;
+        }
+        
+        if(verticalPos < Driver.map.length - 2) //top
+        {
+        	top = Driver.map[verticalPos + 2][horizontalPos];
+        }
+        else
+        {
+        	top = null;
+        }
+        
+        if(verticalPos < Driver.map.length && horizontalPos < Driver.map[0].length) //topright
+        {
+        	topRight = Driver.map[verticalPos + 1][horizontalPos + 1];
+        }
+        else
+        {
+        	topRight = null;
+        }
+        
+        if(verticalPos > 1 && horizontalPos < Driver.map[0].length) //bottomright
+        {
+        	bottomRight = Driver.map[verticalPos - 1][horizontalPos + 1];
+        }
+        else
+        {
+        	bottomRight = null;
+        }
+        
+        if(verticalPos > 2) //bottom
+        {
+        	bottom = Driver.map[verticalPos - 2][horizontalPos];
+        }
+        else
+        {
+        	bottom = null;
+        }
+        
+        if(verticalPos > 1 && horizontalPos > 1) //botttomLeft
+        {
+        	bottomLeft = Driver.map[verticalPos - 1][horizontalPos - 1];
+        }
+        else
+        {
+        	bottomLeft = null;
+        }
     	
         
         adjacentTiles[0] = topLeft;
@@ -251,10 +166,15 @@ public class Tile extends Polygon {
         adjacentTiles[5] = bottomLeft;
         
         
+//        System.out.print("main tile " + getHor() + ", " + getVert() +  " ");
 //        for(int i = 0; i < adjacentTiles.length; i++)
 //        {
-//            System.out.println(adjacentTiles[i]);
+//        	if( adjacentTiles[i] != null)
+//        		System.out.print(adjacentTiles[i].getHor() + ", " + adjacentTiles[i].getVert() + " | ");
+//        	else
+//        		System.out.print("null ");
 //        }
+//        System.out.println();
         
     }
     
