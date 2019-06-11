@@ -238,12 +238,14 @@ public class GUIController {
                             if (event.getGestureSource() != tile &&
                                     event.getDragboard().hasImage() &&
                                     tile.getUnit() == null) {
-                                tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                            	if(!tile.hasUnit())
+                            		tile.setFill(new ImagePattern(event.getDragboard().getImage()));
                             }
                             event.consume();
                         });
                         tile.setOnDragExited(event -> {
-                            tile.setFill(fillColor);
+                        	if(!tile.hasUnit())
+                        		tile.setFill(fillColor);
                             event.consume();
                         });
                         tile.setOnDragDropped(event -> {
