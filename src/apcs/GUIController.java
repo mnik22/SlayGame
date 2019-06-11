@@ -221,9 +221,11 @@ public class GUIController {
                         int alpha = playerColor.getAlpha();
                         double opacity = (alpha / 255.0) * 0.75;
                         javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+                        javafx.scene.paint.Color strokeColor = javafx.scene.paint.Color.rgb(red, green, blue, 1);
 
-                        tile.setFill(fillColor);
-                        tile.setStroke(fillColor);
+                        if (tile.isCapital()) tile.setFill(new ImagePattern(capitalImage));
+                        else tile.setFill(fillColor);
+                        tile.setStroke(strokeColor);
 
                         tile.setOnDragOver(event -> {
                             if (event.getGestureSource() != tile &&
