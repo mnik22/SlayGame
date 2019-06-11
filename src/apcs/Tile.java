@@ -227,6 +227,7 @@ public class Tile extends Polygon {
     
     public boolean moveUnit(Unit u)
     {
+    	System.out.println("Move unit was called");
     	Territory t = player.containsTile(this);
     	return(t.moveUnit(u, this));
     }
@@ -235,6 +236,8 @@ public class Tile extends Polygon {
     //post: returns true if it could set the unit false otherwise.
 	public boolean setUnit(Unit u) //this method is for creating new units or called from territories move unit method
     {
+		System.out.println(getX() + " " + getY());
+		System.out.println(this);
     	Tile old = u.getTile();
         boolean test = false;
         if(u != null) //this line is mostly useless now but i'm keeping it.
@@ -253,20 +256,26 @@ public class Tile extends Polygon {
 		                        int curProtect = unit.getStrength();
 		                        switch(curProtect) //for upgrading with a peasant.
 		                        {
-		                            case 1:     newUnitTest(old, u);
-		                                        unit = new Spearman(this);
-		                                        setAdjacentProtection();
-		                                        test = true;
+		                            case 1:     if(newUnitTest(old, u))
+		                            			{
+			                                        unit = new Spearman(this);
+			                                        setAdjacentProtection();
+			                                        test = true;
+		                            			}
 		                                        break;
-		                            case 2:     newUnitTest(old, u);
-		                                        unit = new Knight(this);
-		                                        setAdjacentProtection();
-		                                        test = true;
+		                            case 2:     if(newUnitTest(old, u))
+		                            			{	
+			                                        unit = new Knight(this);
+			                                        setAdjacentProtection();
+			                                        test = true;
+		                            			}
 		                                        break;
-		                            case 3:		newUnitTest(old, u);
-		                                        unit = new Baron(this);
-		                                        setAdjacentProtection();
-		                                        test = true;
+		                            case 3:		if(newUnitTest(old, u))
+		                            			{
+			                                        unit = new Baron(this);
+			                                        setAdjacentProtection();
+			                                        test = true;
+		                            			}
 		                                        break;
 		                            default:
 		                                    	//possibly put a noise or alert here
@@ -287,12 +296,14 @@ public class Tile extends Polygon {
 		            }
 		            else
 		            {
-		            	newUnitTest(old, u);
-		                unit = u;
-		                u.setTile(this);
-		                setAdjacentProtection();
-		                test = true;
-		                System.out.println("The unit should be set: " + unit.getClass());
+		            	if(newUnitTest(old, u))
+		            	{
+			                unit = u;
+			                u.setTile(this);
+			                setAdjacentProtection();
+			                test = true;
+			                System.out.println("The unit should be set: " + unit.getClass());
+		            	}
 		            }
 	            }
 		        else
@@ -474,10 +485,9 @@ public class Tile extends Polygon {
     	Territory t = getTerritory();
     	if(u instanceof Peasant)
     	{
-    		if(t.money > 5)
+    		if(t.money >= 5)
     		{
-    			t.money -= 5;
-    			
+    			t.money -= 5;    			
 //    			t.availbleUnits();
     			return true;
     		}
@@ -489,7 +499,7 @@ public class Tile extends Polygon {
     	}
     	else if(u instanceof Castle)
     	{
-    		if(t.money > 10)
+    		if(t.money >= 10)
     		{
     			t.money -= 10;
 //   			t.availbleUnits();
