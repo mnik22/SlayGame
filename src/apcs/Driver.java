@@ -368,21 +368,23 @@ public class Driver extends Application {
             
         }
 
-        for (int r = 0; r < map.length; r++)
-        {
-            for (int c = 0; c < map[0].length; c++)
-            {
-            	if(map[r][c] == null)
-            	{
-            		System.out.print("x ");
-            	}
-            	else
-            	{
-            		System.out.print("0 ");
-            	}
-            }
-            System.out.println();
-        }
+//        for (int r = 0; r < map.length; r++)
+//        {
+//            for (int c = 0; c < map[0].length; c++)
+//            {
+//            	if(map[r][c] == null)
+//            	{
+//            		System.out.print("x ");
+//            	}
+//            	else
+//            	{
+//            		System.out.print("0 ");
+//            	}
+//            }
+//            System.out.println();
+//        }
+        
+
         
         //TODO this code works, the setAdjacent method it calls though has out of bounds exceptions
         for (int r = 1; r < map.length; r++)
@@ -411,6 +413,11 @@ public class Driver extends Application {
         	{
         		players[p].getTerritories().get(t).setBeginningCapital();
         	}
+        }
+        
+        for(int p = 0; p < players[0].getTerritories().size(); p++)
+        {
+        	System.out.println(players[0].getTerritories().get(p));
         }
         
         
@@ -494,19 +501,21 @@ public class Driver extends Application {
     		{
 	    		if(t.getAdjacentTiles()[i].getPlayer().equals(t.getPlayer()) && t.getAdjacentTiles()[i].hasTerritory())
 	    		{
-	    			check = false;
 					Territory ter = t.getAdjacentTiles()[i].getTerritory();
 	    			if(!t.hasTerritory())
 	    			{
 		    			ter.addTile(t);
 		    			t.setHasTerritory();
+		    			check = false;
 	    			}
 	    			else if(!ter.equals(t.getTerritory()))
 	    			{
+//	    				System.out.println("Merging");
 	    				Tile temp = t.getAdjacentTiles()[i];
 	    				ArrayList<Tile> meme = ter.getTiles();
-	    				ter.getPlayer().removeTerritory(ter);
-	    				t.getTerritory().addTiles(meme);    				
+	    				t.getTerritory().addTiles(meme);
+	    				ter.getPlayer().removeTerritory(ter);		
+		    			check = false;
 	    			}
 	    		}
     		}
@@ -518,6 +527,7 @@ public class Driver extends Application {
 			ter.addTile(t);
 			t.setHasTerritory();
     	}
+    	
     }
 
 }
