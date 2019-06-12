@@ -21,9 +21,9 @@ public class Player
     {
         if(endTurn)
             return endTurn;
-        for(Territory t: territories)
+        for (int i = 0; i < territories.size(); i++)
         {
-            if(t.canPurchaseUnits() || t.canMoveUnit())
+            if(territories.get(i).canPurchaseUnits() || territories.get(i).canMoveUnit())
                 return false;
         }
         return true;
