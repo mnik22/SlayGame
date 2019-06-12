@@ -305,7 +305,7 @@ public class Driver extends Application {
     
     private void makeMap() {
         
-        map = new Tile[GUIMap.length][(GUIMap[0].length * 2) + 1];
+        map = new Tile[GUIMap.length + 1][(GUIMap[0].length * 2) + 1];
         
 //        for(int r = 0; r < GUIMap.length; r++)
 //        {
