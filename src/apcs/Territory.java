@@ -88,10 +88,13 @@ public class Territory {
     	//pre: there cannot be a capital already in this territory.
     	if(tiles.size() > 1)
     	{
-	        int rnd = (int)(Math.random()*tiles.size());
-	        capital = tiles.get(rnd);                       
-	        capital.setCapital(true);
-	        capital.setUnit(new Capital(capital));
+    		if(capital == null)
+    		{
+		        int rnd = (int)(Math.random()*tiles.size());
+		        capital = tiles.get(rnd);                       
+		        capital.setCapital(true);
+		        capital.setUnit(new Capital(capital));
+    		}
     	}
     }
     
@@ -148,18 +151,23 @@ public class Territory {
 	                if(u.getStrength() > t.getProtection())
 	                {
 	                	Territory ter = t.getTerritory();
+	                	boolean capCheck = false;
 	                	checkMerge(t);
 	                	ter.removeTile(t);
 	                	if(t.isCapital())
 	                	{
-	                		t.setCapital(false);
-	                		ter.setCapital();
+	                		capCheck = true;
 	                	}
 	                    t.setUnit(old.removeUnit());
 	                    t.setPlayer(player);
 	                    tiles.add(t);
 	                    t.setAdjacentProtection();
 	                    u.move(false);
+	                    if(capCheck)
+	                    {
+	                    	t.setCapital(false);
+	                    	ter.setCapital();
+	                    }
 	                    test = true;
 	                }
 	                else
