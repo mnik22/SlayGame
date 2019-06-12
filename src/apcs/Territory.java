@@ -132,6 +132,7 @@ public class Territory {
     public boolean moveUnit(Unit u, Tile t) //this method is for moving a unit already in play.
     {
     	System.out.println("Call complete");
+    	System.out.println(t.getProtection());
     	boolean test = false;
         Tile old = u.getTile();
         System.out.println(u.canMove());
@@ -258,32 +259,35 @@ public class Territory {
     {
     	for(int i = 0; i < t.getAdjacentTiles().length; i++)
     	{
-    		if(t.getAdjacentTiles()[i].getPlayer().equals(player))
+    		if(t.getAdjacentTiles()[i] != null)
     		{
-    			Territory ter = t.getAdjacentTiles()[i].getTerritory();
-    			if(!ter.equals(this))
-    			{
-    				if(ter.getTiles().size() > this.getTiles().size())
-    				{
-    				    if(this.getCapital() != null)
-    				    {
-        					Tile cap = this.getCapital();
-        					cap.removeUnit();
-    				    }
-    					ter.addTiles(this.getTiles());
-    					player.removeTerritory(this);
-    				}
-    				else
-    				{
-    				    if(ter.getCapital() != null)
-    				    {
-        					Tile cap = ter.getCapital();
-        					cap.removeUnit();
-    				    }
-	    				this.addTiles(ter.getTiles());
-	    				player.removeTerritory(ter);
-    				}
-    			}
+	    		if(t.getAdjacentTiles()[i].getPlayer().equals(player))
+	    		{
+	    			Territory ter = t.getAdjacentTiles()[i].getTerritory();
+	    			if(!ter.equals(this))
+	    			{
+	    				if(ter.getTiles().size() > this.getTiles().size())
+	    				{
+	    				    if(this.getCapital() != null)
+	    				    {
+	        					Tile cap = this.getCapital();
+	        					cap.removeUnit();
+	    				    }
+	    					ter.addTiles(this.getTiles());
+	    					player.removeTerritory(this);
+	    				}
+	    				else
+	    				{
+	    				    if(ter.getCapital() != null)
+	    				    {
+	        					Tile cap = ter.getCapital();
+	        					cap.removeUnit();
+	    				    }
+		    				this.addTiles(ter.getTiles());
+		    				player.removeTerritory(ter);
+	    				}
+	    			}
+	    		}
     		}
     	}
     }
