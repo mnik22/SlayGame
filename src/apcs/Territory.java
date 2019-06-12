@@ -40,6 +40,11 @@ public class Territory {
         return null;
     }
     
+    public Tile getCapital()
+    {
+    	return capital;
+    }
+    
     public Player getPlayer()
     {
         return player;
@@ -142,6 +147,7 @@ public class Territory {
 	                if(u.getStrength() > t.getProtection())
 	                {
 	                	Territory ter = t.getTerritory();
+	                	checkMerge(t);
 	                	ter.removeTile(t);
 	                	if(t.isCapital())
 	                	{
@@ -246,6 +252,34 @@ public class Territory {
         {
             return true;
         }
+    }
+    
+    public void checkMerge(Tile t)//this should be called after a tile is captured.
+    {
+    	for(int i = 0; i < t.getAdjacentTiles().length; i++)
+    	{
+    		if(t.getAdjacentTiles()[i].getPlayer().equals(player))
+    		{
+    			Territory ter = t.getAdjacentTiles()[i].getTerritory();
+    			if(!ter.equals(this))
+    			{
+    				if(ter.getTiles().size() > this.getTiles().size())
+    				{
+    					Tile cap = this.getCapital();
+    					cap.removeUnit();
+    					ter.addTiles(this.getTiles());
+    					player.removeTerritory(this);
+    				}
+    				else
+    				{
+    					Tile cap = ter.getCapital();
+    					cap.removeUnit();
+	    				this.addTiles(ter.getTiles());
+	    				player.removeTerritory(ter);
+    				}
+    			}
+    		}
+    	}
     }
     
 //    public int costThisTurn()
