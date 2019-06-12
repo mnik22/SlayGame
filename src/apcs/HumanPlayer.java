@@ -15,12 +15,7 @@ public class HumanPlayer extends Player
         super.playRound();
         while(!endTurn());
         
-        //end stuff
-        super.endOfTurnStuff();
-        for(int i = 0; i < Driver.players.length; i++) 
-        {
-            Driver.players[i].checkEndOfTurnStatus();
-        }
+        
         
     }
     

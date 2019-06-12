@@ -36,15 +36,16 @@ public class Player
         endTurn();
     }
     
-    public void endOfTurnStuff()
+    public void endOfTurnSinglef()
     {
         for(int i = 0; i < territories.size(); i++)
         {
-        	territories.get(i).resetMove();
+    		territories.get(i).resetMove();
         }
+        
     }
     
-    public void checkEndOfTurnStatus()
+    public void checkEndOfTurnAll()
     {
         for(int i = 0; i < territories.size(); i++)
         {
@@ -135,6 +136,11 @@ public class Player
                 }
             }
             territory.setWages(wages);
+        }
+        endOfTurnSinglef();
+        for(int i = 0; i < Driver.players.length; i++) 
+        {
+            Driver.players[i].checkEndOfTurnAll();
         }
     }
 

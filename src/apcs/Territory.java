@@ -200,7 +200,7 @@ public class Territory {
     {
     	for(int i = 0; i < tiles.size(); i++)
     	{
-    		if(tiles.get(i).hasUnit())
+    		if(tiles.get(i).getUnit() != null)
     		{
     			tiles.get(i).getUnit().move(true);
     		}
@@ -267,7 +267,7 @@ public class Territory {
         {
             if(tiles.get(i).getUnit() != null && (!(tiles.get(i).getUnit() instanceof Capital) || !(tiles.get(i).getUnit() instanceof Castle)))
             {
-                tiles.get(i).setUnit(null);
+                tiles.get(i).removeUnit();
             }
         }
     }
