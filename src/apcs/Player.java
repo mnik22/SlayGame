@@ -25,6 +25,8 @@ public class Player
         {
             if(territories.get(i).canPurchaseUnits() || territories.get(i).canMoveUnit())
                 return false;
+            if(endTurn)
+                return true;
         }
         return true;
 //    	return false;
