@@ -228,6 +228,7 @@ public class GUIController {
                         tile.setStroke(strokeColor);
 
                         tile.setOnDragOver(event -> {
+                            System.out.println("Drag Over Called from: " + tile);
                             if (event.getGestureSource() != tile &&
                                     event.getDragboard().hasImage()) {
                                 event.acceptTransferModes(TransferMode.MOVE);
@@ -235,6 +236,7 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragEntered(event -> {
+                            System.out.println("Drag Entered over: " + tile);
                             if (event.getGestureSource() != tile &&
                                     event.getDragboard().hasImage() &&
                                     tile.getUnit() == null) {
@@ -244,11 +246,13 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragExited(event -> {
+                            System.out.println("Drag Exited over: " + tile);
                         	if(!tile.hasUnit())
                         		tile.setFill(fillColor);
                             event.consume();
                         });
                         tile.setOnDragDropped(event -> {
+                            System.out.println("Drag Dropped Detected on: " + tile);
                             Dragboard db = event.getDragboard();
                             System.out.println(event.getDragboard().getString());
                             boolean success = false;
@@ -256,23 +260,25 @@ public class GUIController {
                                 switch (db.getString()) {
 
                                     case "N_Pesant":
-                                        success = tile.setUnit(new Peasant(null));
+                                        success = tile.setUnit(new Peasant(tile));
+                                        if (success) {
+                                            tile.setFill(new ImagePattern(tile.getUnit().getImage()));
+                                            tile.getTerritory().setWages(tile.getTerritory().getWages() + 5);
+                                        }
                                         break;
 
                                     case "N_Castle":
-                                        success = tile.setUnit(new Castle(null));
+                                        success = tile.setUnit(new Castle(tile));
+                                        if (success) {
+                                            tile.setFill((new ImagePattern(tile.getUnit().getImage())));
+                                            tile.getTerritory().setWages(tile.getTerritory().getWages() + 10);
+                                        }
                                         break;
 
                                     default:
-                                        int x = Integer.parseInt(db.getString().substring(0, db.getString().indexOf(',')));
-                                        int y = Integer.parseInt(db.getString().substring(db.getString().indexOf(' ') + 1));
-                                        Tile previousTile = map[y][x];
-                                        if (previousTile.getUnit() != null)
-                                        {
-                                            success = tile.moveUnit(previousTile.getUnit());
-                                        }
-                                        else
-                                            System.out.println("There is no unit here to move.");
+                                        success = tile.moveUnit(((Tile) event.getGestureSource()).getUnit());
+                                        if (success) tile.setFill(new ImagePattern(tile.getUnit().getImage()));
+                                        break;
 
                                 }
                             } else {
@@ -282,22 +288,26 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragDetected(event -> {
+                            System.out.println("Drag Detected Originating from: " + tile);
                             Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
                             ClipboardContent content = new ClipboardContent();
                             if (tile.getUnit() != null) {
                                 content.putImage(tile.getUnit().getImage());
+                                if (tile.getUnit() instanceof Peasant) content.putString("Pesant");
+                                else if (tile.getUnit() instanceof Spearman) content.putString("Spearman");
+                                else if (tile.getUnit() instanceof Knight) content.putString("Knight");
+                                else if (tile.getUnit() instanceof Baron) content.putString("Baron");
                             } else {
                                 System.out.println("There are no units to move on this tile.");
                             }
-                            content.putString(tile.getX() + ", " + tile.getY());
                             db.setContent(content);
                             event.consume();
                         });
                         tile.setOnDragDone(event -> {
+                            System.out.println("Drag Done Called by: " + tile);
                             if (event.getTransferMode() == TransferMode.MOVE) {
                                 tile.setFill(fillColor);
-                                //noinspection ConstantConditions
-                                tile.setUnit(null);
+                                tile.removeUnit();
                             }
                             event.consume();
                         });
@@ -346,13 +356,11 @@ public class GUIController {
 
                             }
 
-                            if (!territory.canPurchaseUnits()) {
-                                if (castleSelectorImageView.getImage() != null)
-                                    castleSelectorImageView.setImage(null);
+                            if (!canBuyCastle(territory) && castleSelectorImageView.getImage() != null)
+                                castleSelectorImageView.setImage(null);
 
-                                if (pesantSelectorImageView.getImage() != null)
-                                    pesantSelectorImageView.setImage(null);
-                            }
+                            if (!canBuyPesant(territory) && pesantSelectorImageView.getImage() != null)
+                                pesantSelectorImageView.setImage(null);
 
                         });
 
@@ -438,7 +446,10 @@ public class GUIController {
 
     private boolean canBuyPesant(Territory t) {
 
-        return t.canPurchaseUnits();
+        boolean canBuyPesant = false;
+        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 5 >= 0)
+            canBuyPesant = true;
+        return canBuyPesant;
 
     }
 
