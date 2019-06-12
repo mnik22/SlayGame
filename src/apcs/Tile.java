@@ -372,6 +372,21 @@ public class Tile extends Polygon {
 //        }
 //    }
     
+    public boolean canMoveUnit(Tile t)
+    {
+    	if(unit != null)
+    	{
+    		if(unit.canMove())
+    		{
+    			if(getTerritory().isAdjacent(t))
+    			{
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
     public boolean hasUnit()
     {
         return unit != null;
