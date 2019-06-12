@@ -469,7 +469,6 @@ public class Driver extends Application {
         	{
         		AIPlayer temp = (AIPlayer)players[playerNum];
         		temp.playRound();
-        		guiController.updateGraph();
         		guiController.updateMap();
         	}
             if(playerNum < players.length - 1)
