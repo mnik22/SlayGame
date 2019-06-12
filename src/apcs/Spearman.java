@@ -15,8 +15,10 @@ public class Spearman extends Unit{
         } catch (IOException e) {
             e.printStackTrace();
         }
+	    tile = t;
 		super.unitCost = 6;
 		super.unitStrength = 2;
+		canMove = true;
 	}
 	
 }
