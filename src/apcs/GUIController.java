@@ -418,22 +418,6 @@ public class GUIController {
         return false;
 
     }
-    
-    public void setTileFill(Tile t, Unit u) {
-
-        t.setFill(new ImagePattern(u.getImage()));
-
-    }
-    
-    public void setTileFill(Tile t, Color c) {
-        int red = c.getRed();
-        int green = c.getGreen();
-        int blue = c.getBlue();
-        int alpha = c.getAlpha();
-        double opacity = (alpha / 255.0) * 0.75;
-        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
-        t.setFill(fillColor);
-    }
 
     private boolean canBuyCastle(Territory t) {
 
@@ -450,12 +434,6 @@ public class GUIController {
         if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 5 >= 0)
             canBuyPesant = true;
         return canBuyPesant;
-
-    }
-
-    private boolean canSetUnit(Tile t) {
-
-        return t.getTerritory().canPurchaseUnits();
 
     }
 
