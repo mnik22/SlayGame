@@ -93,10 +93,10 @@ class GUIController {
             for (Player player : players) {
 
                 if (player instanceof HumanPlayer)
-                    series.getData().add(new XYChart.Data<>("H", player.getNumTerritories()));
+                    series.getData().add(new XYChart.Data<>("H", player.getNumTiles()));
 
                 else if (player instanceof AIPlayer)
-                    series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTerritories()));
+                    series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTiles()));
 
             }
             
@@ -392,17 +392,17 @@ class GUIController {
     }
 
     @SuppressWarnings("unchecked")
-    void updateGraph() {
+    private void updateGraph() {
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         int cpuCount = 1;
         for (Player player : players) {
 
             if (player instanceof HumanPlayer)
-                series.getData().add(new XYChart.Data<>("H", player.getNumTerritories()));
+                series.getData().add(new XYChart.Data<>("H", player.getNumTiles()));
 
             else if (player instanceof AIPlayer)
-                series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTerritories()));
+                series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTiles()));
 
         }
 
