@@ -227,7 +227,8 @@ public class Tile extends Polygon {
     
     public boolean moveUnit(Unit u)
     {
-    	Territory t = player.containsTile(this);
+    	System.out.println("Calling move unit: " + u + " " + toString());
+    	Territory t = u.getTile().getTerritory();
     	return(t.moveUnit(u, this));
     }
     

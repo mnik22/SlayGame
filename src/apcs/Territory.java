@@ -126,64 +126,72 @@ public class Territory {
     
     public boolean moveUnit(Unit u, Tile t) //this method is for moving a unit already in play.
     {
+    	System.out.println("Call complete");
     	boolean test = false;
         Tile old = u.getTile();
-        if(isAdjacent(t))
+        System.out.println(u.canMove());
+        if(u.canMove())
         {
-            if(!t.getPlayer().equals(player))
-            { //capturing
-                if(u.getStrength() > t.getProtection())
-                {
-                	Territory ter = t.getTerritory();
-                	ter.removeTile(t);
-                	if(t.isCapital())
-                	{
-                		t.setCapital(false);
-                		ter.setCapital();
-                	}
-                    t.setUnit(old.removeUnit());
-                    t.setPlayer(player);
-                    tiles.add(t);
-                    t.setAdjacentProtection();
-                    u.move(false);
-                    test = true;
-                }
-                else
-                {
-                    //maybe play a noise or something
-                	test = false;
-                }
-            }
-            else
-            {
-                if(!t.hasUnit())
-                {
-                    t.setUnit(old.removeUnit());
-                    t.setAdjacentProtection();
-                    test = true;
-                }
-                else if(u instanceof Peasant)
-                {
-                	if(t.setUnit(u))
-                	{
-                		old.removeUnit();
-                		t.setAdjacentProtection();
-                		u.move(false);
-                		test = true;
-                	}
-                }
-                else
-                {
-                	//maybe play noise or something
-                	test = false;
-                }
-            }
-        }
-        else
-        {
-        	// maybe play noise or something
-        	test = false;
-
+            System.out.println(isAdjacent(t));
+	        if(isAdjacent(t))
+	        {
+	        	System.out.println(!(t.getPlayer().equals(player)));
+	            if(!t.getPlayer().equals(player))
+	            { //capturing
+	            	System.out.println(u.getStrength() > t.getProtection());
+	                if(u.getStrength() > t.getProtection())
+	                {
+	                	Territory ter = t.getTerritory();
+	                	ter.removeTile(t);
+	                	if(t.isCapital())
+	                	{
+	                		t.setCapital(false);
+	                		ter.setCapital();
+	                	}
+	                    t.setUnit(old.removeUnit());
+	                    t.setPlayer(player);
+	                    tiles.add(t);
+	                    t.setAdjacentProtection();
+	                    u.move(false);
+	                    test = true;
+	                }
+	                else
+	                {
+	                    //maybe play a noise or something
+	                	test = false;
+	                }
+	            }
+	            else
+	            {
+	                if(!t.hasUnit())
+	                {
+	                    t.setUnit(old.removeUnit());
+	                    t.setAdjacentProtection();
+	                    test = true;
+	                }
+	                else if(u instanceof Peasant)
+	                {
+	                	if(t.setUnit(u))
+	                	{
+	                		old.removeUnit();
+	                		t.setAdjacentProtection();
+	                		u.move(false);
+	                		test = true;
+	                	}
+	                }
+	                else
+	                {
+	                	//maybe play noise or something
+	                	test = false;
+	                }
+	            }
+	        }
+	        else
+	        {
+	        	// maybe play noise or something
+	        	test = false;
+	
+	        }
         }
         return test;
     }
