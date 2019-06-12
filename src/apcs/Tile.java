@@ -366,6 +366,13 @@ public class Tile extends Polygon {
         return unit != null;
     }
     
+    public boolean hasMoveableUnit()
+    {
+        if(unit instanceof Capital || unit instanceof Castle || unit == null)
+            return false;
+        return true;
+    }
+    
     public void setProtection(int p)
     {
         protection = p;

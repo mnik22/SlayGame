@@ -228,7 +228,6 @@ public class GUIController {
                         tile.setStroke(strokeColor);
 
                         tile.setOnDragOver(event -> {
-                            System.out.println("Drag Over Called from: " + tile);
                             if (event.getGestureSource() != tile &&
                                     event.getDragboard().hasImage()) {
                                 event.acceptTransferModes(TransferMode.MOVE);
@@ -236,7 +235,6 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragEntered(event -> {
-                            System.out.println("Drag Entered over: " + tile);
                             if (event.getGestureSource() != tile &&
                                     event.getDragboard().hasImage() &&
                                     tile.getUnit() == null) {
@@ -246,13 +244,11 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragExited(event -> {
-                            System.out.println("Drag Exited over: " + tile);
                         	if(!tile.hasUnit())
                         		tile.setFill(fillColor);
                             event.consume();
                         });
                         tile.setOnDragDropped(event -> {
-                            System.out.println("Drag Dropped Detected on: " + tile);
                             Dragboard db = event.getDragboard();
                             System.out.println(event.getDragboard().getString());
                             boolean success = false;
@@ -288,7 +284,6 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragDetected(event -> {
-                            System.out.println("Drag Detected Originating from: " + tile);
                             Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
                             ClipboardContent content = new ClipboardContent();
                             if (tile.getUnit() != null) {
@@ -304,7 +299,6 @@ public class GUIController {
                             event.consume();
                         });
                         tile.setOnDragDone(event -> {
-                            System.out.println("Drag Done Called by: " + tile);
                             if (event.getTransferMode() == TransferMode.MOVE) {
                                 tile.setFill(fillColor);
                                 tile.removeUnit();

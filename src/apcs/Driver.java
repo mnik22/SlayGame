@@ -59,13 +59,11 @@ public class Driver extends Application {
         
         //sets center tile
         int randomPlayer = (int) (Math.random() * players.length);
-        System.out.println("randomPlayer: " + randomPlayer);
         Tile t = new Tile(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H);
         t.setPlayer(players[randomPlayer]);
         tilesRemaining[randomPlayer]--;
         count++;
         t.getPoints().addAll(loadCoords(CENTER_TILE_INDEX_W, CENTER_TILE_INDEX_H));
-        System.out.println("Coords: " + t.getPoints().toString());
         GUIMap[CENTER_TILE_GUI_INDEX_ROW][CENTER_TILE_GUI_INDEX_COLUMN] = t;
         
         
@@ -461,7 +459,7 @@ public class Driver extends Application {
         int playerNum = 0;
         while(playerNum < players.length && !gameWon())
         {
-        	//System.out.println(currentPlayer.getColor());
+        	System.out.println(currentPlayer);
         	if(playerNum == 0)
         	{
         		HumanPlayer temp = (HumanPlayer)players[playerNum];

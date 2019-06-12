@@ -311,6 +311,16 @@ public class Territory {
         return tiles;
     }
     
+    public void buyPeasant()
+    {
+        money -= 5;
+    }
+    
+    public void buyCastle()
+    {
+        money -= 10;
+    }
+    
     public int getMoney()
     {
         return money;

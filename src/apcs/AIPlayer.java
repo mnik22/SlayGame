@@ -35,7 +35,7 @@ public class AIPlayer extends Player
                for(int i = 0; i < tiles.size(); i++)
                {
                    ArrayList<Tile> adjacents = territory.adjacentEnemyTiles();
-                   if(tiles.get(i).hasUnit())
+                   if(tiles.get(i).hasMoveableUnit())
                    {
                        int tileCount = 0;
                        int rand = (int) (Math.random() * adjacents.size());
@@ -57,7 +57,10 @@ public class AIPlayer extends Player
                        while(tiles.get(randTile).getProtection() > 0)
                            randTile = (int) (Math.random() * tiles.size());
                        if(adjacents.get(randTile).getProtection() == 0)
+                       {
                            adjacents.get(randTile).setUnit(new Castle(null));
+                           territory.buyCastle();
+                       }
                    }
                    else
                    {
@@ -65,7 +68,10 @@ public class AIPlayer extends Player
                        while(adjacents.get(randAdjacent).getProtection() > 0)
                            randAdjacent = (int) (Math.random() * adjacents.size());
                        if(adjacents.get(randAdjacent).getProtection() == 0)
+                       {
                     	   adjacents.get(randAdjacent).setUnit(new Peasant(null));
+                    	   territory.buyPeasant();
+                       }
                    }
                    
                }
