@@ -19,7 +19,6 @@ public class Driver extends Application {
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
     private static final int NUM_TILES = 360;
-    private static Tile[][] GUIMap;
     private Color[] colors;
     private static final int CENTER_TILE_INDEX_W = 8;
     private static final int CENTER_TILE_INDEX_H = 20;
@@ -29,6 +28,7 @@ public class Driver extends Application {
     private Thread gameThread;
     
     static Player currentPlayer;
+    static Tile[][] GUIMap;
     static Tile[][] map;
     public static Player[] players;
     

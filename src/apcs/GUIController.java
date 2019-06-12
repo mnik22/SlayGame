@@ -49,10 +49,10 @@ class GUIController {
     private Territory selectedTerritory;
 
     @SuppressWarnings({ "unchecked" })
-    GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
+    GUIController(Stage primaryStage) {
         
-        this.map = map;
-        this.players = players;
+        map = Driver.GUIMap;
+        players = Driver.players;
         
         try {
             
@@ -238,8 +238,16 @@ class GUIController {
                             event.consume();
                         });
                         tile.setOnDragExited(event -> {
-                        	if(!tile.hasUnit())
-                        		tile.setFill(fillColor);
+                        	if(!tile.hasUnit()) {
+                                Color color = (tile.getPlayer().getColor());
+                                int r = color.getRed();
+                                int g = color.getGreen();
+                                int b = color.getBlue();
+                                if (selectedTerritory.getTiles().contains(tile))
+                                    tile.setFill(javafx.scene.paint.Color.rgb(r, g, b, 1));
+                                else
+                                    tile.setFill(javafx.scene.paint.Color.rgb(r, g, b, .75));
+                            }
                             event.consume();
                         });
                         tile.setOnDragDropped(event -> {
