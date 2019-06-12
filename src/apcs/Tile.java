@@ -236,14 +236,13 @@ public class Tile extends Polygon {
     //post: returns true if it could set the unit false otherwise.
 	public boolean setUnit(Unit u) //this method is for creating new units or called from territories move unit method
     {
-		System.out.println("Set unit called " + u);
+//		System.out.println("Set unit called " + u);
     	Tile old = u.getTile();
         boolean test = false;
         if(u != null) //this line is mostly useless now but i'm keeping it.
         {
         	if(!(u instanceof Capital))
         	{
-        		System.out.println(u instanceof Castle);
         		if(!(u instanceof Castle))
         		{
 	        		if(u.canMove())
@@ -328,12 +327,15 @@ public class Tile extends Polygon {
         		}
         		else
         		{
-        			System.out.println("Trying to set castle");
-        			unit = u;
-                    u.setTile(this);
-                    setAdjacentProtection();
-                    test = true;
-                    System.out.println("Complete");
+        			if(!hasUnit())
+        			{
+	        			System.out.println("Trying to set castle");
+	        			unit = u;
+	                    u.setTile(this);
+	                    setAdjacentProtection();
+	                    test = true;
+	                    System.out.println("Complete");
+        			}
         		}
         	}
         	else
@@ -352,38 +354,11 @@ public class Tile extends Polygon {
     public Unit removeUnit()
     {
     	Unit u = unit;
-    	super.setFill(super.getStroke());
     	unit = null;
     	removeProtection();
     	return u;
     }
     
-//    public void unitFill(ImagePattern i)
-//    {
-//        
-//        try
-//        {
-//            if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Pesant.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Pesant.png")))).getWidth())
-//            {
-//                if(setUnit(new Peasant(this)))
-//                    super.setFill(i);
-//            }
-//            else if(i.getImage().getHeight() == ((new Image(new FileInputStream("src/Castle.png")))).getHeight() && i.getImage().getWidth() == (new ImagePattern(new Image(new FileInputStream("src/Castle.png")))).getWidth())
-//            {
-//                if(setUnit(new Castle(this)))
-//                    super.setFill(i);
-//            }
-//            else
-//            {
-//                System.out.println("Something went wrong with the image pattern thing");
-//            }
-//                
-//        } catch (FileNotFoundException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
     
     public boolean canMoveUnit(Tile t)
     {
@@ -416,19 +391,8 @@ public class Tile extends Polygon {
     {
         protection = p;
     }
-//	public void setAdjacentProtection(int p) //sets this and adjacent tiles protection to p based on each tiles previous protection. //this also might be overlooked by the other setAdjacentProtection method as it does the samething but better.
-//    {
-//		//might be useless
-//        if(protection < p)
-//            protection = p;
-//        for(int i = 0; i < adjacentTiles.length; i++)
-//        {
-//            if(player.equals(adjacentTiles[i].getPlayer()) && p > adjacentTiles[i].getProtection())
-//            {
-//                adjacentTiles[i].setProtection(p);
-//            }
-//        }
-//    }
+    
+    
     public int getProtection()
     {
         return protection;
@@ -436,19 +400,22 @@ public class Tile extends Polygon {
     
     public ArrayList<Tile> hasProtection()
     {
+    	System.out.println("hasProtection was called");
         ArrayList<Tile> temp = new ArrayList<Tile>();
-        if(protection > 0)
+
+        for(int i = 0; i < adjacentTiles.length; i++)
         {
-            for(int i = 0; i < adjacentTiles.length; i++)
-            {
-            	if(adjacentTiles[i] != null)
-            	{
-	                if(adjacentTiles[i].hasUnit() && adjacentTiles[i].getPlayer().equals(player))
-	                {
-	                    temp.add(adjacentTiles[i]);
-	                }
-            	}
-            }
+        	if(adjacentTiles[i] != null)
+        	{
+                if(adjacentTiles[i].hasUnit() && adjacentTiles[i].getPlayer().equals(player))
+                {
+                    temp.add(adjacentTiles[i]);
+                }
+        	}
+        }
+        for(int i = 0; i < temp.size(); i++)
+        {
+        	System.out.println("This unit is in temp " + temp.get(i));
         }
         return temp;
     }
@@ -463,17 +430,19 @@ public class Tile extends Polygon {
         }
         for(int i = 0; i < temp.size(); i++)
         {
-            if(temp.get(i).getProtection() > strongest)
+            if(temp.get(i).getUnit().getStrength() > strongest)
             {
-                strongest = temp.get(i).getProtection();
+                strongest = temp.get(i).getUnit().getStrength();
             }
         }
+        System.out.println("Strongest: " + strongest);
         setProtection(strongest);
     }
     
     public void setAdjacentProtection() //updates this and adjacent tiles protection based on nearby units
     {
     	setProtection();
+    	System.out.println("This protection: " + protection);
         for(int i = 0; i < adjacentTiles.length; i++)
         {
         	if(adjacentTiles[i] != null)
@@ -481,6 +450,7 @@ public class Tile extends Polygon {
 	            if(adjacentTiles[i].getPlayer().equals(player))
 	            {
 	                adjacentTiles[i].setProtection();
+	                System.out.println("Protection: " + adjacentTiles[i].getProtection());
 	            }
         	}
         }
