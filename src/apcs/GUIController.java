@@ -9,13 +9,16 @@ package apcs;
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +28,8 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+
+import javax.xml.transform.Result;
 
 class GUIController {
     
@@ -156,7 +161,21 @@ class GUIController {
 
                 if (Driver.currentPlayer instanceof HumanPlayer) {
 
-                    Driver.currentPlayer.buttonEndTurn();
+                    boolean hasMovesLeft = false;
+                    for (Territory t: Driver.currentPlayer.getTerritories())
+                        if (t.canMoveUnit() || t.canPurchaseUnits())
+                            hasMovesLeft = true;
+
+                    if (hasMovesLeft) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("You can still make moves, are you sure you want to end your turn?");
+                        Optional<ButtonType> option = alert.showAndWait();
+                        if (option.get() == ButtonType.OK) {
+                            Driver.currentPlayer.buttonEndTurn();
+                        } else {
+                            alert.close();
+                        }
+                    }
 
                 }
 
