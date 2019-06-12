@@ -305,9 +305,13 @@ public class Territory {
     {
         for(int i = 0; i < tiles.size(); i++)
         {
-            if(tiles.get(i).getUnit() != null && (!(tiles.get(i).getUnit() instanceof Capital) || !(tiles.get(i).getUnit() instanceof Castle)))
+            if(tiles.get(i).hasUnit())
             {
-                tiles.get(i).removeUnit();
+            	if(!(tiles.get(i).getUnit() instanceof Capital) && !(tiles.get(i).getUnit() instanceof Castle))
+    			{
+        			System.out.println(tiles.get(i).getUnit());
+        			tiles.get(i).removeUnit();
+    			}
             }
         }
     }
