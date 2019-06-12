@@ -56,9 +56,9 @@ public class AIPlayer extends Player
                        int randTile = (int) (Math.random() * tiles.size());
                        while(tiles.get(randTile).getProtection() > 0)
                            randTile = (int) (Math.random() * tiles.size());
-                       if(adjacents.get(randTile).getProtection() == 0)
+                       if(tiles.get(randTile).getProtection() == 0)
                        {
-                           adjacents.get(randTile).setUnit(new Castle(null));
+                           tiles.get(randTile).setUnit(new Castle(null));
                            territory.buyCastle();
                        }
                    }

@@ -265,15 +265,21 @@ public class Territory {
     			{
     				if(ter.getTiles().size() > this.getTiles().size())
     				{
-    					Tile cap = this.getCapital();
-    					cap.removeUnit();
+    				    if(this.getCapital() != null)
+    				    {
+        					Tile cap = this.getCapital();
+        					cap.removeUnit();
+    				    }
     					ter.addTiles(this.getTiles());
     					player.removeTerritory(this);
     				}
     				else
     				{
-    					Tile cap = ter.getCapital();
-    					cap.removeUnit();
+    				    if(ter.getCapital() != null)
+    				    {
+        					Tile cap = ter.getCapital();
+        					cap.removeUnit();
+    				    }
 	    				this.addTiles(ter.getTiles());
 	    				player.removeTerritory(ter);
     				}
