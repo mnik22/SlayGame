@@ -118,20 +118,6 @@ class GUIController {
                     event.consume();
                 }
             });
-            castleSelectorImageView.setOnDragDone(event -> {
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    if (Driver.currentPlayer instanceof HumanPlayer) {
-                        boolean canBuyAnother = false;
-                        for (Territory t : Driver.currentPlayer.getTerritories()) {
-                            if (t.availbleUnits()[1] > 0)
-                                canBuyAnother = true;
-                        }
-                        if (!canBuyAnother)
-                            castleSelectorImageView.setImage(null);
-                    }
-                }
-                event.consume();
-            });
             
             pesantImage = new Image(new FileInputStream("src/Pesant.png"));
             pesantSelectorImageView = (ImageView) root.lookup("#pesantSelectorImageView");
@@ -144,20 +130,6 @@ class GUIController {
                     db.setContent(content);
                     event.consume();
                 }
-            });
-            pesantSelectorImageView.setOnDragDone(event -> {
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    if (Driver.currentPlayer instanceof HumanPlayer) {
-                        boolean canBuyAnother = false;
-                        for (Territory t : Driver.currentPlayer.getTerritories()) {
-                            if (t.availbleUnits()[1] > 0)
-                                canBuyAnother = true;
-                        }
-                        if (!canBuyAnother)
-                            pesantSelectorImageView.setImage(null);
-                    }
-                }
-                event.consume();
             });
             
             /*
@@ -264,6 +236,11 @@ class GUIController {
                                                 tile.setFill(new ImagePattern(tile.getUnit().getImage()));
                                                 tile.getTerritory().buyPeasant();
                                                 updateLabels(tile.getTerritory());
+                                                if (!canBuyCastle(selectedTerritory) && castleSelectorImageView.getImage() != null)
+                                                    castleSelectorImageView.setImage(null);
+
+                                                if (!canBuyPesant(selectedTerritory) && pesantSelectorImageView.getImage() != null)
+                                                    pesantSelectorImageView.setImage(null);
                                             }
                                         }
                                         break;
@@ -275,6 +252,11 @@ class GUIController {
                                                 tile.setFill((new ImagePattern(tile.getUnit().getImage())));
                                                 tile.getTerritory().buyCastle();
                                                 updateLabels(tile.getTerritory());
+                                                if (!canBuyCastle(selectedTerritory) && castleSelectorImageView.getImage() != null)
+                                                    castleSelectorImageView.setImage(null);
+
+                                                if (!canBuyPesant(selectedTerritory) && pesantSelectorImageView.getImage() != null)
+                                                    pesantSelectorImageView.setImage(null);
                                             }
                                         }
                                         break;
