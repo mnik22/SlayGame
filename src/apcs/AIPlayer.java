@@ -29,55 +29,77 @@ public class AIPlayer extends Player
         super.playRound();
         while(!endTurn())
         {
-           for(Territory territory: territories)
+            System.out.println("stuck here 6");
+           for(int i = 0; i < territories.size(); i++)
            {
-               ArrayList<Tile> tiles = territory.getTiles();
-               for(int i = 0; i < tiles.size(); i++)
+               ArrayList<Tile> tiles = territories.get(i).getTiles();
+               for(int j = 0; j < tiles.size(); j++)
                {
-                   ArrayList<Tile> adjacents = territory.adjacentEnemyTiles();
-                   if(tiles.get(i).hasMoveableUnit())
+                   ArrayList<Tile> adjacents = territories.get(j).adjacentEnemyTiles();
+                   if(tiles.get(j).hasMoveableUnit())
                    {
                        int tileCount = 0;
                        int rand = (int) (Math.random() * adjacents.size());
                        while(tileCount < adjacents.size() && adjacents.get(rand).getProtection() > 0)
                        {
+                           System.out.println("stuck here 7");
                            rand = (int) (Math.random() * adjacents.size());
                            tileCount++;
                        }
-                       if(adjacents.get(rand).getProtection() == 0)
-                           territory.moveUnit(tiles.get(i).getUnit(), adjacents.get(rand));
+                       if(adjacents.get(rand) != null && adjacents.get(rand).getProtection() == 0) {
+                           System.out.println("stuck here 8");
+                           territories.get(i).moveUnit(tiles.get(j).getUnit(), adjacents.get(rand));
+                       }
+                       System.out.println("got here");
                    }
+                   System.out.println("got here 2");
+//                   try
+//                   {
+//                        Thread.sleep(10);
+//                   } catch (InterruptedException e)
+//                   {
+//                        e.printStackTrace();
+//                   }
                }
-               while(territory.canPurchaseUnits())
+               System.out.println("got here 3");
+               while(territories.get(i).canPurchaseUnits())
                {
-                   ArrayList<Tile> adjacents = territory.adjacentEnemyTiles();
-                   if(territory.getMoney() > 20)
+                   System.out.println("stuck here 1");
+                   if(territories.get(i).getMoney() > 20)
                    {
                        int randTile = (int) (Math.random() * tiles.size());
-                       while(tiles.get(randTile).getProtection() > 0)
-                           randTile = (int) (Math.random() * tiles.size());
-                       if(tiles.get(randTile).getProtection() == 0)
+                       int count = 0;
+                       while(tiles.get(randTile) != null && tiles.get(randTile).getProtection() > 0 && count < tiles.size())
+                           randTile = (int) (Math.random() * tiles.size());System.out.println("stuck here 2");
+                       if(tiles.get(randTile) != null && tiles.get(randTile).getProtection() == 0)
                        {
-                           tiles.get(randTile).setUnit(new Castle(null));
-                           territory.buyCastle();
+                           tiles.get(randTile).setUnit(new Castle(tiles.get(randTile)));
+                           territories.get(i).buyCastle();
                        }
                    }
                    else
                    {
-                       int randAdjacent = (int) (Math.random() * adjacents.size());
-                       while(adjacents.get(randAdjacent).getProtection() > 0)
-                           randAdjacent = (int) (Math.random() * adjacents.size());
-                       if(adjacents.get(randAdjacent).getProtection() == 0)
+                       int randTile = (int) (Math.random() * tiles.size());
+                       int count = 0;
+                       while(tiles.get(randTile) != null && tiles.get(randTile).getProtection() > 0 && count < tiles.size())
+                           randTile = (int) (Math.random() * tiles.size()); System.out.println("stuck here 3");
+                       if(tiles.get(randTile) != null && tiles.get(randTile).getProtection() == 0)
                        {
-                    	   adjacents.get(randAdjacent).setUnit(new Peasant(null));
-                    	   territory.buyPeasant();
+                    	   tiles.get(randTile).setUnit(new Peasant(tiles.get(randTile)));
+                    	   System.out.println("stuck here 4");
+                    	   territories.get(i).buyPeasant();
+                    	   System.out.println("stuck here 5");
                        }
                    }
-                   
                }
+//               try
+//               {
+//                    Thread.sleep(10);
+//               } catch (InterruptedException e)
+//               {
+//                    e.printStackTrace();
+//               }
            }
         }
     }
-    
-
 }
