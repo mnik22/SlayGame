@@ -3,8 +3,10 @@ Comp Sci Final Game Project - SLAY
 
 TODO List:
 
--Fix unit fill
-
+-Fix AI not showing moves
+-Fix problem where the capital and peasant are removed after each turn
+-Split territories method
+-Finish all the GUI stuff
 -Debug the game further down the line after the GUI is rock solid
 
 
@@ -13,12 +15,11 @@ TIME LINE:
 
 Monday Night
 
--Finish GUI
 
 Tuesday Night
 
--Finish all remaining code to make game run
--Finish GUI
+-Finish all remaining code to make game run 
+-Finish GUI 
 
 Wednesday Night
 
