@@ -19,7 +19,7 @@ public class Driver extends Application {
     private final int MAP_PANE_HEIGHT = 800;
     private static final int NUM_PLAYERS = 6;
     private static final int NUM_TILES = 360;
-    private Tile[][] GUIMap;
+    private static Tile[][] GUIMap;
     private Color[] colors;
     private static final int CENTER_TILE_INDEX_W = 8;
     private static final int CENTER_TILE_INDEX_H = 20;
@@ -91,7 +91,7 @@ public class Driver extends Application {
             System.out.println("num tiles for p" + j + ": " + players[j].getNumTiles());
         }
         
-        guiController = new GUIController(primaryStage, GUIMap, players);
+        guiController = new GUIController(primaryStage);
         
         gameThread = new Thread(new Runnable() {
 
