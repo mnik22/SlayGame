@@ -84,9 +84,7 @@ class GUIController {
             /*
              * Chart Code
              */
-            
-//            playerImage = new Image(new FileInputStream("src/Player.png"));
-//            computerImage = new Image(new FileInputStream("src/Computer.png"));
+
             propertiesBarChart = (BarChart<String, Integer>) root.lookup("#propertiesBarChart");
             propertiesBarChart.setTitle("Territory Summary");
             
