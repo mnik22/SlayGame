@@ -236,91 +236,104 @@ public class Tile extends Polygon {
     //post: returns true if it could set the unit false otherwise.
 	public boolean setUnit(Unit u) //this method is for creating new units or called from territories move unit method
     {
+		System.out.println("Set unit called " + u);
     	Tile old = u.getTile();
         boolean test = false;
         if(u != null) //this line is mostly useless now but i'm keeping it.
         {
-//        	System.out.println(Driver.currentPlayer.equals(player));
         	if(!(u instanceof Capital))
         	{
-        		if(u.canMove())
+        		System.out.println(u instanceof Castle);
+        		if(!(u instanceof Castle))
         		{
-		            if(Driver.currentPlayer.equals(player))
-		            {
-		                if(hasUnit())
-		                {
-		                    if(u instanceof Peasant)
-		                    {
-		                    	if(!(unit instanceof Capital) && !(unit instanceof Castle))
-		                    	{
-			                        int curProtect = unit.getStrength();
-			                        switch(curProtect) //for upgrading with a peasant.
-			                        {
-			                            case 1:     newUnitTest(old, u);
-			                                        unit = new Spearman(this);
-			                                        unit.move(false);
-			                                        setAdjacentProtection();
-			                                        test = true;
-			                                        break;
-			                            case 2:     newUnitTest(old, u);
-			                                        unit = new Knight(this);
-			                                        unit.move(false);;
-			                                        setAdjacentProtection();
-			                                        test = true;
-			                                        break;
-			                            case 3:		newUnitTest(old, u);
-			                                        unit = new Baron(this);
-			                                        unit.move(false);
-			                                        setAdjacentProtection();
-			                                        test = true;
-			                                        break;
-			                            default:
-			                                    	//possibly put a noise or alert here
-			//                                		Alert a = new Alert(AlertType.WARNING);
-			//                                		a.setTitle("Warning");     
-			                                		test = false;
-			                        }
-		                    	}
-		                    	else
-		                    	{
-		                    		//play a noise or something
-		                    	}
-			                }
-			                else
-			                {
-			                	//possibly put a noise or sumting.
-			                }
-			            }
-			            else
+	        		if(u.canMove())
+	        		{
+			            if(Driver.currentPlayer.equals(player))
 			            {
-			            	newUnitTest(old, u);
-			                unit = u;
-			                u.setTile(this);
-			                setAdjacentProtection();
-			                test = true;
-			                System.out.println("The unit should be set: " + unit.getClass());
+			                if(hasUnit())
+			                {
+			                    if(u instanceof Peasant)
+			                    {
+			                    	if(!(unit instanceof Capital) && !(unit instanceof Castle))
+			                    	{
+				                        int curProtect = unit.getStrength();
+				                        switch(curProtect) //for upgrading with a peasant.
+				                        {
+				                            case 1:     newUnitTest(old, u);
+				                                        unit = new Spearman(this);
+				                                        unit.move(false);
+				                                        setAdjacentProtection();
+				                                        test = true;
+				                                        break;
+				                            case 2:     newUnitTest(old, u);
+				                                        unit = new Knight(this);
+				                                        unit.move(false);;
+				                                        setAdjacentProtection();
+				                                        test = true;
+				                                        break;
+				                            case 3:		newUnitTest(old, u);
+				                                        unit = new Baron(this);
+				                                        unit.move(false);
+				                                        setAdjacentProtection();
+				                                        test = true;
+				                                        break;
+				                            default:
+				                                    	//possibly put a noise or alert here
+				//                                		Alert a = new Alert(AlertType.WARNING);
+				//                                		a.setTitle("Warning");     
+				                                		test = false;
+				                        }
+			                    	}
+			                    	else
+			                    	{
+			                    		//play a noise or something
+			                    	}
+				                }
+				                else
+				                {
+				                	//possibly put a noise or sumting.
+				                }
+				            }
+				            else
+				            {
+				            	newUnitTest(old, u);
+				                unit = u;
+				                u.setTile(this);
+				                setAdjacentProtection();
+				                test = true;
+				                System.out.println("The unit should be set: " + unit.getClass());
+				            }
 			            }
-		            }
-			        else
-			        {
-			        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
-			     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
-			     		if(old != null)
-			     		{
-			     			unit = u;
-			     			u.setTile(this);
-			                setAdjacentProtection();
-			                test = true;
-			     		}
-			     		else
-			     		{
-			     			//maybe make a noise or something
-			     		}
-			        }
+				        else
+				        {
+				        	//As of now the only time that this case (setting unit to enemy tile) is used is when called by territories move unit method.
+				     		//This means that when you build a new unit (in this case a peasant) you have to put them on your territory before moving them to another players tile.
+				     		if(old != null)
+				     		{
+				     			unit = u;
+				     			u.setTile(this);
+				                setAdjacentProtection();
+				                test = true;
+				     		}
+				     		else
+				     		{
+				     			//maybe make a noise or something
+				     		}
+				        }
+	        		}
+	        		else
+	        		{
+	        			//maybe play a noise or something
+	        		}
         		}
         		else
         		{
-        			//maybe play a noise or something
+        			System.out.println("Trying to set castle");
+        			unit = u;
+                    u.setTile(this);
+                    setAdjacentProtection();
+                    test = true;
+                    System.out.println("Complete");
         		}
         	}
         	else
