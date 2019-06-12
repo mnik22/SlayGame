@@ -26,7 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
-public class GUIController {
+class GUIController {
     
     private Tile[][] map;
     private Player[] players;
@@ -44,10 +44,6 @@ public class GUIController {
     private ImageView castleSelectorImageView;
     private Image castleImage;
 
-    private Image spearmanImage;
-    private Image knightImage;
-    private Image baronImage;
-    
     private Image capitalImage;
 
     private Territory selectedTerritory;
@@ -172,16 +168,16 @@ public class GUIController {
 
             ImageView pesantImageView = (ImageView) root.lookup("#pesantImageView");
             pesantImageView.setImage(pesantImage);
-            
-            spearmanImage = new Image(new FileInputStream("src/Spearman.png"));
+
+            Image spearmanImage = new Image(new FileInputStream("src/Spearman.png"));
             ImageView spearmanImageView = (ImageView) root.lookup("#spearmanImageView");
             spearmanImageView.setImage(spearmanImage);
-            
-            knightImage = new Image(new FileInputStream("src/Knight.png"));
+
+            Image knightImage = new Image(new FileInputStream("src/Knight.png"));
             ImageView knightImageView = (ImageView) root.lookup("#knightImageView");
             knightImageView.setImage(knightImage);
-            
-            baronImage = new Image(new FileInputStream("src/Baron.png"));
+
+            Image baronImage = new Image(new FileInputStream("src/Baron.png"));
             ImageView baronImageView = (ImageView) root.lookup("#baronImageView");
             baronImageView.setImage(baronImage);
 
@@ -283,6 +279,11 @@ public class GUIController {
                                     success = tile.moveUnit(((Tile) event.getGestureSource()).getUnit());
                                     if (success) {
                                         tile.setFill(new ImagePattern(tile.getUnit().getImage()));
+                                        Color color = ((Tile) event.getGestureSource()).getPlayer().getColor();
+                                        int r = color.getRed();
+                                        int g = color.getGreen();
+                                        int b = color.getBlue();
+                                        tile.setStroke(javafx.scene.paint.Color.rgb(r, g, b, 1));
                                         updateGraph();
                                     }
                                 }
@@ -385,7 +386,7 @@ public class GUIController {
     }
 
     @SuppressWarnings("unchecked")
-    public void updateGraph() {
+    void updateGraph() {
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         int cpuCount = 1;
@@ -403,7 +404,7 @@ public class GUIController {
         
     }
 
-    public void updateMap() {
+    void updateMap() {
 
         for (Tile[] tiles : map) {
             for (Tile t : tiles) {
@@ -425,24 +426,6 @@ public class GUIController {
                 }
             }
         }
-
-    }
-
-    public boolean moveUnit(Tile source, Tile target) {
-
-        return false;
-
-    }
-
-    public boolean purchasePeasant (Tile target) {
-
-        if (target.getTerritory().canPurchaseUnits()) {
-            target.setUnit(new Peasant(target));
-            target.setFill(new ImagePattern(pesantImage));
-            return true;
-        }
-
-        return false;
 
     }
 
@@ -473,25 +456,25 @@ public class GUIController {
 
     }
 
-    public void setSavings(int amt) {
+    private void setSavings(int amt) {
         
         savingsLabel.setText("" + amt);
         
     }
     
-    public void setIncome(int amt) {
+    private void setIncome(int amt) {
         
         incomeLabel.setText("" + amt);
         
     }
     
-    public void setWages(int amt) {
+    private void setWages(int amt) {
         
         wagesLabel.setText("" + amt);
         
     }
     
-    public void setBalance(int amt) {
+    private void setBalance(int amt) {
         
         balanceLabel.setText("" + amt);
         
