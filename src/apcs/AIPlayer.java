@@ -32,10 +32,10 @@ public class AIPlayer extends Player
            for(Territory territory: territories)
            {
                ArrayList<Tile> tiles = territory.getTiles();
-               for (Tile tile : tiles)
+               for(int i = 0; i < tiles.size(); i++)
                {
                    ArrayList<Tile> adjacents = territory.adjacentEnemyTiles();
-                   if(tile.hasUnit())
+                   if(tiles.get(i).hasUnit())
                    {
                        int tileCount = 0;
                        int rand = (int) (Math.random() * adjacents.size());
@@ -45,7 +45,7 @@ public class AIPlayer extends Player
                            tileCount++;
                        }
                        if(adjacents.get(rand).getProtection() == 0)
-                           territory.moveUnit(tile.getUnit(), adjacents.get(rand));
+                           territory.moveUnit(tiles.get(i).getUnit(), adjacents.get(rand));
                    }
                }
                while(territory.canPurchaseUnits())
