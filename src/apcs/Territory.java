@@ -381,5 +381,14 @@ public class Territory {
     public int getWages() {
         return wages;
     }
+    
+    public int getIncome()
+    {
+    	return tiles.size();
+    }
    
+    public void setMoney()
+    {
+    	money += getIncome();
+    }
 }
