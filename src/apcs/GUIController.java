@@ -38,19 +38,19 @@ public class GUIController {
     private Label balanceLabel;
     
     private BarChart<String, Integer> propertiesBarChart;
-//    private Image playerImage;
-//    private Image computerImage;
     
     private ImageView pesantSelectorImageView;
+    private Image pesantImage;
     private ImageView castleSelectorImageView;
     private Image castleImage;
 
-    private Image pesantImage;
     private Image spearmanImage;
     private Image knightImage;
     private Image baronImage;
     
     private Image capitalImage;
+
+    private Territory selectedTerritory;
 
     @SuppressWarnings({ "unchecked" })
     GUIController(Stage primaryStage, Tile[][] map, Player[] players) {
@@ -106,7 +106,7 @@ public class GUIController {
 
             }
             
-            propertiesBarChart.getData().add(series);
+            propertiesBarChart.getData().addAll(series);
             
             /*
              * Playable Objects Code
@@ -214,7 +214,7 @@ public class GUIController {
 
                         final Tile tile = tiles[c];
 
-                        Color playerColor = tiles[c].getPlayer().getColor();
+                        Color playerColor = tile.getPlayer().getColor();
                         int red = playerColor.getRed();
                         int green = playerColor.getGreen();
                         int blue = playerColor.getBlue();
@@ -228,18 +228,18 @@ public class GUIController {
                         tile.setStroke(strokeColor);
 
                         tile.setOnDragOver(event -> {
-                            if (event.getGestureSource() != tile &&
-                                    event.getDragboard().hasImage()) {
+                            if (event.getGestureSource() != tile && event.getDragboard().hasImage()) {
                                 event.acceptTransferModes(TransferMode.MOVE);
                             }
                             event.consume();
                         });
                         tile.setOnDragEntered(event -> {
-                            if (event.getGestureSource() != tile &&
-                                    event.getDragboard().hasImage() &&
-                                    tile.getUnit() == null) {
-                            	if(!tile.hasUnit())
-                            		tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                            if (event.getGestureSource() != tile && event.getDragboard().hasImage() && tile.getUnit() == null) {
+                                if (event.getGestureSource() instanceof ImageView && tile.getPlayer() instanceof HumanPlayer && selectedTerritory.getTiles().contains(tile) && (canBuyPesant(tile.getTerritory()) || canBuyCastle(tile.getTerritory()))) {
+                                    tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                                } else if (((Tile) event.getGestureSource()).canMoveUnit(tile)) {
+                                    tile.setFill(new ImagePattern(event.getDragboard().getImage()));
+                                }
                             }
                             event.consume();
                         });
@@ -256,47 +256,54 @@ public class GUIController {
                                 switch (db.getString()) {
 
                                     case "N_Pesant":
-                                        success = tile.setUnit(new Peasant(tile));
-                                        if (success) {
-                                            tile.setFill(new ImagePattern(tile.getUnit().getImage()));
-                                            tile.getTerritory().setWages(tile.getTerritory().getWages() + 5);
+                                        if (event.getGestureSource() instanceof ImageView && tile.getPlayer() instanceof HumanPlayer && selectedTerritory.getTiles().contains(tile) && canBuyPesant(tile.getTerritory())) {
+                                            success = tile.setUnit(new Peasant(tile));
+                                            if (success) {
+                                                tile.setFill(new ImagePattern(tile.getUnit().getImage()));
+                                                tile.getTerritory().buyPeasant();
+                                                updateLabels(tile.getTerritory());
+                                            }
                                         }
                                         break;
 
                                     case "N_Castle":
-                                        success = tile.setUnit(new Castle(tile));
-                                        if (success) {
-                                            tile.setFill((new ImagePattern(tile.getUnit().getImage())));
-                                            tile.getTerritory().setWages(tile.getTerritory().getWages() + 10);
+                                        if (event.getGestureSource() instanceof ImageView && tile.getPlayer() instanceof HumanPlayer && selectedTerritory.getTiles().contains(tile) && canBuyCastle(tile.getTerritory())) {
+                                            success = tile.setUnit(new Castle(tile));
+                                            if (success) {
+                                                tile.setFill((new ImagePattern(tile.getUnit().getImage())));
+                                                tile.getTerritory().buyCastle();
+                                                updateLabels(tile.getTerritory());
+                                            }
                                         }
-                                        break;
-
-                                    default:
-                                        success = tile.moveUnit(((Tile) event.getGestureSource()).getUnit());
-                                        if (success) tile.setFill(new ImagePattern(tile.getUnit().getImage()));
                                         break;
 
                                 }
                             } else {
-                                System.out.println("No String found in the dragboard.");
+                                if (((Tile) event.getGestureSource()).canMoveUnit(tile)) {
+                                    success = tile.moveUnit(((Tile) event.getGestureSource()).getUnit());
+                                    if (success) {
+                                        tile.setFill(new ImagePattern(tile.getUnit().getImage()));
+                                        updateGraph();
+                                    }
+                                }
                             }
                             event.setDropCompleted(success);
                             event.consume();
                         });
                         tile.setOnDragDetected(event -> {
-                            Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
-                            ClipboardContent content = new ClipboardContent();
-                            if (tile.getUnit() != null) {
-                                content.putImage(tile.getUnit().getImage());
-                                if (tile.getUnit() instanceof Peasant) content.putString("Pesant");
-                                else if (tile.getUnit() instanceof Spearman) content.putString("Spearman");
-                                else if (tile.getUnit() instanceof Knight) content.putString("Knight");
-                                else if (tile.getUnit() instanceof Baron) content.putString("Baron");
+                            if (tile.getPlayer() instanceof HumanPlayer && !tile.isCapital() && !(tile.getUnit() instanceof Castle)) {
+                                Dragboard db = tile.startDragAndDrop(TransferMode.MOVE);
+                                ClipboardContent content = new ClipboardContent();
+                                if (tile.getUnit() != null) {
+                                    content.putImage(tile.getUnit().getImage());
+                                } else {
+                                    System.out.println("There are no units to move on this tile.");
+                                }
+                                db.setContent(content);
+                                event.consume();
                             } else {
-                                System.out.println("There are no units to move on this tile.");
+                                System.out.println("This tile does not belong to you or the unit cannot be moved.");
                             }
-                            db.setContent(content);
-                            event.consume();
                         });
                         tile.setOnDragDone(event -> {
                             if (event.getTransferMode() == TransferMode.MOVE) {
@@ -307,7 +314,7 @@ public class GUIController {
                         });
                         tile.setOnMouseClicked(event -> {
 
-                            Territory territory = tile.getTerritory();
+                            selectedTerritory = tile.getTerritory();
 
                             for (Tile[] tempTiles : map) {
                                 for (Tile t : tempTiles) {
@@ -319,14 +326,16 @@ public class GUIController {
                                         int a = color.getAlpha();
                                         double o = (a / 255.0) * 0.75;
                                         javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
+                                        javafx.scene.paint.Color stroke = javafx.scene.paint.Color.rgb(r, g, b, 1);
                                         if (!t.hasUnit()) t.setFill(fill);
+                                        t.setStroke(stroke);
                                     }
                                 }
                             }
 
                             if (tile.getPlayer() instanceof HumanPlayer) {
 
-                                for (Tile t : territory.getTiles()) {
+                                for (Tile t : selectedTerritory.getTiles()) {
                                     Color color = t.getPlayer().getColor();
                                     int r = color.getRed();
                                     int g = color.getGreen();
@@ -334,26 +343,25 @@ public class GUIController {
                                     int a = color.getAlpha();
                                     double o = a / 255.0;
                                     javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
+                                    javafx.scene.paint.Color stroke = javafx.scene.paint.Color.rgb(r, g, b, 1);
                                     if (!t.hasUnit()) t.setFill(fill);
+                                    t.setStroke(stroke);
                                 }
 
-                                setSavings(territory.getMoney());
-                                setIncome(territory.getNumTiles());
-                                setWages(territory.getWages());
-                                setBalance((territory.getMoney() + territory.getNumTiles()) - territory.getWages());
+                                updateLabels(selectedTerritory);
 
-                                if (canBuyCastle(territory))
+                                if (canBuyCastle(selectedTerritory))
                                     castleSelectorImageView.setImage(castleImage);
 
-                                if (canBuyPesant(territory))
+                                if (canBuyPesant(selectedTerritory))
                                     pesantSelectorImageView.setImage(pesantImage);
 
                             }
 
-                            if (!canBuyCastle(territory) && castleSelectorImageView.getImage() != null)
+                            if (!canBuyCastle(selectedTerritory) && castleSelectorImageView.getImage() != null)
                                 castleSelectorImageView.setImage(null);
 
-                            if (!canBuyPesant(territory) && pesantSelectorImageView.getImage() != null)
+                            if (!canBuyPesant(selectedTerritory) && pesantSelectorImageView.getImage() != null)
                                 pesantSelectorImageView.setImage(null);
 
                         });
@@ -395,6 +403,31 @@ public class GUIController {
         
     }
 
+    public void updateMap() {
+
+        for (Tile[] tiles : map) {
+            for (Tile t : tiles) {
+                if (t != null) {
+                    Color color = t.getPlayer().getColor();
+                    int r = color.getRed();
+                    int g = color.getGreen();
+                    int b = color.getBlue();
+                    int a = color.getAlpha();
+                    double o = (a / 255.0) * 0.75;
+                    t.setStroke(javafx.scene.paint.Color.rgb(r, g, b, 1));
+                    if (t.isCapital()) {
+                        t.setFill(new ImagePattern(capitalImage));
+                    } else if (t.hasUnit()) {
+                        t.setFill(new ImagePattern(t.getUnit().getImage()));
+                    } else {
+                        t.setFill(javafx.scene.paint.Color.rgb(r, g, b, o));
+                    }
+                }
+            }
+        }
+
+    }
+
     public boolean moveUnit(Tile source, Tile target) {
 
         return false;
@@ -416,7 +449,7 @@ public class GUIController {
     private boolean canBuyCastle(Territory t) {
 
         boolean canBuyCastle = false;
-        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 10 >= 0)
+        if (t.getMoney() - 10 >= 0)
             canBuyCastle = true;
         return canBuyCastle;
 
@@ -425,9 +458,18 @@ public class GUIController {
     private boolean canBuyPesant(Territory t) {
 
         boolean canBuyPesant = false;
-        if (((t.getMoney() + t.getNumTiles()) - t.getWages()) - 5 >= 0)
+        if (t.getMoney() - 5 >= 0)
             canBuyPesant = true;
         return canBuyPesant;
+
+    }
+
+    private void updateLabels(Territory t) {
+
+        setSavings(t.getMoney());
+        setIncome(t.getNumTiles());
+        setWages(t.getWages());
+        setBalance((t.getMoney() + t.getNumTiles()) - t.getWages());
 
     }
 
