@@ -91,8 +91,8 @@ class GUIController {
 
             propertiesBarChart = (BarChart<String, Integer>) root.lookup("#propertiesBarChart");
             propertiesBarChart.setTitle("Territory Summary");
-            
-            XYChart.Series<String, Integer> series = new XYChart.Series<>(); 
+
+            XYChart.Series<String, Integer> series = new XYChart.Series<>();
             int cpuCount = 1;
             for (Player player : players) {
 
@@ -103,13 +103,13 @@ class GUIController {
                     series.getData().add(new XYChart.Data<>("C" + cpuCount++, player.getNumTiles()));
 
             }
-            
+
             propertiesBarChart.getData().addAll(series);
 
-            for (int i = 0; i < players.length; i++) {
-                Node n = propertiesBarChart.lookup(".data" + i + ".chart-bar");
-                n.setStyle("-fx-bar-fill: " + convertToHexColor(players[i].getColor()));
-            }
+//            for (int i = 0; i < players.length; i++) {
+//                Node n = propertiesBarChart.lookup(".data" + i + ".chart-bar");
+//                n.setStyle("-fx-bar-fill: " + convertToHexColor(players[i].getColor()));
+//            }
             
             /*
              * Playable Objects Code
@@ -287,7 +287,6 @@ class GUIController {
                                         tile.setFill(new ImagePattern(tile.getUnit().getImage()));
                                         tile.setStroke(convertToHexColor(((Tile) event.getGestureSource()).getPlayer().getColor(), 1));
                                         highlightTerritory(selectedTerritory);
-                                        updateGraph();
                                     }
                                 }
                             }
@@ -313,6 +312,7 @@ class GUIController {
                             if (event.getTransferMode() == TransferMode.MOVE) {
                                 highlightTile(tile);
                                 tile.removeUnit();
+                                updateGraph();
                             }
                             event.consume();
                         });
@@ -392,11 +392,6 @@ class GUIController {
         }
 
         propertiesBarChart.getData().setAll(series);
-
-        for (int i = 0; i < players.length; i++) {
-            Node n = propertiesBarChart.lookup(".data" + i + ".chart-bar");
-            n.setStyle("-fx-bar-fill: " + convertToHexColor(players[i].getColor()));
-        }
         
     }
 
