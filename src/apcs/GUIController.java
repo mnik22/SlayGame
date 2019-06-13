@@ -178,8 +178,9 @@ class GUIController {
                         Optional<ButtonType> option = alert.showAndWait();
                         //noinspection OptionalGetWithoutIsPresent
                         if (option.get() == ButtonType.OK) {
-                            Driver.currentPlayer.buttonEndTurn();
+                            Driver.currentPlayer.buttonEndTurn(true);
                         } else {
+                            Driver.currentPlayer.buttonEndTurn(false);
                             alert.close();
                         }
                     }
@@ -288,7 +289,7 @@ class GUIController {
                                     if (success) {
                                         tile.setFill(new ImagePattern(tile.getUnit().getImage()));
                                         tile.setStroke(convertToHexColor(((Tile) event.getGestureSource()).getPlayer().getColor(), 1));
-                                        highlightTerritory(selectedTerritory);
+                                        highlightTerritory(tile.getTerritory());
                                     }
                                 }
                             }
