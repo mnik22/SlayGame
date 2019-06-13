@@ -206,6 +206,8 @@ class GUIController {
 
                         final Tile tile = tiles[c];
 
+                        tile.setStyle("-fx-stroke-width: " + 3);
+
                         Color playerColor = tile.getPlayer().getColor();
                         javafx.scene.paint.Color fillColor = convertToHexColor(playerColor, 0.6);
                         javafx.scene.paint.Color strokeColor = convertToHexColor(playerColor, 1);
