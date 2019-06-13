@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -104,6 +105,11 @@ class GUIController {
             }
             
             propertiesBarChart.getData().addAll(series);
+
+            for (int i = 0; i < players.length; i++) {
+                Node n = propertiesBarChart.lookup(".data" + i + ".chart-bar");
+                n.setStyle("-fx-bar-fill: " + convertToHexColor(players[i].getColor()));
+            }
             
             /*
              * Playable Objects Code
@@ -201,11 +207,8 @@ class GUIController {
                         final Tile tile = tiles[c];
 
                         Color playerColor = tile.getPlayer().getColor();
-                        int red = playerColor.getRed();
-                        int green = playerColor.getGreen();
-                        int blue = playerColor.getBlue();
-                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, 0.6);
-                        javafx.scene.paint.Color strokeColor = javafx.scene.paint.Color.rgb(red, green, blue, 1);
+                        javafx.scene.paint.Color fillColor = convertToHexColor(playerColor, 0.6);
+                        javafx.scene.paint.Color strokeColor = convertToHexColor(playerColor, 1);
 
                         if (tile.isCapital()) tile.setFill(new ImagePattern(capitalImage));
                         else tile.setFill(fillColor);
@@ -282,11 +285,8 @@ class GUIController {
                                     success = tile.moveUnit(((Tile) event.getGestureSource()).getUnit());
                                     if (success) {
                                         tile.setFill(new ImagePattern(tile.getUnit().getImage()));
-                                        Color color = ((Tile) event.getGestureSource()).getPlayer().getColor();
-                                        int r = color.getRed();
-                                        int g = color.getGreen();
-                                        int b = color.getBlue();
-                                        tile.setStroke(javafx.scene.paint.Color.rgb(r, g, b, 1));
+                                        tile.setStroke(convertToHexColor(((Tile) event.getGestureSource()).getPlayer().getColor(), 1));
+                                        highlightTerritory(selectedTerritory);
                                         updateGraph();
                                     }
                                 }
@@ -420,13 +420,8 @@ class GUIController {
 
     private void highlightTile(Tile t) {
 
-        if (!t.hasUnit()) {
-            Color color = t.getPlayer().getColor();
-            int r = color.getRed();
-            int g = color.getGreen();
-            int b = color.getBlue();
-            t.setFill(javafx.scene.paint.Color.rgb(r, g, b, 1));
-        }
+        if (!t.hasUnit())
+            t.setFill(convertToHexColor(t.getPlayer().getColor(), 1));
 
     }
 
@@ -439,13 +434,23 @@ class GUIController {
 
     private void unhighlightTile(Tile t) {
 
-        if (!t.hasUnit()) {
-            Color color = t.getPlayer().getColor();
-            int r = color.getRed();
-            int g = color.getGreen();
-            int b = color.getBlue();
-            t.setFill(javafx.scene.paint.Color.rgb(r, g, b, 0.6));
-        }
+        if (!t.hasUnit())
+            t.setFill(convertToHexColor(t.getPlayer().getColor(), 0.6));
+
+    }
+
+    private javafx.scene.paint.Color convertToHexColor(Color c, double opacity) {
+
+        int red = c.getRed();
+        int green = c.getGreen();
+        int blue = c.getBlue();
+        return javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+
+    }
+
+    private String convertToHexColor(Color c) {
+
+        return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
 
     }
 
