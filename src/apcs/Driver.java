@@ -470,6 +470,14 @@ public class Driver extends Application {
         		AIPlayer temp = (AIPlayer)players[playerNum];
         		temp.playRound();
         		guiController.updateMap();
+        		try
+                {
+                    Thread.sleep(500);
+                } catch (InterruptedException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
         	}
             if(playerNum < players.length - 1)
                 playerNum++;
