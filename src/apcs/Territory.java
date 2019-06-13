@@ -150,14 +150,15 @@ public class Territory {
 	            	System.out.println(u.getStrength() > t.getProtection());
 	                if(u.getStrength() > t.getProtection())
 	                {
+	                	System.out.println("You should be capturing");
 	                	Territory ter = t.getTerritory();
 	                	boolean capCheck = false;
-	                	checkMerge(t);
-	                	ter.removeTile(t);
 	                	if(t.isCapital())
 	                	{
 	                		capCheck = true;
 	                	}
+	                	checkMerge(t);
+	                	ter.removeTile(t);
 	                    t.setUnit(old.removeUnit());
 	                    t.setPlayer(player);
 	                    tiles.add(t);
@@ -169,6 +170,7 @@ public class Territory {
 	                    	ter.setCapital();
 	                    }
 	                    test = true;
+	                    System.out.println("Capture Complete");
 	                }
 	                else
 	                {
@@ -265,6 +267,7 @@ public class Territory {
     
     public void checkMerge(Tile t)//this should be called after a tile is captured.
     {
+    	System.out.println("checkMerge was called");
     	for(int i = 0; i < t.getAdjacentTiles().length; i++)
     	{
     		if(t.getAdjacentTiles()[i] != null)
@@ -280,6 +283,7 @@ public class Territory {
 	    				    {
 	        					Tile cap = this.getCapital();
 	        					cap.removeUnit();
+	        					cap.setCapital(false);
 	    				    }
 	    					ter.addTiles(this.getTiles());
 	    					player.removeTerritory(this);
@@ -290,6 +294,7 @@ public class Territory {
 	    				    {
 	        					Tile cap = ter.getCapital();
 	        					cap.removeUnit();
+	        					cap.setCapital(false);
 	    				    }
 		    				this.addTiles(ter.getTiles());
 		    				player.removeTerritory(ter);
@@ -315,6 +320,7 @@ public class Territory {
     
     public void destroyTheChild()
     {
+    	System.out.println("Destroy the child was called");
         for(int i = 0; i < tiles.size(); i++)
         {
             if(tiles.get(i).hasUnit())

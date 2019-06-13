@@ -227,7 +227,6 @@ public class Tile extends Polygon {
     
     public boolean moveUnit(Unit u)
     {
-    	System.out.println("Calling move unit: " + u + " " + toString());
     	Territory t = u.getTile().getTerritory();
     	return(t.moveUnit(u, this));
     }
@@ -300,7 +299,6 @@ public class Tile extends Polygon {
 				                u.setTile(this);
 				                setAdjacentProtection();
 				                test = true;
-				                System.out.println("The unit should be set: " + unit.getClass());
 				            }
 			            }
 				        else
@@ -329,12 +327,10 @@ public class Tile extends Polygon {
         		{
         			if(!hasUnit())
         			{
-	        			System.out.println("Trying to set castle");
 	        			unit = u;
 	                    u.setTile(this);
 	                    setAdjacentProtection();
 	                    test = true;
-	                    System.out.println("Complete");
         			}
         		}
         	}
@@ -344,7 +340,6 @@ public class Tile extends Polygon {
                 u.setTile(this);
                 setAdjacentProtection();
                 test = true;
-                System.out.println("The unit should be set: " + unit.getClass());
         	}
         }     
 	    return test;
@@ -400,7 +395,6 @@ public class Tile extends Polygon {
     
     public ArrayList<Tile> hasProtection()
     {
-    	System.out.println("hasProtection was called");
         ArrayList<Tile> temp = new ArrayList<Tile>();
 
         for(int i = 0; i < adjacentTiles.length; i++)
@@ -415,7 +409,6 @@ public class Tile extends Polygon {
         }
         for(int i = 0; i < temp.size(); i++)
         {
-        	System.out.println("This unit is in temp " + temp.get(i));
         }
         return temp;
     }
@@ -435,14 +428,12 @@ public class Tile extends Polygon {
                 strongest = temp.get(i).getUnit().getStrength();
             }
         }
-        System.out.println("Strongest: " + strongest);
         setProtection(strongest);
     }
     
     public void setAdjacentProtection() //updates this and adjacent tiles protection based on nearby units
     {
     	setProtection();
-    	System.out.println("This protection: " + protection);
         for(int i = 0; i < adjacentTiles.length; i++)
         {
         	if(adjacentTiles[i] != null)
@@ -450,7 +441,6 @@ public class Tile extends Polygon {
 	            if(adjacentTiles[i].getPlayer().equals(player))
 	            {
 	                adjacentTiles[i].setProtection();
-	                System.out.println("Protection: " + adjacentTiles[i].getProtection());
 	            }
         	}
         }
