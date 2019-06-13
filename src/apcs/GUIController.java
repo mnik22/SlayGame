@@ -184,6 +184,8 @@ class GUIController {
                             HumanPlayer temp = (HumanPlayer)Driver.currentPlayer;
                             temp.buttonEndTurn(false);
                         }
+                    } else {
+                        ((HumanPlayer) Driver.currentPlayer).buttonEndTurn(true);
                     }
 
                 }
