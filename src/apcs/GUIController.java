@@ -392,6 +392,11 @@ class GUIController {
         }
 
         propertiesBarChart.getData().setAll(series);
+
+        for (int i = 0; i < players.length; i++) {
+            Node n = propertiesBarChart.lookup(".data" + i + ".chart-bar");
+            n.setStyle("-fx-bar-fill: " + convertToHexColor(players[i].getColor()));
+        }
         
     }
 
