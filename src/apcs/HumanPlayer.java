@@ -18,7 +18,7 @@ public class HumanPlayer extends Player
         endTurn = false;
         while(!endTurn)
         {
-            System.out.println("running HP");
+            System.out.print("");
         }
         
         
