@@ -203,9 +203,7 @@ class GUIController {
                         int red = playerColor.getRed();
                         int green = playerColor.getGreen();
                         int blue = playerColor.getBlue();
-                        int alpha = playerColor.getAlpha();
-                        double opacity = (alpha / 255.0) * 0.75;
-                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, .75);
                         javafx.scene.paint.Color strokeColor = javafx.scene.paint.Color.rgb(red, green, blue, 1);
 
                         if (tile.isCapital()) tile.setFill(new ImagePattern(capitalImage));
@@ -315,7 +313,7 @@ class GUIController {
                         });
                         tile.setOnDragDone(event -> {
                             if (event.getTransferMode() == TransferMode.MOVE) {
-                                tile.setFill(fillColor);
+                                tile.setFill(javafx.scene.paint.Color.rgb(red, green, blue, 1));
                                 tile.removeUnit();
                             }
                             event.consume();
