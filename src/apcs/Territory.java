@@ -152,25 +152,28 @@ public class Territory {
 	                {
 	                	System.out.println("You should be capturing");
 	                	Territory ter = t.getTerritory();
-	                	boolean capCheck = false;
-	                	if(t.isCapital())
+	                	if(ter != null)
 	                	{
-	                		capCheck = true;
+		                	boolean capCheck = false;
+		                	if(t.isCapital())
+		                	{
+		                		capCheck = true;
+		                	}
+		                	checkMerge(t);
+		                	ter.removeTile(t);
+		                    t.setUnit(old.removeUnit());
+		                    t.setPlayer(player);
+		                    tiles.add(t);
+		                    t.setAdjacentProtection();
+		                    u.move(false);
+		                    if(capCheck)
+		                    {
+		                    	t.setCapital(false);
+		                    	ter.setCapital();
+		                    }
+		                    test = true;
+		                    System.out.println("Capture Complete");
 	                	}
-	                	checkMerge(t);
-	                	ter.removeTile(t);
-	                    t.setUnit(old.removeUnit());
-	                    t.setPlayer(player);
-	                    tiles.add(t);
-	                    t.setAdjacentProtection();
-	                    u.move(false);
-	                    if(capCheck)
-	                    {
-	                    	t.setCapital(false);
-	                    	ter.setCapital();
-	                    }
-	                    test = true;
-	                    System.out.println("Capture Complete");
 	                }
 	                else
 	                {
