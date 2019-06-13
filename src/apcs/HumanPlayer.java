@@ -5,6 +5,8 @@ import java.awt.Color;
 
 public class HumanPlayer extends Player
 {
+    private boolean endTurn;
+    
     public HumanPlayer(Color c)
     {
         super(c);
@@ -13,14 +15,18 @@ public class HumanPlayer extends Player
     public void playRound()
     {
         super.playRound();
-        while(!endTurn());
+        while(!endTurn)
+        {
+            System.out.println("running HP");
+        }
         
         
         
     }
-    
-    public boolean endTurn() 
+    public void buttonEndTurn(boolean b)
     {
-        return super.endTurn();
+        endTurn = b;
+        System.out.println("endTurn: " + endTurn);
     }
+   
 }

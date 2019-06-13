@@ -17,25 +17,22 @@ public class Player
         endTurn = false;
     }
 
-    public boolean endTurn() 
-    {
-        if(endTurn)
-            return endTurn;
-        for (int i = 0; i < territories.size(); i++)
-        {
-            if(territories.get(i).canPurchaseUnits() || territories.get(i).canMoveUnit())
-                return false;
-            if(endTurn)
-                return true;
-        }
-        return true;
-//    	return false;
-    }
+//    public boolean endTurn() 
+//    {
+//        for (int i = 0; i < territories.size(); i++)
+//        {
+//            if(territories.get(i).canPurchaseUnits() || territories.get(i).canMoveUnit())
+//                return false;
+//        }
+//        return true;
+////    	return false;
+//    }
     
-    public void buttonEndTurn()
+    
+    
+    public boolean getEndTurn()
     {
-        endTurn = true;
-        endTurn();
+        return endTurn;
     }
     
     public void endOfTurnSingle()

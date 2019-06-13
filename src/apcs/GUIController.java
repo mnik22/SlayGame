@@ -178,10 +178,11 @@ class GUIController {
                         Optional<ButtonType> option = alert.showAndWait();
                         //noinspection OptionalGetWithoutIsPresent
                         if (option.get() == ButtonType.OK) {
-                            Driver.currentPlayer.buttonEndTurn(true);
+                            HumanPlayer temp = (HumanPlayer)Driver.currentPlayer;
+                            temp.buttonEndTurn(true);
                         } else {
-                            Driver.currentPlayer.buttonEndTurn(false);
-                            alert.close();
+                            HumanPlayer temp = (HumanPlayer)Driver.currentPlayer;
+                            temp.buttonEndTurn(false);
                         }
                     }
 
