@@ -15,6 +15,7 @@ public class HumanPlayer extends Player
     public void playRound()
     {
         super.playRound();
+        endTurn = false;
         while(!endTurn)
         {
             System.out.println("running HP");
