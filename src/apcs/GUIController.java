@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -451,12 +450,6 @@ class GUIController {
         int green = c.getGreen();
         int blue = c.getBlue();
         return javafx.scene.paint.Color.rgb(red, green, blue, opacity);
-
-    }
-
-    private String convertToHexColor(Color c) {
-
-        return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
 
     }
 
