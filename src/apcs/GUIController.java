@@ -29,8 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
-import javax.xml.transform.Result;
-
 class GUIController {
     
     private Tile[][] map;
@@ -163,13 +161,16 @@ class GUIController {
 
                     boolean hasMovesLeft = false;
                     for (Territory t: Driver.currentPlayer.getTerritories())
-                        if (t.canMoveUnit() || t.canPurchaseUnits())
+                        if (t.canMoveUnit() || t.canPurchaseUnits()) {
                             hasMovesLeft = true;
+                            highlightTerritory(t);
+                        }
 
                     if (hasMovesLeft) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("You can still make moves, are you sure you want to end your turn?");
                         Optional<ButtonType> option = alert.showAndWait();
+                        //noinspection OptionalGetWithoutIsPresent
                         if (option.get() == ButtonType.OK) {
                             Driver.currentPlayer.buttonEndTurn();
                         } else {
@@ -203,7 +204,7 @@ class GUIController {
                         int red = playerColor.getRed();
                         int green = playerColor.getGreen();
                         int blue = playerColor.getBlue();
-                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, .75);
+                        javafx.scene.paint.Color fillColor = javafx.scene.paint.Color.rgb(red, green, blue, 0.6);
                         javafx.scene.paint.Color strokeColor = javafx.scene.paint.Color.rgb(red, green, blue, 1);
 
                         if (tile.isCapital()) tile.setFill(new ImagePattern(capitalImage));
@@ -228,14 +229,11 @@ class GUIController {
                         });
                         tile.setOnDragExited(event -> {
                         	if(!tile.hasUnit()) {
-                                Color color = (tile.getPlayer().getColor());
-                                int r = color.getRed();
-                                int g = color.getGreen();
-                                int b = color.getBlue();
-                                if (selectedTerritory.getTiles().contains(tile))
-                                    tile.setFill(javafx.scene.paint.Color.rgb(r, g, b, 1));
-                                else
-                                    tile.setFill(javafx.scene.paint.Color.rgb(r, g, b, .75));
+                                if (selectedTerritory.getTiles().contains(tile)) {
+                                    highlightTile(tile);
+                                } else {
+                                    unhighlightTile(tile);
+                                }
                             }
                             event.consume();
                         });
@@ -313,46 +311,34 @@ class GUIController {
                         });
                         tile.setOnDragDone(event -> {
                             if (event.getTransferMode() == TransferMode.MOVE) {
-                                tile.setFill(javafx.scene.paint.Color.rgb(red, green, blue, 1));
+                                highlightTile(tile);
                                 tile.removeUnit();
                             }
                             event.consume();
                         });
                         tile.setOnMouseClicked(event -> {
 
+                            System.out.println("Tile owned by: " + tile.getPlayer());
+                            if (tile.hasUnit()) {
+                                System.out.println("Unit on this tile: " + tile.getUnit());
+                                System.out.println("This tile's unit can move: " + tile.getUnit().canMove());
+                            } else {
+                                System.out.println("This tile has no unit on it.");
+                            }
+
                             selectedTerritory = tile.getTerritory();
 
                             for (Tile[] tempTiles : map) {
                                 for (Tile t : tempTiles) {
                                     if (t != null) {
-                                        Color color = t.getPlayer().getColor();
-                                        int r = color.getRed();
-                                        int g = color.getGreen();
-                                        int b = color.getBlue();
-                                        int a = color.getAlpha();
-                                        double o = (a / 255.0) * 0.75;
-                                        javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
-                                        javafx.scene.paint.Color stroke = javafx.scene.paint.Color.rgb(r, g, b, 1);
-                                        if (!t.hasUnit()) t.setFill(fill);
-                                        t.setStroke(stroke);
+                                        unhighlightTile(t);
                                     }
                                 }
                             }
 
                             if (tile.getPlayer() instanceof HumanPlayer) {
 
-                                for (Tile t : selectedTerritory.getTiles()) {
-                                    Color color = t.getPlayer().getColor();
-                                    int r = color.getRed();
-                                    int g = color.getGreen();
-                                    int b = color.getBlue();
-                                    int a = color.getAlpha();
-                                    double o = a / 255.0;
-                                    javafx.scene.paint.Color fill = javafx.scene.paint.Color.rgb(r, g, b, o);
-                                    javafx.scene.paint.Color stroke = javafx.scene.paint.Color.rgb(r, g, b, 1);
-                                    if (!t.hasUnit()) t.setFill(fill);
-                                    t.setStroke(stroke);
-                                }
+                                highlightTerritory(selectedTerritory);
 
                                 updateLabels(selectedTerritory);
 
@@ -418,18 +404,47 @@ class GUIController {
                     int r = color.getRed();
                     int g = color.getGreen();
                     int b = color.getBlue();
-                    int a = color.getAlpha();
-                    double o = (a / 255.0) * 0.75;
                     t.setStroke(javafx.scene.paint.Color.rgb(r, g, b, 1));
                     if (t.isCapital()) {
                         t.setFill(new ImagePattern(capitalImage));
                     } else if (t.hasUnit()) {
                         t.setFill(new ImagePattern(t.getUnit().getImage()));
                     } else {
-                        t.setFill(javafx.scene.paint.Color.rgb(r, g, b, o));
+                        t.setFill(javafx.scene.paint.Color.rgb(r, g, b, 0.6));
                     }
                 }
             }
+        }
+
+    }
+
+    private void highlightTile(Tile t) {
+
+        if (!t.hasUnit()) {
+            Color color = t.getPlayer().getColor();
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
+            t.setFill(javafx.scene.paint.Color.rgb(r, g, b, 1));
+        }
+
+    }
+
+    private void highlightTerritory(Territory t) {
+
+        for (Tile tile : t.getTiles())
+            highlightTile(tile);
+
+    }
+
+    private void unhighlightTile(Tile t) {
+
+        if (!t.hasUnit()) {
+            Color color = t.getPlayer().getColor();
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
+            t.setFill(javafx.scene.paint.Color.rgb(r, g, b, 0.6));
         }
 
     }
