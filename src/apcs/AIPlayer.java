@@ -62,15 +62,18 @@ public class AIPlayer extends Player
            ArrayList<Tile> tiles = territories.get(i).getTiles();
            for(int j = 0; j < tiles.size(); j++)
            {
-               ArrayList<Tile> adjacents = territories.get(i).adjacentEnemyTiles();
-               if(tiles.get(j).hasMoveableUnit() && tiles.get(j).getUnit().canMove && tiles.size() > 2)
-               {
-                   int index = 0;
-                   while(index < adjacents.size() && !(territories.get(i).moveUnit(tiles.get(j).getUnit(), adjacents.get(index))))
-                   {
-                       index++;
-                   }
-               }
+        	   if(i < territories.size())
+        	   {
+	               ArrayList<Tile> adjacents = territories.get(i).adjacentEnemyTiles();
+	               if(tiles.get(j).hasMoveableUnit() && tiles.get(j).getUnit().canMove && tiles.size() > 2)
+	               {
+	                   int index = 0;
+	                   while(index < adjacents.size() && !(territories.get(i).moveUnit(tiles.get(j).getUnit(), adjacents.get(index))))
+	                   {
+	                       index++;
+	                   }
+	               }
+        	   }
            }
        }
            
