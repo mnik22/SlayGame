@@ -275,30 +275,33 @@ public class Territory {
 	    		if(t.getAdjacentTiles()[i].getPlayer().equals(player))
 	    		{
 	    			Territory ter = t.getAdjacentTiles()[i].getTerritory();
-	    			if(!ter.equals(this))
+	    			if(ter != null)
 	    			{
-	    				if(ter.getTiles().size() > this.getTiles().size())
-	    				{
-	    				    if(this.getCapital() != null)
-	    				    {
-	        					Tile cap = this.getCapital();
-	        					cap.removeUnit();
-	        					cap.setCapital(false);
-	    				    }
-	    					ter.addTiles(this.getTiles());
-	    					player.removeTerritory(this);
-	    				}
-	    				else
-	    				{
-	    				    if(ter.getCapital() != null)
-	    				    {
-	        					Tile cap = ter.getCapital();
-	        					cap.removeUnit();
-	        					cap.setCapital(false);
-	    				    }
-		    				this.addTiles(ter.getTiles());
-		    				player.removeTerritory(ter);
-	    				}
+		    			if(!ter.equals(this))
+		    			{
+		    				if(ter.getTiles().size() > this.getTiles().size())
+		    				{
+		    				    if(this.getCapital() != null)
+		    				    {
+		        					Tile cap = this.getCapital();
+		        					cap.removeUnit();
+		        					cap.setCapital(false);
+		    				    }
+		    					ter.addTiles(this.getTiles());
+		    					player.removeTerritory(this);
+		    				}
+		    				else
+		    				{
+		    				    if(ter.getCapital() != null)
+		    				    {
+		        					Tile cap = ter.getCapital();
+		        					cap.removeUnit();
+		        					cap.setCapital(false);
+		    				    }
+			    				this.addTiles(ter.getTiles());
+			    				player.removeTerritory(ter);
+		    				}
+		    			}
 	    			}
 	    		}
     		}
